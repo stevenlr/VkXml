@@ -104,6 +104,11 @@ class FunctionPointerType:
         self.name = name
         self.prototype = prototype
 
+class Command:
+    def __init__(self, name: str, prototype: FunctionPrototype):
+        self.name = name
+        self.prototype = prototype
+
 def stringify_tag_except_comment(tag):
     if tag.tag == "comment": return ""
 
@@ -191,6 +196,7 @@ STRUCTURE_TYPES:        Dict[str, StructureType] = {}
 UNION_TYPES:            Dict[str, UnionType] = {}
 FUNCTION_POINTER_TYPES: Dict[str, FunctionPointerType] = {}
 CONSTANTS:              Dict[str, Constant] = {}
+COMMANDS:               Dict[str, Command] = {}
 
 def parse_basetype(type):
     name = type.find("./name").text
@@ -272,6 +278,10 @@ def parse_typed_entity(s: str) -> TypedEntity:
         raise Exception("Didn't finish parsing properly")
 
     return TypedEntity(entity_name, type)
+
+# @Todo Parse length information
+# @Todo Parse optional values
+# @Todo Parse default values
 
 def parse_struct(type):
     if "alias" in type.attrib:
@@ -367,6 +377,34 @@ def parse_funcpointer(type):
 
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
+# @Todo Parse success codes
+# @Todo Parse error codes
+# @Todo Parse optionals
+# @Todo Categorize entry points, instance & device commands
+
+def parse_command(tag):
+    if "alias" in tag.attrib:
+        COMMANDS[tag.attrib["name"]] = COMMANDS[tag.attrib["alias"]]
+        return
+
+    proto_tag = tag.find("./proto")
+    proto_str = stringify_tag_except_comment(proto_tag)
+    proto_tokens = TokenString(proto_str)
+    return_type = parse_type_reference(proto_tokens)
+    name = proto_tokens.eat_next_identifier()
+
+    prototype = FunctionPrototype(return_type)
+
+    if not proto_tokens.is_finished():
+        raise Exception("Invalid proto format")
+
+    for param_tag in tag.findall("./param"):
+        param_str = stringify_tag_except_comment(param_tag)
+        param = parse_typed_entity(param_str)
+        prototype.add_argument(param)
+
+    COMMANDS[name] = Command(name, prototype)
+
 for type in ROOT.findall("./types/type"):
     if "category" in type.attrib:
         category = type.attrib["category"]
@@ -395,3 +433,6 @@ for enum in ROOT.findall("./enums"):
 
     for e in enum.findall("./enum"):
         parse_constant(e)
+
+for c in ROOT.findall("./commands/command"):
+    parse_command(c)
