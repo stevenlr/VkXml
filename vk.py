@@ -3,52 +3,93 @@ import re
 from xml.etree import ElementTree
 import xml.etree
 
+class DependenciesSet:
+    def __init__(self):
+        self.deps: List[str] = []
+
+    def add_dep(self, dep: str):
+        if dep != None and dep not in self.deps:
+            self.deps.append(dep)
+
+class Entity:
+    def __init__(self, name: str):
+        self.name = name
+
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        return depset
+
 class Type:
-    pass
+    def get_base_type(self):
+        return None
 
 class TypeReference(Type):
     def __init__(self, name: str, is_const: bool):
         self.name = name
         self.is_const = is_const
 
+    def get_base_type(self):
+        return self.name
+
 class PointerType(Type):
     def __init__(self, inner: Type, is_const: bool):
         self.inner = inner
         self.is_const = is_const
+
+    def get_base_type(self):
+        return self.inner.get_base_type()
 
 class ArrayType(Type):
     def __init__(self, inner: Type, length: int):
         self.inner = inner
         self.length = length
 
-class TypedEntity:
+    def get_base_type(self):
+        return self.inner.get_base_type()
+
+class TypedIdentifier:
     def __init__(self, name: str, type: Type):
         self.name = name
         self.type = type
 
-class BaseType:
+class BaseType(Entity):
     def __init__(self, name: str, alias: str):
-        self.name = name
+        Entity.__init__(self, name)
         self.alias = alias
 
-class AliasType:
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        depset.add_dep(self.alias)
+        return depset
+
+class AliasType(Entity):
     def __init__(self, name: str, alias: str):
-        self.name = name
+        Entity.__init__(self, name)
         self.alias = alias
 
-class BitmaskType:
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        depset.add_dep(self.alias)
+        return depset
+
+class BitmaskType(Entity):
     def __init__(self, name: str, alias: str):
-        self.name = name
+        Entity.__init__(self, name)
         self.alias = alias
 
-class HandleType:
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        depset.add_dep(self.alias)
+        return depset
+
+class HandleType(Entity):
     def __init__(self, name: str, dispatchable: bool):
-        self.name = name
+        Entity.__init__(self, name)
         self.dispatchable = dispatchable
 
-class EnumType:
+class EnumType(Entity):
     def __init__(self, name: str):
-        self.name = name
+        Entity.__init__(self, name)
         self.values: Dict[str, int] = {}
 
     def add_value(self, name: str, value: int):
@@ -59,33 +100,52 @@ class EnumType:
             raise Exception("Unknown enum value")
         return self.values[name]
 
-class StructureType:
+class StructureType(Entity):
     def __init__(self, name: str):
-        self.name = name
-        self.members: List[TypedEntity] = []
+        Entity.__init__(self, name)
+        self.members: List[TypedIdentifier] = []
 
-    def add_member(self, entity: TypedEntity):
+    def add_member(self, entity: TypedIdentifier):
         self.members.append(entity)
 
-class UnionType:
-    def __init__(self, name: str):
-        self.name = name
-        self.members: List[TypedEntity] = []
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        for member in self.members:
+            depset.add_dep(member.type.get_base_type())
+        return depset
 
-    def add_member(self, entity: TypedEntity):
+class UnionType(Entity):
+    def __init__(self, name: str):
+        Entity.__init__(self, name)
+        self.members: List[TypedIdentifier] = []
+
+    def add_member(self, entity: TypedIdentifier):
         self.members.append(entity)
+
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        for member in self.members:
+            depset.add_dep(member.type.get_base_type())
+        return depset
 
 class FunctionPrototype:
     def __init__(self, return_type: Type):
         self.return_type = return_type
-        self.arguments: List[TypedEntity] = []
+        self.arguments: List[TypedIdentifier] = []
 
-    def add_argument(self, arg: TypedEntity):
+    def add_argument(self, arg: TypedIdentifier):
         self.arguments.append(arg)
 
-class Constant:
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        depset.add_dep(self.return_type.get_base_type())
+        for member in self.arguments:
+            depset.add_dep(member.type.get_base_type())
+        return depset
+
+class Constant(Entity):
     def __init__(self, name: str):
-        self.name = name
+        Entity.__init__(self, name)
 
 class IntegerConstant(Constant):
     def __init__(self, name: str, value: int, size: int):
@@ -99,15 +159,21 @@ class RealConstant(Constant):
         self.value = value
         self.size = size
 
-class FunctionPointerType:
+class FunctionPointerType(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
-        self.name = name
+        Entity.__init__(self, name)
         self.prototype = prototype
 
-class Command:
+    def make_depset(self) -> DependenciesSet:
+        return self.prototype.make_depset()
+
+class Command(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
-        self.name = name
+        Entity.__init__(self, name)
         self.prototype = prototype
+
+    def make_depset(self) -> DependenciesSet:
+        return self.prototype.make_depset()
 
 def stringify_tag_except_comment(tag):
     if tag.tag == "comment": return ""
@@ -186,6 +252,20 @@ def is_int(s: str) -> bool:
     except Exception:
         return False
 
+class Feature:
+    def __init__(self, name: str, version: str):
+        self.name = name
+        self.version = version
+        self.version_int = 0
+        for i in [int(x) for x in version.split(".")]:
+            self.version_int = self.version_int * 1000 + i
+
+class Extension:
+    def __init__(self, name: str, number: int, dependencies: List[str]):
+        self.name = name
+        self.number = number
+        self.dependencies = dependencies
+
 ROOT = ElementTree.parse("vk.xml").getroot()
 BASE_TYPES:             Dict[str, BaseType] = {}
 HANDLE_TYPES:           Dict[str, HandleType] = {}
@@ -197,6 +277,8 @@ UNION_TYPES:            Dict[str, UnionType] = {}
 FUNCTION_POINTER_TYPES: Dict[str, FunctionPointerType] = {}
 CONSTANTS:              Dict[str, Constant] = {}
 COMMANDS:               Dict[str, Command] = {}
+FEATURES:               Dict[str, Feature] = {}
+EXTENSIONS:             Dict[str, Extension] = {}
 
 def parse_basetype(type):
     name = type.find("./name").text
@@ -259,7 +341,7 @@ def parse_type_reference(tokens: TokenString) -> Type:
 
     return type
 
-def parse_typed_entity(s: str) -> TypedEntity:
+def parse_typed_entity(s: str) -> TypedIdentifier:
     tokens = TokenString(s)
     type = parse_type_reference(tokens)
     entity_name = tokens.eat_next_identifier()
@@ -277,7 +359,7 @@ def parse_typed_entity(s: str) -> TypedEntity:
     if not tokens.is_finished():
         raise Exception("Didn't finish parsing properly")
 
-    return TypedEntity(entity_name, type)
+    return TypedIdentifier(entity_name, type)
 
 # @Todo Parse length information
 # @Todo Parse optional values
@@ -405,6 +487,21 @@ def parse_command(tag):
 
     COMMANDS[name] = Command(name, prototype)
 
+# @Todo Create required types and commands sets from required features
+
+def parse_feature(tag):
+    FEATURES[tag.attrib["name"]] = Feature(tag.attrib["name"], tag.attrib["number"])
+
+def parse_extension(tag):
+    name = tag.attrib["name"]
+    number = int(tag.attrib["number"])
+    deps = []
+
+    if "requires" in tag.attrib:
+        deps = tag.attrib["requires"].split(",")
+
+    EXTENSIONS[name] = Extension(name, number, deps)
+
 for type in ROOT.findall("./types/type"):
     if "category" in type.attrib:
         category = type.attrib["category"]
@@ -426,6 +523,10 @@ for type in ROOT.findall("./types/type"):
             pass
         elif category == "define":
             pass
+        else:
+            raise Exception("Unhandled type")
+    else:
+        pass
 
 for enum in ROOT.findall("./enums"):
     if "type" in enum.attrib:
@@ -436,3 +537,9 @@ for enum in ROOT.findall("./enums"):
 
 for c in ROOT.findall("./commands/command"):
     parse_command(c)
+
+for f in ROOT.findall("./feature"):
+    parse_feature(f)
+
+for e in ROOT.findall("./extensions/extension"):
+    parse_extension(e)
