@@ -1,215 +1,314 @@
+from typing import *
+import re
 from xml.etree import ElementTree
 import xml.etree
 
+class Type:
+    pass
+
+class TypeReference(Type):
+    def __init__(self, name: str, is_const: bool):
+        self.name = name
+        self.is_const = is_const
+
+class PointerType(Type):
+    def __init__(self, inner: Type, is_const: bool):
+        self.inner = inner
+        self.is_const = is_const
+
+class ArrayType(Type):
+    def __init__(self, inner: Type, length: int):
+        self.inner = inner
+        self.length = length
+
+class TypedEntity:
+    def __init__(self, name: str, type: Type):
+        self.name = name
+        self.type = type
+
+class BaseType:
+    def __init__(self, name: str, alias: str):
+        self.name = name
+        self.alias = alias
+
+class AliasType:
+    def __init__(self, name: str, alias: str):
+        self.name = name
+        self.alias = alias
+
+class BitmaskType:
+    def __init__(self, name: str, alias: str):
+        self.name = name
+        self.alias = alias
+
+class HandleType:
+    def __init__(self, name: str, dispatchable: bool):
+        self.name = name
+        self.dispatchable = dispatchable
+
+class EnumType:
+    def __init__(self, name: str):
+        self.name = name
+        self.values: Dict[str, int] = {}
+
+    def add_value(self, name: str, value: int):
+        self.values[name] = value
+
+    def get_value(self, name: str) -> int:
+        if not name in self.values:
+            raise Exception("Unknown enum value")
+        return self.values[name]
+
+class StructureType:
+    def __init__(self, name: str):
+        self.name = name
+        self.members: List[TypedEntity] = []
+
+    def add_member(self, entity: TypedEntity):
+        self.members.append(entity)
+
+class UnionType:
+    def __init__(self, name: str):
+        self.name = name
+        self.members: List[TypedEntity] = []
+
+    def add_member(self, entity: TypedEntity):
+        self.members.append(entity)
+
+class FunctionPrototype:
+    def __init__(self, return_type: Type):
+        self.return_type = return_type
+        self.arguments: List[TypedEntity] = []
+
+    def add_argument(self, arg: TypedEntity):
+        self.arguments.append(arg)
+
+class FunctionPointerType:
+    def __init__(self, name: str, prototype: FunctionPrototype):
+        self.name = name
+        self.prototype = prototype
+
+def stringify_tag_except_comment(tag):
+    if tag.tag == "comment": return ""
+
+    elements = []
+
+    if isinstance(tag.text, str):
+        elements.append(tag.text)
+
+    for e in tag:
+        if isinstance(e, str):
+            elements.append(e.strip())
+        else:
+            elements.append(stringify_tag_except_comment(e))
+
+        if isinstance(e.tail, str):
+            elements.append(e.tail.strip())
+
+    return " ".join((" ".join(elements)).split()) + " "
+
+class TokenString:
+    def __init__(self, s: str):
+        self.s = s.strip()
+        self.id_regex = re.compile("^[a-zA-Z_][a-zA-Z0-9_]*")
+
+    def maybe_eat_token_end(self, token: str) -> bool:
+        if self.s.endswith(token):
+            self.s = self.s[:-len(token)].strip()
+            return True
+        else:
+            return False
+
+    def maybe_eat_tokens_end(self, tokens: List[str]) -> bool:
+        for token in tokens:
+            if not self.maybe_eat_token_end(token):
+                return False
+        return True
+
+    def maybe_eat_token(self, token: str) -> bool:
+        if self.s.startswith(token):
+            self.s = self.s[len(token):].strip()
+            return True
+        else:
+            return False
+
+    def maybe_eat_tokens(self, tokens: List[str]) -> bool:
+        for token in tokens:
+            if not self.maybe_eat_token(token):
+                return False
+        return True
+
+    def eat_next_identifier(self) -> str:
+        match = self.id_regex.search(self.s)
+        if match == None:
+            raise Exception("Not an identifier")
+        else:
+            identifier = match.group(0)
+            self.s = self.s[len(identifier):].strip()
+            return identifier
+
+    def eat_next_until(self, limit: str) -> str:
+        index = self.s.find(limit)
+        if index == -1:
+            raise Exception("String limit not found")
+        token = self.s[:index].strip()
+        self.s = self.s[index + len(limit):].strip()
+        return token
+
+    def is_finished(self) -> bool:
+        return len(self.s) == 0
+
+def is_int(s: str) -> bool:
+    try:
+        int(s, 0)
+        return True
+    except Exception:
+        return False
+
 ROOT = ElementTree.parse("vk.xml").getroot()
-BASE_TYPES = {}
-HANDLE_TYPES = {}
-ALIAS_TYPES = {}
-ENUM_TYPES = {}
-BITMASK_TYPES = {}
-STRUCTURE_TYPES = {}
-UNION_TYPES = {}
+BASE_TYPES:             Dict[str, BaseType] = {}
+HANDLE_TYPES:           Dict[str, HandleType] = {}
+ALIAS_TYPES:            Dict[str, AliasType] = {}
+ENUM_TYPES:             Dict[str, EnumType] = {}
+BITMASK_TYPES:          Dict[str, BitmaskType] = {}
+STRUCTURE_TYPES:        Dict[str, StructureType] = {}
+UNION_TYPES:            Dict[str, UnionType] = {}
+FUNCTION_POINTER_TYPES: Dict[str, FunctionPointerType] = {}
 
 def parse_basetype(type):
     name = type.find("./name").text
     base = type.find("./type").text
-    BASE_TYPES[name] = base
+    BASE_TYPES[name] = BaseType(name, base)
 
 def parse_handle(type):
     if "alias" in type.attrib:
-        ALIAS_TYPES[type.attrib["name"]] = type.attrib["alias"]
+        ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
     else:
         handle_type = type.find("./type").text
         name = type.find("./name").text
         if handle_type == "VK_DEFINE_HANDLE":
-            HANDLE_TYPES[name] = "uintptr_t"
+            HANDLE_TYPES[name] = HandleType(name, True)
         elif handle_type == "VK_DEFINE_NON_DISPATCHABLE_HANDLE":
-            HANDLE_TYPES[name] = "uint64_t"
+            HANDLE_TYPES[name] = HandleType(name, False)
         else:
             print("Unknown handle type %s for %s" % (handle_type, name))
 
 def parse_enum(type):
     name = type.attrib["name"]
     if "alias" in type.attrib:
-        ALIAS_TYPES[name] = type.attrib["alias"]
+        ALIAS_TYPES[name] = AliasType(name, type.attrib["alias"])
     else:
         enums = ROOT.find("./enums[@name='%s']" % name)
-        if enums == None:
-            ENUM_TYPES[name] = {}
-        else:
+        enum = EnumType(name)
+        if enums != None:
             enum_type = enums.attrib["type"]
             values = {}
             for e in enums.findall("./enum"):
                 if "alias" in e.attrib:
-                    values[e.attrib["name"]] = values[e.attrib["alias"]]
+                    enum.add_value(e.attrib["name"], enum.get_value(e.attrib["alias"]))
                 elif "bitpos" in e.attrib:
-                    values[e.attrib["name"]] = str(1 << int(e.attrib["bitpos"]))
+                    enum.add_value(e.attrib["name"], 1 << int(e.attrib["bitpos"]))
                 else:
-                    values[e.attrib["name"]] = e.attrib["value"]
-            ENUM_TYPES[name] = values
+                    enum.add_value(e.attrib["name"], int(e.attrib["value"], 0))
+        ENUM_TYPES[name] = enum
 
 def parse_bitmask(type):
     if "alias" in type.attrib:
-        ALIAS_TYPES[type.attrib["name"]] = type.attrib["alias"]
+        ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
     else:
         name = type.find("./name").text
         if "requires" in type.attrib:
-            BITMASK_TYPES[name] = type.attrib["requires"]
+            BITMASK_TYPES[name] = BitmaskType(name, type.attrib["requires"])
         else:
-            BITMASK_TYPES[name] = None
+            BITMASK_TYPES[name] = BitmaskType(name, "")
 
-def element_tokens(element):
-    t = []
-    if element.text != None and element.text.strip() != "":
-        t.append(element.text.strip())
-    for e in element:
-        t.append(e)
-        if e.tail != None and e.tail.strip() != "":
-            t.append(e.tail.strip())
-    return t
+def parse_type_reference(tokens: TokenString) -> Type:
+    tokens.maybe_eat_token("struct") # Ignore this!
+    is_const = tokens.maybe_eat_token("const")
+    tokens.maybe_eat_token("struct") # Ignore this!
+    type_name = tokens.eat_next_identifier()
+    is_const = is_const or tokens.maybe_eat_token("const")
+    type: Any = TypeReference(type_name, is_const)
 
-def parse_typed_identifier(tokens):
-    is_const = False
-    if not isinstance(tokens[0], ElementTree.Element):
-        if tokens[0] == "const":
-            is_const = True
-        elif tokens[0] == "const struct":
-            pass
-        elif tokens[0] == "struct":
-            pass
-        else:
-            print("Unknown token " + tokens[0])
-            return None
-        tokens = tokens[1:]
+    while tokens.maybe_eat_token("*"):
+        is_const = tokens.maybe_eat_token("const")
+        type = PointerType(type, is_const)
 
-    type_name = None
-    if tokens[0].tag == "type":
-        type_name = tokens[0].text
-    else:
-        print("Unknown member structure")
-        return None
-    tokens = tokens[1:]
+    return type
 
-    is_pointer = False
-    is_pointer_const_pointer = False
-    if not isinstance(tokens[0], ElementTree.Element):
-        if tokens[0] == "*":
-            is_pointer = True
-        elif tokens[0] == "* const*":
-            is_pointer_const_pointer = True
-        else:
-            print("Unknown token " + tokens[0])
-            return None
-        tokens = tokens[1:]
+def parse_typed_entity(s: str) -> TypedEntity:
+    tokens = TokenString(s)
+    type = parse_type_reference(tokens)
+    entity_name = tokens.eat_next_identifier()
 
-    field_name = None
-    if tokens[0].tag == "name":
-        field_name = tokens[0].text
-    else:
-        print("Unknown member structure")
-        return None
-    tokens = tokens[1:]
-
-    is_array = False
-    array_count = None
-    if len(tokens) > 0 and isinstance(tokens[0], str) and tokens[0].startswith("["):
-        is_array = True
-
-        if tokens[0].endswith("]"):
-            array_count = tokens[0][1:-1]
-            tokens = tokens[1:]
-        else:
-            if isinstance(tokens[1], ElementTree.Element) and tokens[1].tag == "enum":
-                array_count = tokens[1].text
+    if tokens.maybe_eat_token("["):
+        length: Any = tokens.eat_next_until("]")
+        if not is_int(length):
+            e = ROOT.find("enums/enum[@name='%s']" % length)
+            if e == None:
+                raise Exception("Cannot find enum")
             else:
-                print("Invalid array length qualifier")
-                return None
+                length = int(e.attrib["value"], 0)
+        type = ArrayType(type, length)
 
-            if not isinstance(tokens[2], str) or not tokens[2] == "]":
-                print("Invalid array length qualifier")
-                return None
-            tokens = tokens[3:]
+    if not tokens.is_finished():
+        raise Exception("Didn't finish parsing properly")
 
-    if len(tokens) > 0 and isinstance(tokens[0], ElementTree.Element) and tokens[0].tag == "comment":
-        tokens = tokens[1:]
-
-    if len(tokens) > 0:
-        print("Unknown member structure")
-        return None
-
-    return {
-        "field_name": field_name,
-        "is_const": is_const,
-        "is_pointer": is_pointer,
-        "is_pointer_const_pointer": is_pointer_const_pointer,
-        "type_name": type_name,
-        "is_array": is_array,
-        "array_count": array_count,
-    }
+    return TypedEntity(entity_name, type)
 
 def parse_struct(type):
     if "alias" in type.attrib:
-        ALIAS_TYPES[type.attrib["name"]] = type.attrib["alias"]
+        ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
         return
 
-    members = []
+    struct_name = type.attrib["name"]
+    struct = StructureType(struct_name)
+
     for member in type.findall("./member"):
-        tokens = element_tokens(member)
-        m = parse_typed_identifier(tokens)
-        if m != None:
-            members.append(m)
-    STRUCTURE_TYPES[type.attrib["name"]] = members
+        entity = parse_typed_entity(stringify_tag_except_comment(member))
+        struct.add_member(entity)
+
+    STRUCTURE_TYPES[struct_name] = struct
 
 def parse_union(type):
     if "alias" in type.attrib:
-        ALIAS_TYPES[type.attrib["name"]] = type.attrib["alias"]
+        ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
         return
 
-    members = []
+    union_name = type.attrib["name"]
+    union = UnionType(union_name)
+
     for member in type.findall("./member"):
-        tokens = element_tokens(member)
-        m = parse_typed_identifier(tokens)
-        if m != None:
-            members.append(m)
-    UNION_TYPES[type.attrib["name"]] = members
+        entity = parse_typed_entity(stringify_tag_except_comment(member))
+        union.add_member(entity)
+
+    UNION_TYPES[union_name] = union
 
 def parse_funcpointer(type):
-    tokens = element_tokens(type)
-    if tokens[0].startswith("typedef") and tokens[0].endswith("(VKAPI_PTR *"):
-        return_type_str = tokens[0][7:-12].strip()
-        return_is_const = False
-        return_type_name = None
-        return_is_pointer = False
+    s = stringify_tag_except_comment(type)
+    tokens = TokenString(s)
 
-        if return_type_str.startswith("const "):
-            return_is_const = True
-            return_type_str = return_type_str[5:].strip()
+    if not tokens.maybe_eat_token("typedef"):
+        raise Exception("Not typedef in function pointer? What?")
 
-        if return_type_str.endswith("*"):
-            return_is_pointer = True
-            return_type_str = return_type_str[:-1].strip()
+    return_type = parse_type_reference(tokens)
+    prototype = FunctionPrototype(return_type)
 
-        return_type_name = return_type_str
+    if not tokens.maybe_eat_tokens(["(", "VKAPI_PTR", "*"]):
+        raise Exception("Bad funcpointer format")
 
-        return_type = {
-            "is_const": return_is_const,
-            "is_pointer": return_is_pointer,
-            "type_name": return_type_name,
-        }
+    name = tokens.eat_next_identifier()
 
-        name = None
-        if tokens[1].tag == "name":
-            name = tokens[1].text
-        tokens = tokens[2:]
+    if not tokens.maybe_eat_tokens([")", "("]) or not tokens.maybe_eat_tokens_end([";", ")"]):
+        raise Exception("Bad funcpointer format")
 
-        args = []
-        if len(tokens) > 1:
-            pass
+    if tokens.s != "void":
+        arguments = [s.strip() for s in tokens.s.split(",")]
+        for arg in arguments:
+            entity = parse_typed_entity(arg)
+            prototype.add_argument(entity)
 
-        print(name, args)
-    else:
-        print("Bad funcpointer format")
-        return
+    FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
 for type in ROOT.findall("./types/type"):
     if "category" in type.attrib:
@@ -230,9 +329,5 @@ for type in ROOT.findall("./types/type"):
             parse_funcpointer(type)
         elif category == "include":
             pass
-        else:
-            print("Unknown type category %s" % category)
+        elif category == "define":
             pass
-    else:
-        # print("Type with no category")
-        pass
