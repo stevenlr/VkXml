@@ -83,6 +83,22 @@ class FunctionPrototype:
     def add_argument(self, arg: TypedEntity):
         self.arguments.append(arg)
 
+class Constant:
+    def __init__(self, name: str):
+        self.name = name
+
+class IntegerConstant(Constant):
+    def __init__(self, name: str, value: int, size: int):
+        Constant.__init__(self, name)
+        self.value = value
+        self.size = size
+
+class RealConstant(Constant):
+    def __init__(self, name: str, value: float, size: int):
+        Constant.__init__(self, name)
+        self.value = value
+        self.size = size
+
 class FunctionPointerType:
     def __init__(self, name: str, prototype: FunctionPrototype):
         self.name = name
@@ -174,6 +190,7 @@ BITMASK_TYPES:          Dict[str, BitmaskType] = {}
 STRUCTURE_TYPES:        Dict[str, StructureType] = {}
 UNION_TYPES:            Dict[str, UnionType] = {}
 FUNCTION_POINTER_TYPES: Dict[str, FunctionPointerType] = {}
+CONSTANTS:              Dict[str, Constant] = {}
 
 def parse_basetype(type):
     name = type.find("./name").text
@@ -284,6 +301,46 @@ def parse_union(type):
 
     UNION_TYPES[union_name] = union
 
+def parse_constant(tag):
+    if "alias" in tag.attrib:
+        CONSTANTS[tag.attrib["name"]] = CONSTANTS[tag.attrib["alias"]]
+        return
+
+    name = tag.attrib["name"]
+    value = tag.attrib["value"]
+
+    if value.startswith("(") and value.endswith(")"):
+        value = value[1:-1]
+
+    if value.endswith("f"):
+        float_value = float(value[:-1])
+        CONSTANTS[name] = RealConstant(name, float_value, 32)
+    else:
+        # All of this is quite shitty, but you know...
+        minus_index = value.find("-")
+        offset = 0
+        if minus_index != -1:
+            offset = -int(value[minus_index + 1:])
+            value = value[:minus_index]
+
+        size = 32
+        if value.endswith("U"):
+            size = 32
+            value = value[:-1]
+        elif value.endswith("ULL"):
+            size = 64
+            value = value[:-3]
+
+        int_value = 0
+        if value == "~0":
+            int_value = (1 << size) - 1
+        else:
+            int_value = int(value, 0)
+
+        int_value += offset
+
+        CONSTANTS[name] = IntegerConstant(name, int_value, size)
+
 def parse_funcpointer(type):
     s = stringify_tag_except_comment(type)
     tokens = TokenString(s)
@@ -331,3 +388,10 @@ for type in ROOT.findall("./types/type"):
             pass
         elif category == "define":
             pass
+
+for enum in ROOT.findall("./enums"):
+    if "type" in enum.attrib:
+        continue
+
+    for e in enum.findall("./enum"):
+        parse_constant(e)
