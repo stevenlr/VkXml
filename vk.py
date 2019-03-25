@@ -656,7 +656,7 @@ for f in ROOT.findall("./feature"):
 for e in ROOT.findall("./extensions/extension"):
     parse_extension(e)
 
-VERSION = "1.1"
+VERSION = "1.0"
 WANTED_EXTENSIONS = ["VK_KHR_win32_surface", "VK_KHR_swapchain", "VK_EXT_debug_utils"]
 
 version_int = version_to_int(VERSION)
