@@ -87,6 +87,14 @@ class HandleType(Entity):
         Entity.__init__(self, name)
         self.dispatchable = dispatchable
 
+    def make_depset(self) -> DependenciesSet:
+        depset = DependenciesSet()
+        if self.dispatchable:
+            depset.add_dep("uintptr_t")
+        else:
+            depset.add_dep("uint64_t")
+        return depset
+
 class EnumType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -207,7 +215,7 @@ class TokenString:
             return False
 
     def maybe_eat_tokens_end(self, tokens: List[str]) -> bool:
-        for token in tokens:
+        for token in reversed(tokens):
             if not self.maybe_eat_token_end(token):
                 return False
         return True
@@ -252,13 +260,17 @@ def is_int(s: str) -> bool:
     except Exception:
         return False
 
+def version_to_int(s: str) -> int:
+    version = 0
+    for i in [int(x) for x in s.split(".")]:
+        version = version * 1000 + i
+    return version
+
 class Feature:
     def __init__(self, name: str, version: str):
         self.name = name
         self.version = version
-        self.version_int = 0
-        for i in [int(x) for x in version.split(".")]:
-            self.version_int = self.version_int * 1000 + i
+        self.version_int = version_to_int(version)
 
 class Extension:
     def __init__(self, name: str, number: int, dependencies: List[str]):
@@ -267,6 +279,7 @@ class Extension:
         self.dependencies = dependencies
 
 ROOT = ElementTree.parse("vk.xml").getroot()
+PLATFORM_TYPES:         Dict[str, Entity] = {}
 BASE_TYPES:             Dict[str, BaseType] = {}
 HANDLE_TYPES:           Dict[str, HandleType] = {}
 ALIAS_TYPES:            Dict[str, AliasType] = {}
@@ -277,8 +290,54 @@ UNION_TYPES:            Dict[str, UnionType] = {}
 FUNCTION_POINTER_TYPES: Dict[str, FunctionPointerType] = {}
 CONSTANTS:              Dict[str, Constant] = {}
 COMMANDS:               Dict[str, Command] = {}
+EMPTY:                  Dict[str, Entity] = {}
 FEATURES:               Dict[str, Feature] = {}
 EXTENSIONS:             Dict[str, Extension] = {}
+
+def add_platform_type(name: str):
+    PLATFORM_TYPES[name] = Entity(name)
+
+add_platform_type("void")
+add_platform_type("char")
+add_platform_type("uint8_t")
+add_platform_type("int8_t")
+add_platform_type("uint16_t")
+add_platform_type("int16_t")
+add_platform_type("uint32_t")
+add_platform_type("int32_t")
+add_platform_type("uint64_t")
+add_platform_type("int64_t")
+add_platform_type("float")
+add_platform_type("size_t")
+add_platform_type("uintptr_t")
+
+def find_entity(name: str) -> Optional[Entity]:
+    if name in BASE_TYPES:
+        return BASE_TYPES[name]
+    elif name in HANDLE_TYPES:
+        return HANDLE_TYPES[name]
+    elif name in ALIAS_TYPES:
+        return ALIAS_TYPES[name]
+    elif name in ENUM_TYPES:
+        return ENUM_TYPES[name]
+    elif name in BITMASK_TYPES:
+        return BITMASK_TYPES[name]
+    elif name in STRUCTURE_TYPES:
+        return STRUCTURE_TYPES[name]
+    elif name in UNION_TYPES:
+        return UNION_TYPES[name]
+    elif name in FUNCTION_POINTER_TYPES:
+        return FUNCTION_POINTER_TYPES[name]
+    elif name in CONSTANTS:
+        return CONSTANTS[name]
+    elif name in COMMANDS:
+        return COMMANDS[name]
+    elif name in EMPTY:
+        return EMPTY[name]
+    elif name in PLATFORM_TYPES:
+        return PLATFORM_TYPES[name]
+    else:
+        return None
 
 def parse_basetype(type):
     name = type.find("./name").text
@@ -325,7 +384,7 @@ def parse_bitmask(type):
         if "requires" in type.attrib:
             BITMASK_TYPES[name] = BitmaskType(name, type.attrib["requires"])
         else:
-            BITMASK_TYPES[name] = BitmaskType(name, "")
+            ALIAS_TYPES[name] = AliasType(name, "VkFlags")
 
 def parse_type_reference(tokens: TokenString) -> Type:
     tokens.maybe_eat_token("struct") # Ignore this!
@@ -448,7 +507,7 @@ def parse_funcpointer(type):
 
     name = tokens.eat_next_identifier()
 
-    if not tokens.maybe_eat_tokens([")", "("]) or not tokens.maybe_eat_tokens_end([";", ")"]):
+    if not tokens.maybe_eat_tokens([")", "("]) or not tokens.maybe_eat_tokens_end([")", ";"]):
         raise Exception("Bad funcpointer format")
 
     if tokens.s != "void":
@@ -502,6 +561,21 @@ def parse_extension(tag):
 
     EXTENSIONS[name] = Extension(name, number, deps)
 
+def parse_define(tag):
+    name = None
+    if "name" in tag.attrib:
+        name = tag.attrib["name"]
+    else:
+        name = tag.find("./name").text
+
+    if name:
+        EMPTY[name] = Entity(name)
+
+def parse_include(tag):
+    if "name" in tag.attrib:
+        name = tag.attrib["name"]
+        EMPTY[name] = Entity(name)
+
 for type in ROOT.findall("./types/type"):
     if "category" in type.attrib:
         category = type.attrib["category"]
@@ -520,9 +594,9 @@ for type in ROOT.findall("./types/type"):
         elif category == "funcpointer":
             parse_funcpointer(type)
         elif category == "include":
-            pass
+            parse_include(type)
         elif category == "define":
-            pass
+            parse_define(type)
         else:
             raise Exception("Unhandled type")
     else:
@@ -543,3 +617,52 @@ for f in ROOT.findall("./feature"):
 
 for e in ROOT.findall("./extensions/extension"):
     parse_extension(e)
+
+VERSION = "1.0"
+
+version_int = version_to_int(VERSION)
+
+selected_features: List[Feature] = []
+for feature_str in FEATURES:
+    if version_int >= FEATURES[feature_str].version_int:
+        selected_features.append(FEATURES[feature_str])
+
+selected_features = sorted(selected_features, key = lambda x: x.version_int)
+
+FEATURES_TO_LOAD: List[str] = [f.name for f in selected_features]
+
+entities_visited: List[str] = []
+entities_to_visit: List[Entity] = []
+
+for feature_name in FEATURES_TO_LOAD:
+    for r in ROOT.findall("./feature[@name='%s']/require" % feature_name):
+        # @Todo Handle dependencies
+        # @Todo Handle conditionals
+        for x in r.findall("./*"):
+            entity = None
+            if x.tag == "type":
+                entity = find_entity(x.attrib["name"])
+            elif x.tag == "enum":
+                entity = find_entity(x.attrib["name"])
+            elif x.tag == "command":
+                entity = find_entity(x.attrib["name"])
+            else:
+                raise Exception("Unknown required entity type %s", x.tag)
+
+            if not entity:
+                raise Exception("Unknown entity %s" % x.attrib["name"])
+            else:
+                entities_to_visit.append(entity)
+
+while len(entities_to_visit) > 0:
+    entity = entities_to_visit[-1]
+    entities_to_visit = entities_to_visit[:-1]
+
+    if not entity.name in entities_visited:
+        entities_visited.append(entity.name)
+        for e in entity.make_depset().deps:
+            to_visit = find_entity(e)
+            if not to_visit:
+                raise Exception("Unknown entity %s" % e)
+            else:
+                entities_to_visit.append(to_visit)
