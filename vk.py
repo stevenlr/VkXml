@@ -167,6 +167,11 @@ class RealConstant(Constant):
         self.value = value
         self.size = size
 
+class StringConstant(Constant):
+    def __init__(self, name: str, value: str):
+        Constant.__init__(self, name)
+        self.value = value
+
 class FunctionPointerType(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
         Entity.__init__(self, name)
@@ -376,6 +381,29 @@ def parse_enum(type):
                     enum.add_value(e.attrib["name"], int(e.attrib["value"], 0))
         ENUM_TYPES[name] = enum
 
+def parse_enum_extends(tag, extnumber: int) -> Entity:
+    base_enum_name = tag.attrib["extends"]
+
+    if not base_enum_name in ENUM_TYPES:
+        raise Exception("Unknown enum to extend %s" % base_enum_name)
+
+    name = tag.attrib["name"]
+    value = 0
+
+    if "extnumber" in tag.attrib:
+        extnumber = int(tag.attrib["extnumber"], 0)
+
+    if "bitpos" in tag.attrib:
+        value = 1 << int(tag.attrib["bitpos"])
+    else:
+        value = 1000000000 + 1000 * extnumber + int(tag.attrib["offset"], 0)
+
+    if "dir" in tag.attrib and tag.attrib["dir"] == "-":
+        value = -value
+
+    ENUM_TYPES[base_enum_name].add_value(name, value)
+    return ENUM_TYPES[base_enum_name]
+
 def parse_bitmask(type):
     if "alias" in type.attrib:
         ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
@@ -452,10 +480,10 @@ def parse_union(type):
 
     UNION_TYPES[union_name] = union
 
-def parse_constant(tag):
+def parse_constant(tag) -> Entity:
     if "alias" in tag.attrib:
         CONSTANTS[tag.attrib["name"]] = CONSTANTS[tag.attrib["alias"]]
-        return
+        return CONSTANTS[tag.attrib["name"]]
 
     name = tag.attrib["name"]
     value = tag.attrib["value"]
@@ -466,6 +494,11 @@ def parse_constant(tag):
     if value.endswith("f"):
         float_value = float(value[:-1])
         CONSTANTS[name] = RealConstant(name, float_value, 32)
+        return CONSTANTS[name]
+    if value.startswith("\"") and value.endswith("\""):
+        str_value = value[1:-1]
+        CONSTANTS[name] = StringConstant(name, str_value)
+        return CONSTANTS[name]
     else:
         # All of this is quite shitty, but you know...
         minus_index = value.find("-")
@@ -491,6 +524,7 @@ def parse_constant(tag):
         int_value += offset
 
         CONSTANTS[name] = IntegerConstant(name, int_value, size)
+        return CONSTANTS[name]
 
 def parse_funcpointer(type):
     s = stringify_tag_except_comment(type)
@@ -576,6 +610,10 @@ def parse_include(tag):
         name = tag.attrib["name"]
         EMPTY[name] = Entity(name)
 
+def parse_misc_type(tag):
+    name = tag.attrib["name"]
+    EMPTY[name] = Entity(name)
+
 for type in ROOT.findall("./types/type"):
     if "category" in type.attrib:
         category = type.attrib["category"]
@@ -600,7 +638,7 @@ for type in ROOT.findall("./types/type"):
         else:
             raise Exception("Unhandled type")
     else:
-        pass
+        parse_misc_type(type)
 
 for enum in ROOT.findall("./enums"):
     if "type" in enum.attrib:
@@ -618,7 +656,8 @@ for f in ROOT.findall("./feature"):
 for e in ROOT.findall("./extensions/extension"):
     parse_extension(e)
 
-VERSION = "1.0"
+VERSION = "1.1"
+WANTED_EXTENSIONS = ["VK_KHR_win32_surface", "VK_KHR_swapchain", "VK_EXT_debug_utils"]
 
 version_int = version_to_int(VERSION)
 
@@ -629,30 +668,69 @@ for feature_str in FEATURES:
 
 selected_features = sorted(selected_features, key = lambda x: x.version_int)
 
-FEATURES_TO_LOAD: List[str] = [f.name for f in selected_features]
+features_to_load: List[str] = [f.name for f in selected_features]
+
+extensions_to_visit: List[str] = WANTED_EXTENSIONS
+extensions_visited: List[str] = []
+
+while len(extensions_to_visit) > 0:
+    extension_name = extensions_to_visit[-1]
+    extensions_to_visit = extensions_to_visit[:-1]
+
+    if not extension_name in extensions_visited:
+        extensions_visited.append(extension_name)
+
+        if not extension_name in EXTENSIONS:
+            raise Exception("Extension %s not found" % extension_name)
+
+        extension = EXTENSIONS[extension_name]
+
+        for e in extension.dependencies:
+            extensions_to_visit.append(e)
 
 entities_visited: List[str] = []
 entities_to_visit: List[Entity] = []
 
-for feature_name in FEATURES_TO_LOAD:
-    for r in ROOT.findall("./feature[@name='%s']/require" % feature_name):
-        # @Todo Handle dependencies
-        # @Todo Handle conditionals
-        for x in r.findall("./*"):
-            entity = None
-            if x.tag == "type":
-                entity = find_entity(x.attrib["name"])
-            elif x.tag == "enum":
-                entity = find_entity(x.attrib["name"])
-            elif x.tag == "command":
-                entity = find_entity(x.attrib["name"])
-            else:
-                raise Exception("Unknown required entity type %s", x.tag)
+def parse_require(tag, extnumber: int):
+    if "feature" in tag.attrib:
+        if not tag.attrib["feature"] in features_to_load:
+            return
 
-            if not entity:
-                raise Exception("Unknown entity %s" % x.attrib["name"])
+    if "extension" in tag.attrib:
+        if not tag.attrib["extension"] in extensions_visited:
+            return
+
+    for x in r.findall("./*"):
+        entity = None
+        if x.tag == "type":
+            entity = find_entity(x.attrib["name"])
+        elif x.tag == "enum":
+            if "extends" in x.attrib:
+                entity = parse_enum_extends(x, extnumber)
+            elif "value" in x.attrib:
+                entity = parse_constant(x)
             else:
-                entities_to_visit.append(entity)
+                entity = find_entity(x.attrib["name"])
+        elif x.tag == "command":
+            entity = find_entity(x.attrib["name"])
+        elif x.tag == "comment":
+            continue
+        else:
+            raise Exception("Unknown required entity type %s" % x.tag)
+
+        if not entity:
+            raise Exception("Unknown entity %s" % x.attrib["name"])
+        else:
+            entities_to_visit.append(entity)
+
+for feature_name in features_to_load:
+    for r in ROOT.findall("./feature[@name='%s']/require" % feature_name):
+        parse_require(r, 0)
+
+for extension_name in extensions_visited:
+    for r in ROOT.findall("./extensions/extension[@name='%s']/require" % extension_name):
+        extension = EXTENSIONS[extension_name]
+        parse_require(r, extension.number)
 
 while len(entities_to_visit) > 0:
     entity = entities_to_visit[-1]
