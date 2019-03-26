@@ -163,18 +163,23 @@ class EnumType(Entity):
             e.attrib["name"] = k[0]
             e.text = str(k[1])
 
+class OptionalTypedIdentifier:
+    def __init__(self, id: TypedIdentifier, optional: bool):
+        self.id = id
+        self.optional = optional
+
 class StructureType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
-        self.members: List[TypedIdentifier] = []
+        self.members: List[OptionalTypedIdentifier] = []
 
-    def add_member(self, entity: TypedIdentifier):
-        self.members.append(entity)
+    def add_member(self, entity: TypedIdentifier, optional: bool):
+        self.members.append(OptionalTypedIdentifier(entity, optional))
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
         for member in self.members:
-            depset.add_dep(member.type.get_base_type())
+            depset.add_dep(member.id.type.get_base_type())
         return depset
 
     def to_xml(self, parent: xml.Element):
@@ -182,8 +187,9 @@ class StructureType(Entity):
         node.attrib["name"] = self.name
         for m in self.members:
             e = xml.SubElement(node, "member")
-            e.attrib["name"] = m.name
-            m.type.to_xml(e)
+            e.attrib["name"] = m.id.name
+            e.attrib["optional"] = str(m.optional)
+            m.id.type.to_xml(e)
 
 class UnionType(Entity):
     def __init__(self, name: str):
@@ -210,24 +216,25 @@ class UnionType(Entity):
 class FunctionPrototype:
     def __init__(self, return_type: Type):
         self.return_type = return_type
-        self.arguments: List[TypedIdentifier] = []
+        self.arguments: List[OptionalTypedIdentifier] = []
 
-    def add_argument(self, arg: TypedIdentifier):
-        self.arguments.append(arg)
+    def add_argument(self, arg: TypedIdentifier, optional: bool):
+        self.arguments.append(OptionalTypedIdentifier(arg, optional))
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
         depset.add_dep(self.return_type.get_base_type())
         for member in self.arguments:
-            depset.add_dep(member.type.get_base_type())
+            depset.add_dep(member.id.type.get_base_type())
         return depset
 
     def to_xml(self, parent: xml.Element):
         self.return_type.to_xml(xml.SubElement(parent, "return-type"))
         for arg in self.arguments:
             node = xml.SubElement(parent, "arg")
-            node.attrib["name"] = arg.name
-            arg.type.to_xml(node)
+            node.attrib["name"] = arg.id.name
+            node.attrib["optional"] = str(arg.optional)
+            arg.id.type.to_xml(node)
 
 class Constant(Entity):
     def __init__(self, name: str):
@@ -554,10 +561,6 @@ def parse_typed_entity(s: str) -> TypedIdentifier:
 
     return TypedIdentifier(entity_name, type)
 
-# @Todo Parse length information
-# @Todo Parse optional values
-# @Todo Parse default values
-
 def parse_struct(type):
     if "alias" in type.attrib:
         ALIAS_TYPES[type.attrib["name"]] = AliasType(type.attrib["name"], type.attrib["alias"])
@@ -568,7 +571,10 @@ def parse_struct(type):
 
     for member in type.findall("./member"):
         entity = parse_typed_entity(stringify_tag_except_comment(member))
-        struct.add_member(entity)
+        optional = False
+        if "optional" in member.attrib and member.attrib["optional"].find("true") != -1:
+            optional = True
+        struct.add_member(entity, optional)
 
     STRUCTURE_TYPES[struct_name] = struct
 
@@ -654,13 +660,14 @@ def parse_funcpointer(type):
         arguments = [s.strip() for s in tokens.s.split(",")]
         for arg in arguments:
             entity = parse_typed_entity(arg)
-            prototype.add_argument(entity)
+            prototype.add_argument(entity, False)
 
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
+# @Todo Parse length information
+# @Todo Parse default values
 # @Todo Parse success codes
 # @Todo Parse error codes
-# @Todo Parse optionals
 # @Todo Categorize entry points, instance & device commands
 
 def parse_command(tag):
@@ -680,9 +687,13 @@ def parse_command(tag):
         raise Exception("Invalid proto format")
 
     for param_tag in tag.findall("./param"):
+        optional = False
+        if "optional" in param_tag.attrib and param_tag.attrib["optional"].find("true") != -1:
+            optional = True
+
         param_str = stringify_tag_except_comment(param_tag)
         param = parse_typed_entity(param_str)
-        prototype.add_argument(param)
+        prototype.add_argument(param, optional)
 
     COMMANDS[name] = Command(name, prototype)
 
@@ -760,7 +771,7 @@ for f in ROOT.findall("./feature"):
 for e in ROOT.findall("./extensions/extension"):
     parse_extension(e)
 
-VERSION = "1.1"
+VERSION = "1.0"
 WANTED_EXTENSIONS = ["VK_KHR_win32_surface", "VK_KHR_swapchain", "VK_EXT_debug_utils"]
 
 version_int = version_to_int(VERSION)
