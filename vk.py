@@ -1,7 +1,7 @@
 from typing import *
 import re
-from xml.etree import ElementTree
-import xml.etree
+import xml.etree.ElementTree as xml
+from xml.dom import minidom
 
 class DependenciesSet:
     def __init__(self):
@@ -19,9 +19,16 @@ class Entity:
         depset = DependenciesSet()
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "prelude-type")
+        node.attrib["name"] = self.name
+
 class Type:
     def get_base_type(self):
         return None
+
+    def to_xml(self, parent: xml.Element):
+        pass
 
 class TypeReference(Type):
     def __init__(self, name: str, is_const: bool):
@@ -31,6 +38,11 @@ class TypeReference(Type):
     def get_base_type(self):
         return self.name
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "type")
+        node.attrib["const"] = str(self.is_const)
+        node.text = self.name
+
 class PointerType(Type):
     def __init__(self, inner: Type, is_const: bool):
         self.inner = inner
@@ -39,6 +51,11 @@ class PointerType(Type):
     def get_base_type(self):
         return self.inner.get_base_type()
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "pointer")
+        node.attrib["const"] = str(self.is_const)
+        self.inner.to_xml(node)
+
 class ArrayType(Type):
     def __init__(self, inner: Type, length: int):
         self.inner = inner
@@ -46,6 +63,11 @@ class ArrayType(Type):
 
     def get_base_type(self):
         return self.inner.get_base_type()
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "array")
+        node.attrib["length"] = str(self.length)
+        self.inner.to_xml(node)
 
 class TypedIdentifier:
     def __init__(self, name: str, type: Type):
@@ -62,6 +84,12 @@ class BaseType(Entity):
         depset.add_dep(self.alias)
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "base")
+        node.attrib["name"] = self.name
+        node.attrib["type"] = self.alias
+
+
 class AliasType(Entity):
     def __init__(self, name: str, alias: str):
         Entity.__init__(self, name)
@@ -72,6 +100,11 @@ class AliasType(Entity):
         depset.add_dep(self.alias)
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "alias")
+        node.attrib["name"] = self.name
+        node.attrib["type"] = self.alias
+
 class BitmaskType(Entity):
     def __init__(self, name: str, alias: str):
         Entity.__init__(self, name)
@@ -81,6 +114,11 @@ class BitmaskType(Entity):
         depset = DependenciesSet()
         depset.add_dep(self.alias)
         return depset
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "bitmask")
+        node.attrib["name"] = self.name
+        node.attrib["flags"] = self.alias
 
 class HandleType(Entity):
     def __init__(self, name: str, dispatchable: bool):
@@ -95,6 +133,15 @@ class HandleType(Entity):
             depset.add_dep("uint64_t")
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "handle")
+        node.attrib["name"] = self.name
+        if self.dispatchable:
+            node.attrib["type"] = "uintptr_t"
+        else:
+            node.attrib["type"] = "uint64_t"
+
+
 class EnumType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -107,6 +154,14 @@ class EnumType(Entity):
         if not name in self.values:
             raise Exception("Unknown enum value")
         return self.values[name]
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "enum")
+        node.attrib["name"] = self.name
+        for k in sorted(self.values.items(), key=lambda kv: kv[1]):
+            e = xml.SubElement(node, "entry")
+            e.attrib["name"] = k[0]
+            e.text = str(k[1])
 
 class StructureType(Entity):
     def __init__(self, name: str):
@@ -122,6 +177,14 @@ class StructureType(Entity):
             depset.add_dep(member.type.get_base_type())
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "struct")
+        node.attrib["name"] = self.name
+        for m in self.members:
+            e = xml.SubElement(node, "member")
+            e.attrib["name"] = m.name
+            m.type.to_xml(e)
+
 class UnionType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -135,6 +198,14 @@ class UnionType(Entity):
         for member in self.members:
             depset.add_dep(member.type.get_base_type())
         return depset
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "union")
+        node.attrib["name"] = self.name
+        for m in self.members:
+            e = xml.SubElement(node, "member")
+            e.attrib["name"] = m.name
+            m.type.to_xml(e)
 
 class FunctionPrototype:
     def __init__(self, return_type: Type):
@@ -151,6 +222,13 @@ class FunctionPrototype:
             depset.add_dep(member.type.get_base_type())
         return depset
 
+    def to_xml(self, parent: xml.Element):
+        self.return_type.to_xml(xml.SubElement(parent, "return-type"))
+        for arg in self.arguments:
+            node = xml.SubElement(parent, "arg")
+            node.attrib["name"] = arg.name
+            arg.type.to_xml(node)
+
 class Constant(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -161,16 +239,34 @@ class IntegerConstant(Constant):
         self.value = value
         self.size = size
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "integer-constant")
+        node.attrib["name"] = self.name
+        node.attrib["size"] = str(self.size)
+        node.text = str(self.value)
+
+
 class RealConstant(Constant):
     def __init__(self, name: str, value: float, size: int):
         Constant.__init__(self, name)
         self.value = value
         self.size = size
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "real-constant")
+        node.attrib["name"] = self.name
+        node.attrib["size"] = str(self.size)
+        node.text = str(self.value)
+
 class StringConstant(Constant):
     def __init__(self, name: str, value: str):
         Constant.__init__(self, name)
         self.value = value
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "string-constant")
+        node.attrib["name"] = self.name
+        node.text = self.value
 
 class FunctionPointerType(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
@@ -180,6 +276,11 @@ class FunctionPointerType(Entity):
     def make_depset(self) -> DependenciesSet:
         return self.prototype.make_depset()
 
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "function-pointer")
+        node.attrib["name"] = self.name
+        self.prototype.to_xml(node)
+
 class Command(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
         Entity.__init__(self, name)
@@ -187,6 +288,11 @@ class Command(Entity):
 
     def make_depset(self) -> DependenciesSet:
         return self.prototype.make_depset()
+
+    def to_xml(self, parent: xml.Element):
+        node = xml.SubElement(parent, "command")
+        node.attrib["name"] = self.name
+        self.prototype.to_xml(node)
 
 def stringify_tag_except_comment(tag):
     if tag.tag == "comment": return ""
@@ -283,7 +389,7 @@ class Extension:
         self.number = number
         self.dependencies = dependencies
 
-ROOT = ElementTree.parse("vk.xml").getroot()
+ROOT = xml.parse("vk.xml").getroot()
 PLATFORM_TYPES:         Dict[str, Entity] = {}
 BASE_TYPES:             Dict[str, BaseType] = {}
 HANDLE_TYPES:           Dict[str, HandleType] = {}
@@ -396,7 +502,7 @@ def parse_enum_extends(tag, extnumber: int) -> Entity:
     if "bitpos" in tag.attrib:
         value = 1 << int(tag.attrib["bitpos"])
     else:
-        value = 1000000000 + 1000 * extnumber + int(tag.attrib["offset"], 0)
+        value = 1000000000 + 1000 * (extnumber - 1) + int(tag.attrib["offset"], 0)
 
     if "dir" in tag.attrib and tag.attrib["dir"] == "-":
         value = -value
@@ -580,8 +686,6 @@ def parse_command(tag):
 
     COMMANDS[name] = Command(name, prototype)
 
-# @Todo Create required types and commands sets from required features
-
 def parse_feature(tag):
     FEATURES[tag.attrib["name"]] = Feature(tag.attrib["name"], tag.attrib["number"])
 
@@ -656,7 +760,7 @@ for f in ROOT.findall("./feature"):
 for e in ROOT.findall("./extensions/extension"):
     parse_extension(e)
 
-VERSION = "1.0"
+VERSION = "1.1"
 WANTED_EXTENSIONS = ["VK_KHR_win32_surface", "VK_KHR_swapchain", "VK_EXT_debug_utils"]
 
 version_int = version_to_int(VERSION)
@@ -744,3 +848,14 @@ while len(entities_to_visit) > 0:
                 raise Exception("Unknown entity %s" % e)
             else:
                 entities_to_visit.append(to_visit)
+
+dst = xml.Element("vulkan")
+
+for entity_name in entities_visited:
+    entity = find_entity(entity_name)
+    entity.to_xml(dst)
+
+dst[:] = sorted(dst, key=lambda x: x.tag)
+
+with open("output.xml", "wb+") as fp:
+    fp.write(minidom.parseString(xml.tostring(dst)).toprettyxml(indent="   ", encoding="utf8"))
