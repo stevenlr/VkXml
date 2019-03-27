@@ -1,21 +1,21 @@
 from model import *
 import xml.etree.ElementTree as xml
 
-BASE_TYPES = []
-STRUCTURE_TYPES = []
-UNION_TYPES = []
-STRING_CONSTANTS = []
-REAL_CONSTANTS = []
-INTEGER_CONSTANTS = []
-PRELUDE_TYPES = []
-HANDLE_TYPES = []
-ENUM_TYPES = []
-FUNCTION_POINTER_TYPES = []
-COMMANDS = []
-BITMASK_TYPES = []
-ALIAS_TYPES = []
-
 def load_model(file):
+    BASE_TYPES = []
+    STRUCTURE_TYPES = []
+    UNION_TYPES = []
+    STRING_CONSTANTS = []
+    REAL_CONSTANTS = []
+    INTEGER_CONSTANTS = []
+    PRELUDE_TYPES = []
+    HANDLE_TYPES = []
+    ENUM_TYPES = []
+    FUNCTION_POINTER_TYPES = []
+    COMMANDS = []
+    BITMASK_TYPES = []
+    ALIAS_TYPES = []
+
     root = xml.parse(file).getroot()
     for child in root:
         if child.tag == "base":
@@ -47,5 +47,18 @@ def load_model(file):
         else:
             raise Exception("Forgot about something? %s" % child.tag)
 
-load_model("output.xml")
-print(0)
+    return {
+        "base_types": BASE_TYPES,
+        "structure_types": STRUCTURE_TYPES,
+        "union_types": UNION_TYPES,
+        "string_constants": STRING_CONSTANTS,
+        "real_constants": REAL_CONSTANTS,
+        "integer_constants": INTEGER_CONSTANTS,
+        "prelude_types": PRELUDE_TYPES,
+        "handle_types": HANDLE_TYPES,
+        "enum_types": ENUM_TYPES,
+        "function_pointer_types": FUNCTION_POINTER_TYPES,
+        "commands": COMMANDS,
+        "bitmask_types": BITMASK_TYPES,
+        "alias_types": ALIAS_TYPES,
+    }
