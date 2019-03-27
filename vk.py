@@ -173,19 +173,20 @@ class OptionalTypedIdentifier:
         self.id = id
         self.optional = optional
 
-class DefaultOptionalTypedIdentifier:
-    def __init__(self, id: TypedIdentifier, optional: bool, default_value: Optional[str]):
+class StructureMember:
+    def __init__(self, id: TypedIdentifier, optional: bool, default_value: Optional[str], length: Optional[str]):
         self.id = id
         self.optional = optional
         self.default_value = default_value
+        self.length = length
 
 class StructureType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
-        self.members: List[DefaultOptionalTypedIdentifier] = []
+        self.members: List[StructureMember] = []
 
-    def add_member(self, entity: TypedIdentifier, optional: bool, default_value: Optional[str]):
-        self.members.append(DefaultOptionalTypedIdentifier(entity, optional, default_value))
+    def add_member(self, entity: TypedIdentifier, optional: bool, default_value: Optional[str], length: Optional[str]):
+        self.members.append(StructureMember(entity, optional, default_value, length))
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
@@ -202,6 +203,8 @@ class StructureType(Entity):
             e.attrib["optional"] = str(m.optional)
             if m.default_value:
                 e.attrib["default_value"] = m.default_value
+            if m.length:
+                e.attrib["length"] = m.length
             m.id.type.to_xml(e)
 
 class UnionType(Entity):
@@ -587,13 +590,23 @@ def parse_struct(type):
 
     for member in type.findall("./member"):
         entity = parse_typed_entity(stringify_tag_except_comment(member))
+
         optional = False
         if "optional" in member.attrib and member.attrib["optional"].find("true") != -1:
             optional = True
+
         default_value = None
         if "values" in member.attrib:
             default_value = member.attrib["values"]
-        struct.add_member(entity, optional, default_value)
+
+        length = None
+        if "len" in member.attrib:
+            length_value = member.attrib["len"].split(",")[0]
+            for member_name in type.findall("./member/name"):
+                if member_name.text == length_value:
+                    length = length_value
+
+        struct.add_member(entity, optional, default_value, length)
 
     STRUCTURE_TYPES[struct_name] = struct
 
@@ -683,7 +696,6 @@ def parse_funcpointer(type):
 
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
-# @Todo Parse length information
 # @Todo Parse success codes
 # @Todo Parse error codes
 

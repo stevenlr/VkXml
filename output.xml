@@ -4119,7 +4119,7 @@
       <member name="waitSemaphoreCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pWaitSemaphores" optional="False">
+      <member length="waitSemaphoreCount" name="pWaitSemaphores" optional="False">
          <pointer const="False">
             <type const="True">VkSemaphore</type>
          </pointer>
@@ -4127,17 +4127,17 @@
       <member name="swapchainCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSwapchains" optional="False">
+      <member length="swapchainCount" name="pSwapchains" optional="False">
          <pointer const="False">
             <type const="True">VkSwapchainKHR</type>
          </pointer>
       </member>
-      <member name="pImageIndices" optional="False">
+      <member length="swapchainCount" name="pImageIndices" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
       </member>
-      <member name="pResults" optional="True">
+      <member length="swapchainCount" name="pResults" optional="True">
          <pointer const="False">
             <type const="False">VkResult</type>
          </pointer>
@@ -4182,7 +4182,7 @@
       <member name="queueFamilyIndexCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueueFamilyIndices" optional="False">
+      <member length="queueFamilyIndexCount" name="pQueueFamilyIndices" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -4231,7 +4231,7 @@
       <member name="queueLabelCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueueLabels" optional="False">
+      <member length="queueLabelCount" name="pQueueLabels" optional="False">
          <pointer const="False">
             <type const="True">VkDebugUtilsLabelEXT</type>
          </pointer>
@@ -4239,7 +4239,7 @@
       <member name="cmdBufLabelCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pCmdBufLabels" optional="False">
+      <member length="cmdBufLabelCount" name="pCmdBufLabels" optional="False">
          <pointer const="False">
             <type const="True">VkDebugUtilsLabelEXT</type>
          </pointer>
@@ -4247,7 +4247,7 @@
       <member name="objectCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pObjects" optional="False">
+      <member length="objectCount" name="pObjects" optional="False">
          <pointer const="False">
             <type const="True">VkDebugUtilsObjectNameInfoEXT</type>
          </pointer>
@@ -4342,7 +4342,7 @@
       <member name="tagSize" optional="False">
          <type const="False">size_t</type>
       </member>
-      <member name="pTag" optional="False">
+      <member length="tagSize" name="pTag" optional="False">
          <pointer const="False">
             <type const="True">void</type>
          </pointer>
@@ -4529,7 +4529,7 @@
       <member name="clearValueCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pClearValues" optional="False">
+      <member length="clearValueCount" name="pClearValues" optional="False">
          <pointer const="False">
             <type const="True">VkClearValue</type>
          </pointer>
@@ -4816,7 +4816,7 @@
       <member name="attachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pAttachments" optional="False">
+      <member length="attachmentCount" name="pAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkAttachmentDescription</type>
          </pointer>
@@ -4824,7 +4824,7 @@
       <member name="subpassCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSubpasses" optional="False">
+      <member length="subpassCount" name="pSubpasses" optional="False">
          <pointer const="False">
             <type const="True">VkSubpassDescription</type>
          </pointer>
@@ -4832,7 +4832,7 @@
       <member name="dependencyCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pDependencies" optional="False">
+      <member length="dependencyCount" name="pDependencies" optional="False">
          <pointer const="False">
             <type const="True">VkSubpassDependency</type>
          </pointer>
@@ -4871,7 +4871,7 @@
       <member name="inputAttachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pInputAttachments" optional="False">
+      <member length="inputAttachmentCount" name="pInputAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkAttachmentReference</type>
          </pointer>
@@ -4879,12 +4879,12 @@
       <member name="colorAttachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pColorAttachments" optional="False">
+      <member length="colorAttachmentCount" name="pColorAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkAttachmentReference</type>
          </pointer>
       </member>
-      <member name="pResolveAttachments" optional="True">
+      <member length="colorAttachmentCount" name="pResolveAttachments" optional="True">
          <pointer const="False">
             <type const="True">VkAttachmentReference</type>
          </pointer>
@@ -4897,7 +4897,7 @@
       <member name="preserveAttachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pPreserveAttachments" optional="False">
+      <member length="preserveAttachmentCount" name="pPreserveAttachments" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -4958,7 +4958,7 @@
       <member name="attachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pAttachments" optional="False">
+      <member length="attachmentCount" name="pAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkImageView</type>
          </pointer>
@@ -5028,17 +5028,17 @@
       <member name="descriptorType" optional="False">
          <type const="False">VkDescriptorType</type>
       </member>
-      <member name="pImageInfo" optional="False">
+      <member length="descriptorCount" name="pImageInfo" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorImageInfo</type>
          </pointer>
       </member>
-      <member name="pBufferInfo" optional="False">
+      <member length="descriptorCount" name="pBufferInfo" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorBufferInfo</type>
          </pointer>
       </member>
-      <member name="pTexelBufferView" optional="False">
+      <member length="descriptorCount" name="pTexelBufferView" optional="False">
          <pointer const="False">
             <type const="True">VkBufferView</type>
          </pointer>
@@ -5081,7 +5081,7 @@
       <member name="descriptorSetCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSetLayouts" optional="False">
+      <member length="descriptorSetCount" name="pSetLayouts" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorSetLayout</type>
          </pointer>
@@ -5105,7 +5105,7 @@
       <member name="poolSizeCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pPoolSizes" optional="False">
+      <member length="poolSizeCount" name="pPoolSizes" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorPoolSize</type>
          </pointer>
@@ -5134,7 +5134,7 @@
       <member name="bindingCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pBindings" optional="False">
+      <member length="bindingCount" name="pBindings" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorSetLayoutBinding</type>
          </pointer>
@@ -5153,7 +5153,7 @@
       <member name="stageFlags" optional="False">
          <type const="False">VkShaderStageFlags</type>
       </member>
-      <member name="pImmutableSamplers" optional="True">
+      <member length="descriptorCount" name="pImmutableSamplers" optional="True">
          <pointer const="False">
             <type const="True">VkSampler</type>
          </pointer>
@@ -5232,7 +5232,7 @@
       <member name="setLayoutCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSetLayouts" optional="False">
+      <member length="setLayoutCount" name="pSetLayouts" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorSetLayout</type>
          </pointer>
@@ -5240,7 +5240,7 @@
       <member name="pushConstantRangeCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pPushConstantRanges" optional="False">
+      <member length="pushConstantRangeCount" name="pPushConstantRanges" optional="False">
          <pointer const="False">
             <type const="True">VkPushConstantRange</type>
          </pointer>
@@ -5315,7 +5315,7 @@
       <member name="mapEntryCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pMapEntries" optional="False">
+      <member length="mapEntryCount" name="pMapEntries" optional="False">
          <pointer const="False">
             <type const="True">VkSpecializationMapEntry</type>
          </pointer>
@@ -5323,7 +5323,7 @@
       <member name="dataSize" optional="True">
          <type const="False">size_t</type>
       </member>
-      <member name="pData" optional="False">
+      <member length="dataSize" name="pData" optional="False">
          <pointer const="False">
             <type const="True">void</type>
          </pointer>
@@ -5355,7 +5355,7 @@
       <member name="stageCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pStages" optional="False">
+      <member length="stageCount" name="pStages" optional="False">
          <pointer const="False">
             <type const="True">VkPipelineShaderStageCreateInfo</type>
          </pointer>
@@ -5436,7 +5436,7 @@
       <member name="dynamicStateCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pDynamicStates" optional="False">
+      <member length="dynamicStateCount" name="pDynamicStates" optional="False">
          <pointer const="False">
             <type const="True">VkDynamicState</type>
          </pointer>
@@ -5463,7 +5463,7 @@
       <member name="attachmentCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pAttachments" optional="False">
+      <member length="attachmentCount" name="pAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkPipelineColorBlendAttachmentState</type>
          </pointer>
@@ -5654,7 +5654,7 @@
       <member name="viewportCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pViewports" optional="True">
+      <member length="viewportCount" name="pViewports" optional="True">
          <pointer const="False">
             <type const="True">VkViewport</type>
          </pointer>
@@ -5662,7 +5662,7 @@
       <member name="scissorCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pScissors" optional="True">
+      <member length="scissorCount" name="pScissors" optional="True">
          <pointer const="False">
             <type const="True">VkRect2D</type>
          </pointer>
@@ -5718,7 +5718,7 @@
       <member name="vertexBindingDescriptionCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pVertexBindingDescriptions" optional="False">
+      <member length="vertexBindingDescriptionCount" name="pVertexBindingDescriptions" optional="False">
          <pointer const="False">
             <type const="True">VkVertexInputBindingDescription</type>
          </pointer>
@@ -5726,7 +5726,7 @@
       <member name="vertexAttributeDescriptionCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pVertexAttributeDescriptions" optional="False">
+      <member length="vertexAttributeDescriptionCount" name="pVertexAttributeDescriptions" optional="False">
          <pointer const="False">
             <type const="True">VkVertexInputAttributeDescription</type>
          </pointer>
@@ -5772,7 +5772,7 @@
       <member name="initialDataSize" optional="True">
          <type const="False">size_t</type>
       </member>
-      <member name="pInitialData" optional="False">
+      <member length="initialDataSize" name="pInitialData" optional="False">
          <pointer const="False">
             <type const="True">void</type>
          </pointer>
@@ -5911,7 +5911,7 @@
       <member name="queueFamilyIndexCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueueFamilyIndices" optional="False">
+      <member length="queueFamilyIndexCount" name="pQueueFamilyIndices" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -5969,7 +5969,7 @@
       <member name="queueFamilyIndexCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueueFamilyIndices" optional="False">
+      <member length="queueFamilyIndexCount" name="pQueueFamilyIndices" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -6048,7 +6048,7 @@
       <member name="waitSemaphoreCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pWaitSemaphores" optional="False">
+      <member length="waitSemaphoreCount" name="pWaitSemaphores" optional="False">
          <pointer const="False">
             <type const="True">VkSemaphore</type>
          </pointer>
@@ -6056,7 +6056,7 @@
       <member name="bufferBindCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pBufferBinds" optional="False">
+      <member length="bufferBindCount" name="pBufferBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseBufferMemoryBindInfo</type>
          </pointer>
@@ -6064,7 +6064,7 @@
       <member name="imageOpaqueBindCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pImageOpaqueBinds" optional="False">
+      <member length="imageOpaqueBindCount" name="pImageOpaqueBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseImageOpaqueMemoryBindInfo</type>
          </pointer>
@@ -6072,7 +6072,7 @@
       <member name="imageBindCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pImageBinds" optional="False">
+      <member length="imageBindCount" name="pImageBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseImageMemoryBindInfo</type>
          </pointer>
@@ -6080,7 +6080,7 @@
       <member name="signalSemaphoreCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSignalSemaphores" optional="False">
+      <member length="signalSemaphoreCount" name="pSignalSemaphores" optional="False">
          <pointer const="False">
             <type const="True">VkSemaphore</type>
          </pointer>
@@ -6093,7 +6093,7 @@
       <member name="bindCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pBinds" optional="False">
+      <member length="bindCount" name="pBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseImageMemoryBind</type>
          </pointer>
@@ -6126,7 +6126,7 @@
       <member name="bindCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pBinds" optional="False">
+      <member length="bindCount" name="pBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseMemoryBind</type>
          </pointer>
@@ -6156,7 +6156,7 @@
       <member name="bindCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pBinds" optional="False">
+      <member length="bindCount" name="pBinds" optional="False">
          <pointer const="False">
             <type const="True">VkSparseMemoryBind</type>
          </pointer>
@@ -6248,12 +6248,12 @@
       <member name="waitSemaphoreCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pWaitSemaphores" optional="False">
+      <member length="waitSemaphoreCount" name="pWaitSemaphores" optional="False">
          <pointer const="False">
             <type const="True">VkSemaphore</type>
          </pointer>
       </member>
-      <member name="pWaitDstStageMask" optional="False">
+      <member length="waitSemaphoreCount" name="pWaitDstStageMask" optional="False">
          <pointer const="False">
             <type const="True">VkPipelineStageFlags</type>
          </pointer>
@@ -6261,7 +6261,7 @@
       <member name="commandBufferCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pCommandBuffers" optional="False">
+      <member length="commandBufferCount" name="pCommandBuffers" optional="False">
          <pointer const="False">
             <type const="True">VkCommandBuffer</type>
          </pointer>
@@ -6269,7 +6269,7 @@
       <member name="signalSemaphoreCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pSignalSemaphores" optional="False">
+      <member length="signalSemaphoreCount" name="pSignalSemaphores" optional="False">
          <pointer const="False">
             <type const="True">VkSemaphore</type>
          </pointer>
@@ -6318,7 +6318,7 @@
       <member name="queueCreateInfoCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueueCreateInfos" optional="False">
+      <member length="queueCreateInfoCount" name="pQueueCreateInfos" optional="False">
          <pointer const="False">
             <type const="True">VkDeviceQueueCreateInfo</type>
          </pointer>
@@ -6326,7 +6326,7 @@
       <member name="enabledLayerCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="ppEnabledLayerNames" optional="False">
+      <member length="enabledLayerCount" name="ppEnabledLayerNames" optional="False">
          <pointer const="False">
             <pointer const="True">
                <type const="True">char</type>
@@ -6336,7 +6336,7 @@
       <member name="enabledExtensionCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="ppEnabledExtensionNames" optional="False">
+      <member length="enabledExtensionCount" name="ppEnabledExtensionNames" optional="False">
          <pointer const="False">
             <pointer const="True">
                <type const="True">char</type>
@@ -6534,7 +6534,7 @@
       <member name="queueCount" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pQueuePriorities" optional="False">
+      <member length="queueCount" name="pQueuePriorities" optional="False">
          <pointer const="False">
             <type const="True">float</type>
          </pointer>
@@ -7018,7 +7018,7 @@
       <member name="enabledLayerCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="ppEnabledLayerNames" optional="False">
+      <member length="enabledLayerCount" name="ppEnabledLayerNames" optional="False">
          <pointer const="False">
             <pointer const="True">
                <type const="True">char</type>
@@ -7028,7 +7028,7 @@
       <member name="enabledExtensionCount" optional="True">
          <type const="False">uint32_t</type>
       </member>
-      <member name="ppEnabledExtensionNames" optional="False">
+      <member length="enabledExtensionCount" name="ppEnabledExtensionNames" optional="False">
          <pointer const="False">
             <pointer const="True">
                <type const="True">char</type>
