@@ -3,6 +3,11 @@ import re
 import xml.etree.ElementTree as xml
 from xml.dom import minidom
 
+CMD_TYPE_STATIC     = "static"
+CMD_TYPE_ENTRY      = "entry"
+CMD_TYPE_INSTANCE   = "instance"
+CMD_TYPE_DEVICE     = "device"
+
 class DependenciesSet:
     def __init__(self):
         self.deps: List[str] = []
@@ -292,6 +297,7 @@ class Command(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
         Entity.__init__(self, name)
         self.prototype = prototype
+        self.type = CMD_TYPE_INSTANCE
 
     def make_depset(self) -> DependenciesSet:
         return self.prototype.make_depset()
@@ -299,6 +305,7 @@ class Command(Entity):
     def to_xml(self, parent: xml.Element):
         node = xml.SubElement(parent, "command")
         node.attrib["name"] = self.name
+        node.attrib["type"] = self.type
         self.prototype.to_xml(node)
 
 def stringify_tag_except_comment(tag):
@@ -391,10 +398,11 @@ class Feature:
         self.version_int = version_to_int(version)
 
 class Extension:
-    def __init__(self, name: str, number: int, dependencies: List[str]):
+    def __init__(self, name: str, number: int, dependencies: List[str], type: str):
         self.name = name
         self.number = number
         self.dependencies = dependencies
+        self.type = type
 
 ROOT = xml.parse("vk.xml").getroot()
 PLATFORM_TYPES:         Dict[str, Entity] = {}
@@ -668,7 +676,6 @@ def parse_funcpointer(type):
 # @Todo Parse default values
 # @Todo Parse success codes
 # @Todo Parse error codes
-# @Todo Categorize entry points, instance & device commands
 
 def parse_command(tag):
     if "alias" in tag.attrib:
@@ -701,14 +708,22 @@ def parse_feature(tag):
     FEATURES[tag.attrib["name"]] = Feature(tag.attrib["name"], tag.attrib["number"])
 
 def parse_extension(tag):
+    if "supported" in tag.attrib and tag.attrib["supported"] == "disabled":
+        return
+
     name = tag.attrib["name"]
     number = int(tag.attrib["number"])
+    type = tag.attrib["type"]
     deps = []
+
+    cmd_type = CMD_TYPE_INSTANCE
+    if type == "device":
+        cmd_type = CMD_TYPE_DEVICE
 
     if "requires" in tag.attrib:
         deps = tag.attrib["requires"].split(",")
 
-    EXTENSIONS[name] = Extension(name, number, deps)
+    EXTENSIONS[name] = Extension(name, number, deps, cmd_type)
 
 def parse_define(tag):
     name = None
@@ -803,10 +818,26 @@ while len(extensions_to_visit) > 0:
         for e in extension.dependencies:
             extensions_to_visit.append(e)
 
+DEVICE_BASE_TYPES = ["VkDevice", "VkQueue", "VkCommandBuffer"]
+
+for cmd_name in COMMANDS:
+    cmd = COMMANDS[cmd_name]
+    first_arg_type = cmd.prototype.arguments[0].id.type.get_base_type()
+    if first_arg_type in DEVICE_BASE_TYPES:
+        cmd.type = CMD_TYPE_DEVICE
+
+COMMANDS["vkGetInstanceProcAddr"].type = CMD_TYPE_STATIC
+COMMANDS["vkCreateInstance"].type = CMD_TYPE_ENTRY
+COMMANDS["vkEnumerateInstanceExtensionProperties"].type = CMD_TYPE_ENTRY
+COMMANDS["vkEnumerateInstanceLayerProperties"].type = CMD_TYPE_ENTRY
+COMMANDS["vkDestroyInstance"].type = CMD_TYPE_INSTANCE
+COMMANDS["vkGetDeviceProcAddr"].type = CMD_TYPE_INSTANCE
+COMMANDS["vkDestroyInstance"].type = CMD_TYPE_INSTANCE
+
 entities_visited: List[str] = []
 entities_to_visit: List[Entity] = []
 
-def parse_require(tag, extnumber: int):
+def parse_require(tag, extnumber: int, override_command_type: Optional[str]):
     if "feature" in tag.attrib:
         if not tag.attrib["feature"] in features_to_load:
             return
@@ -828,6 +859,8 @@ def parse_require(tag, extnumber: int):
                 entity = find_entity(x.attrib["name"])
         elif x.tag == "command":
             entity = find_entity(x.attrib["name"])
+            if override_command_type != None:
+                cast(Command, entity).type = override_command_type
         elif x.tag == "comment":
             continue
         else:
@@ -840,12 +873,12 @@ def parse_require(tag, extnumber: int):
 
 for feature_name in features_to_load:
     for r in ROOT.findall("./feature[@name='%s']/require" % feature_name):
-        parse_require(r, 0)
+        parse_require(r, 0, None)
 
 for extension_name in extensions_visited:
     for r in ROOT.findall("./extensions/extension[@name='%s']/require" % extension_name):
         extension = EXTENSIONS[extension_name]
-        parse_require(r, extension.number)
+        parse_require(r, extension.number, extension.type)
 
 while len(entities_to_visit) > 0:
     entity = entities_to_visit[-1]

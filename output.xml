@@ -70,7 +70,7 @@
    <bitmask flags="VkQueueFlagBits" name="VkQueueFlags"/>
    <bitmask flags="VkSampleCountFlagBits" name="VkSampleCountFlags"/>
    <bitmask flags="VkFormatFeatureFlagBits" name="VkFormatFeatureFlags"/>
-   <command name="vkGetPhysicalDeviceWin32PresentationSupportKHR">
+   <command name="vkGetPhysicalDeviceWin32PresentationSupportKHR" type="instance">
       <return-type>
          <type const="False">VkBool32</type>
       </return-type>
@@ -81,7 +81,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCreateWin32SurfaceKHR">
+   <command name="vkCreateWin32SurfaceKHR" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -104,7 +104,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfacePresentModesKHR">
+   <command name="vkGetPhysicalDeviceSurfacePresentModesKHR" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -125,7 +125,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceFormatsKHR">
+   <command name="vkGetPhysicalDeviceSurfaceFormatsKHR" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -146,7 +146,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceCapabilitiesKHR">
+   <command name="vkGetPhysicalDeviceSurfaceCapabilitiesKHR" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -162,7 +162,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceSupportKHR">
+   <command name="vkGetPhysicalDeviceSurfaceSupportKHR" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -181,7 +181,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroySurfaceKHR">
+   <command name="vkDestroySurfaceKHR" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -197,7 +197,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueuePresentKHR">
+   <command name="vkQueuePresentKHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -210,7 +210,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAcquireNextImageKHR">
+   <command name="vkAcquireNextImageKHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -235,7 +235,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetSwapchainImagesKHR">
+   <command name="vkGetSwapchainImagesKHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -256,7 +256,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroySwapchainKHR">
+   <command name="vkDestroySwapchainKHR" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -272,7 +272,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSwapchainKHR">
+   <command name="vkCreateSwapchainKHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -295,7 +295,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkSubmitDebugUtilsMessageEXT">
+   <command name="vkSubmitDebugUtilsMessageEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -314,7 +314,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyDebugUtilsMessengerEXT">
+   <command name="vkDestroyDebugUtilsMessengerEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -330,7 +330,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDebugUtilsMessengerEXT">
+   <command name="vkCreateDebugUtilsMessengerEXT" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -353,7 +353,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdInsertDebugUtilsLabelEXT">
+   <command name="vkCmdInsertDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -366,7 +366,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdEndDebugUtilsLabelEXT">
+   <command name="vkCmdEndDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -374,7 +374,7 @@
          <type const="False">VkCommandBuffer</type>
       </arg>
    </command>
-   <command name="vkCmdBeginDebugUtilsLabelEXT">
+   <command name="vkCmdBeginDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -387,7 +387,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueueInsertDebugUtilsLabelEXT">
+   <command name="vkQueueInsertDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -400,7 +400,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueueEndDebugUtilsLabelEXT">
+   <command name="vkQueueEndDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -408,7 +408,7 @@
          <type const="False">VkQueue</type>
       </arg>
    </command>
-   <command name="vkQueueBeginDebugUtilsLabelEXT">
+   <command name="vkQueueBeginDebugUtilsLabelEXT" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -421,7 +421,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkSetDebugUtilsObjectTagEXT">
+   <command name="vkSetDebugUtilsObjectTagEXT" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -434,7 +434,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkSetDebugUtilsObjectNameEXT">
+   <command name="vkSetDebugUtilsObjectNameEXT" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -447,7 +447,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdExecuteCommands">
+   <command name="vkCmdExecuteCommands" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -463,7 +463,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdEndRenderPass">
+   <command name="vkCmdEndRenderPass" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -471,7 +471,7 @@
          <type const="False">VkCommandBuffer</type>
       </arg>
    </command>
-   <command name="vkCmdNextSubpass">
+   <command name="vkCmdNextSubpass" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -482,7 +482,7 @@
          <type const="False">VkSubpassContents</type>
       </arg>
    </command>
-   <command name="vkCmdBeginRenderPass">
+   <command name="vkCmdBeginRenderPass" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -498,7 +498,7 @@
          <type const="False">VkSubpassContents</type>
       </arg>
    </command>
-   <command name="vkCmdPushConstants">
+   <command name="vkCmdPushConstants" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -523,7 +523,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdCopyQueryPoolResults">
+   <command name="vkCmdCopyQueryPoolResults" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -552,7 +552,7 @@
          <type const="False">VkQueryResultFlags</type>
       </arg>
    </command>
-   <command name="vkCmdWriteTimestamp">
+   <command name="vkCmdWriteTimestamp" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -569,7 +569,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdResetQueryPool">
+   <command name="vkCmdResetQueryPool" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -586,7 +586,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdEndQuery">
+   <command name="vkCmdEndQuery" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -600,7 +600,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdBeginQuery">
+   <command name="vkCmdBeginQuery" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -617,7 +617,7 @@
          <type const="False">VkQueryControlFlags</type>
       </arg>
    </command>
-   <command name="vkCmdPipelineBarrier">
+   <command name="vkCmdPipelineBarrier" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -658,7 +658,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdWaitEvents">
+   <command name="vkCmdWaitEvents" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -704,7 +704,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdResetEvent">
+   <command name="vkCmdResetEvent" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -718,7 +718,7 @@
          <type const="False">VkPipelineStageFlags</type>
       </arg>
    </command>
-   <command name="vkCmdSetEvent">
+   <command name="vkCmdSetEvent" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -732,7 +732,7 @@
          <type const="False">VkPipelineStageFlags</type>
       </arg>
    </command>
-   <command name="vkCmdResolveImage">
+   <command name="vkCmdResolveImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -760,7 +760,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdClearAttachments">
+   <command name="vkCmdClearAttachments" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -784,7 +784,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdClearDepthStencilImage">
+   <command name="vkCmdClearDepthStencilImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -811,7 +811,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdClearColorImage">
+   <command name="vkCmdClearColorImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -838,7 +838,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdFillBuffer">
+   <command name="vkCmdFillBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -858,7 +858,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdUpdateBuffer">
+   <command name="vkCmdUpdateBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -880,7 +880,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdCopyImageToBuffer">
+   <command name="vkCmdCopyImageToBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -905,7 +905,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdCopyBufferToImage">
+   <command name="vkCmdCopyBufferToImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -930,7 +930,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdBlitImage">
+   <command name="vkCmdBlitImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -961,7 +961,7 @@
          <type const="False">VkFilter</type>
       </arg>
    </command>
-   <command name="vkCmdCopyImage">
+   <command name="vkCmdCopyImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -989,7 +989,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdCopyBuffer">
+   <command name="vkCmdCopyBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1011,7 +1011,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdDispatchIndirect">
+   <command name="vkCmdDispatchIndirect" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1025,7 +1025,7 @@
          <type const="False">VkDeviceSize</type>
       </arg>
    </command>
-   <command name="vkCmdDispatch">
+   <command name="vkCmdDispatch" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1042,7 +1042,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdDrawIndexedIndirect">
+   <command name="vkCmdDrawIndexedIndirect" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1062,7 +1062,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdDrawIndirect">
+   <command name="vkCmdDrawIndirect" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1082,7 +1082,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdDrawIndexed">
+   <command name="vkCmdDrawIndexed" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1105,7 +1105,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdDraw">
+   <command name="vkCmdDraw" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1125,7 +1125,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdBindVertexBuffers">
+   <command name="vkCmdBindVertexBuffers" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1149,7 +1149,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdBindIndexBuffer">
+   <command name="vkCmdBindIndexBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1166,7 +1166,7 @@
          <type const="False">VkIndexType</type>
       </arg>
    </command>
-   <command name="vkCmdBindDescriptorSets">
+   <command name="vkCmdBindDescriptorSets" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1199,7 +1199,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdSetStencilReference">
+   <command name="vkCmdSetStencilReference" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1213,7 +1213,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdSetStencilWriteMask">
+   <command name="vkCmdSetStencilWriteMask" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1227,7 +1227,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdSetStencilCompareMask">
+   <command name="vkCmdSetStencilCompareMask" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1241,7 +1241,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCmdSetDepthBounds">
+   <command name="vkCmdSetDepthBounds" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1255,7 +1255,7 @@
          <type const="False">float</type>
       </arg>
    </command>
-   <command name="vkCmdSetBlendConstants">
+   <command name="vkCmdSetBlendConstants" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1268,7 +1268,7 @@
          </array>
       </arg>
    </command>
-   <command name="vkCmdSetDepthBias">
+   <command name="vkCmdSetDepthBias" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1285,7 +1285,7 @@
          <type const="False">float</type>
       </arg>
    </command>
-   <command name="vkCmdSetLineWidth">
+   <command name="vkCmdSetLineWidth" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1296,7 +1296,7 @@
          <type const="False">float</type>
       </arg>
    </command>
-   <command name="vkCmdSetScissor">
+   <command name="vkCmdSetScissor" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1315,7 +1315,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdSetViewport">
+   <command name="vkCmdSetViewport" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1334,7 +1334,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCmdBindPipeline">
+   <command name="vkCmdBindPipeline" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1348,7 +1348,7 @@
          <type const="False">VkPipeline</type>
       </arg>
    </command>
-   <command name="vkResetCommandBuffer">
+   <command name="vkResetCommandBuffer" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1359,7 +1359,7 @@
          <type const="False">VkCommandBufferResetFlags</type>
       </arg>
    </command>
-   <command name="vkEndCommandBuffer">
+   <command name="vkEndCommandBuffer" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1367,7 +1367,7 @@
          <type const="False">VkCommandBuffer</type>
       </arg>
    </command>
-   <command name="vkBeginCommandBuffer">
+   <command name="vkBeginCommandBuffer" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1380,7 +1380,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFreeCommandBuffers">
+   <command name="vkFreeCommandBuffers" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1399,7 +1399,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateCommandBuffers">
+   <command name="vkAllocateCommandBuffers" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1417,7 +1417,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetCommandPool">
+   <command name="vkResetCommandPool" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1431,7 +1431,7 @@
          <type const="False">VkCommandPoolResetFlags</type>
       </arg>
    </command>
-   <command name="vkDestroyCommandPool">
+   <command name="vkDestroyCommandPool" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1447,7 +1447,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateCommandPool">
+   <command name="vkCreateCommandPool" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1470,7 +1470,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetRenderAreaGranularity">
+   <command name="vkGetRenderAreaGranularity" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1486,7 +1486,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyRenderPass">
+   <command name="vkDestroyRenderPass" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1502,7 +1502,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateRenderPass">
+   <command name="vkCreateRenderPass" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1525,7 +1525,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyFramebuffer">
+   <command name="vkDestroyFramebuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1541,7 +1541,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateFramebuffer">
+   <command name="vkCreateFramebuffer" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1564,7 +1564,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkUpdateDescriptorSets">
+   <command name="vkUpdateDescriptorSets" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1588,7 +1588,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFreeDescriptorSets">
+   <command name="vkFreeDescriptorSets" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1607,7 +1607,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateDescriptorSets">
+   <command name="vkAllocateDescriptorSets" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1625,7 +1625,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetDescriptorPool">
+   <command name="vkResetDescriptorPool" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1639,7 +1639,7 @@
          <type const="False">VkDescriptorPoolResetFlags</type>
       </arg>
    </command>
-   <command name="vkDestroyDescriptorPool">
+   <command name="vkDestroyDescriptorPool" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1655,7 +1655,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDescriptorPool">
+   <command name="vkCreateDescriptorPool" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1678,7 +1678,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyDescriptorSetLayout">
+   <command name="vkDestroyDescriptorSetLayout" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1694,7 +1694,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDescriptorSetLayout">
+   <command name="vkCreateDescriptorSetLayout" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1717,7 +1717,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroySampler">
+   <command name="vkDestroySampler" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1733,7 +1733,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSampler">
+   <command name="vkCreateSampler" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1756,7 +1756,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyPipelineLayout">
+   <command name="vkDestroyPipelineLayout" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1772,7 +1772,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreatePipelineLayout">
+   <command name="vkCreatePipelineLayout" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1795,7 +1795,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyPipeline">
+   <command name="vkDestroyPipeline" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1811,7 +1811,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateComputePipelines">
+   <command name="vkCreateComputePipelines" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1840,7 +1840,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateGraphicsPipelines">
+   <command name="vkCreateGraphicsPipelines" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1869,7 +1869,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkMergePipelineCaches">
+   <command name="vkMergePipelineCaches" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1888,7 +1888,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPipelineCacheData">
+   <command name="vkGetPipelineCacheData" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1909,7 +1909,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyPipelineCache">
+   <command name="vkDestroyPipelineCache" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1925,7 +1925,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreatePipelineCache">
+   <command name="vkCreatePipelineCache" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1948,7 +1948,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyShaderModule">
+   <command name="vkDestroyShaderModule" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -1964,7 +1964,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateShaderModule">
+   <command name="vkCreateShaderModule" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1987,7 +1987,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyImageView">
+   <command name="vkDestroyImageView" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2003,7 +2003,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateImageView">
+   <command name="vkCreateImageView" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2026,7 +2026,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetImageSubresourceLayout">
+   <command name="vkGetImageSubresourceLayout" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2047,7 +2047,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyImage">
+   <command name="vkDestroyImage" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2063,7 +2063,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateImage">
+   <command name="vkCreateImage" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2086,7 +2086,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyBufferView">
+   <command name="vkDestroyBufferView" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2102,7 +2102,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateBufferView">
+   <command name="vkCreateBufferView" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2125,7 +2125,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyBuffer">
+   <command name="vkDestroyBuffer" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2141,7 +2141,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateBuffer">
+   <command name="vkCreateBuffer" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2164,7 +2164,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetQueryPoolResults">
+   <command name="vkGetQueryPoolResults" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2195,7 +2195,7 @@
          <type const="False">VkQueryResultFlags</type>
       </arg>
    </command>
-   <command name="vkDestroyQueryPool">
+   <command name="vkDestroyQueryPool" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2211,7 +2211,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateQueryPool">
+   <command name="vkCreateQueryPool" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2234,7 +2234,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetEvent">
+   <command name="vkResetEvent" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2245,7 +2245,7 @@
          <type const="False">VkEvent</type>
       </arg>
    </command>
-   <command name="vkSetEvent">
+   <command name="vkSetEvent" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2256,7 +2256,7 @@
          <type const="False">VkEvent</type>
       </arg>
    </command>
-   <command name="vkGetEventStatus">
+   <command name="vkGetEventStatus" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2267,7 +2267,7 @@
          <type const="False">VkEvent</type>
       </arg>
    </command>
-   <command name="vkDestroyEvent">
+   <command name="vkDestroyEvent" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2283,7 +2283,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateEvent">
+   <command name="vkCreateEvent" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2306,7 +2306,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroySemaphore">
+   <command name="vkDestroySemaphore" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2322,7 +2322,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSemaphore">
+   <command name="vkCreateSemaphore" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2345,7 +2345,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkWaitForFences">
+   <command name="vkWaitForFences" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2367,7 +2367,7 @@
          <type const="False">uint64_t</type>
       </arg>
    </command>
-   <command name="vkGetFenceStatus">
+   <command name="vkGetFenceStatus" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2378,7 +2378,7 @@
          <type const="False">VkFence</type>
       </arg>
    </command>
-   <command name="vkResetFences">
+   <command name="vkResetFences" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2394,7 +2394,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyFence">
+   <command name="vkDestroyFence" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2410,7 +2410,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateFence">
+   <command name="vkCreateFence" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2433,7 +2433,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueueBindSparse">
+   <command name="vkQueueBindSparse" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2452,7 +2452,7 @@
          <type const="False">VkFence</type>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSparseImageFormatProperties">
+   <command name="vkGetPhysicalDeviceSparseImageFormatProperties" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2485,7 +2485,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetImageSparseMemoryRequirements">
+   <command name="vkGetImageSparseMemoryRequirements" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2506,7 +2506,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetImageMemoryRequirements">
+   <command name="vkGetImageMemoryRequirements" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2522,7 +2522,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetBufferMemoryRequirements">
+   <command name="vkGetBufferMemoryRequirements" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2538,7 +2538,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkBindImageMemory">
+   <command name="vkBindImageMemory" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2555,7 +2555,7 @@
          <type const="False">VkDeviceSize</type>
       </arg>
    </command>
-   <command name="vkBindBufferMemory">
+   <command name="vkBindBufferMemory" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2572,7 +2572,7 @@
          <type const="False">VkDeviceSize</type>
       </arg>
    </command>
-   <command name="vkGetDeviceMemoryCommitment">
+   <command name="vkGetDeviceMemoryCommitment" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2588,7 +2588,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkInvalidateMappedMemoryRanges">
+   <command name="vkInvalidateMappedMemoryRanges" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2604,7 +2604,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFlushMappedMemoryRanges">
+   <command name="vkFlushMappedMemoryRanges" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2620,7 +2620,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkUnmapMemory">
+   <command name="vkUnmapMemory" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2631,7 +2631,7 @@
          <type const="False">VkDeviceMemory</type>
       </arg>
    </command>
-   <command name="vkMapMemory">
+   <command name="vkMapMemory" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2658,7 +2658,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFreeMemory">
+   <command name="vkFreeMemory" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2674,7 +2674,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateMemory">
+   <command name="vkAllocateMemory" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2697,7 +2697,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDeviceWaitIdle">
+   <command name="vkDeviceWaitIdle" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2705,7 +2705,7 @@
          <type const="False">VkDevice</type>
       </arg>
    </command>
-   <command name="vkQueueWaitIdle">
+   <command name="vkQueueWaitIdle" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2713,7 +2713,7 @@
          <type const="False">VkQueue</type>
       </arg>
    </command>
-   <command name="vkQueueSubmit">
+   <command name="vkQueueSubmit" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2732,7 +2732,7 @@
          <type const="False">VkFence</type>
       </arg>
    </command>
-   <command name="vkGetDeviceQueue">
+   <command name="vkGetDeviceQueue" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2751,7 +2751,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateDeviceLayerProperties">
+   <command name="vkEnumerateDeviceLayerProperties" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2769,7 +2769,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateInstanceLayerProperties">
+   <command name="vkEnumerateInstanceLayerProperties" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2784,7 +2784,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateDeviceExtensionProperties">
+   <command name="vkEnumerateDeviceExtensionProperties" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2807,7 +2807,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateInstanceExtensionProperties">
+   <command name="vkEnumerateInstanceExtensionProperties" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2827,7 +2827,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyDevice">
+   <command name="vkDestroyDevice" type="device">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2840,7 +2840,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDevice">
+   <command name="vkCreateDevice" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2863,7 +2863,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetDeviceProcAddr">
+   <command name="vkGetDeviceProcAddr" type="instance">
       <return-type>
          <type const="False">PFN_vkVoidFunction</type>
       </return-type>
@@ -2876,7 +2876,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetInstanceProcAddr">
+   <command name="vkGetInstanceProcAddr" type="static">
       <return-type>
          <type const="False">PFN_vkVoidFunction</type>
       </return-type>
@@ -2889,7 +2889,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceMemoryProperties">
+   <command name="vkGetPhysicalDeviceMemoryProperties" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2902,7 +2902,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceQueueFamilyProperties">
+   <command name="vkGetPhysicalDeviceQueueFamilyProperties" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2920,7 +2920,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceProperties">
+   <command name="vkGetPhysicalDeviceProperties" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2933,7 +2933,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceImageFormatProperties">
+   <command name="vkGetPhysicalDeviceImageFormatProperties" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2961,7 +2961,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceFormatProperties">
+   <command name="vkGetPhysicalDeviceFormatProperties" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2977,7 +2977,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceFeatures">
+   <command name="vkGetPhysicalDeviceFeatures" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -2990,7 +2990,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumeratePhysicalDevices">
+   <command name="vkEnumeratePhysicalDevices" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -3008,7 +3008,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDestroyInstance">
+   <command name="vkDestroyInstance" type="instance">
       <return-type>
          <type const="False">void</type>
       </return-type>
@@ -3021,7 +3021,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateInstance">
+   <command name="vkCreateInstance" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
