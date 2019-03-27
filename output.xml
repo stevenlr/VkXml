@@ -4041,7 +4041,7 @@
       </member>
    </struct>
    <struct name="VkWin32SurfaceCreateInfoKHR">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4108,7 +4108,7 @@
       </member>
    </struct>
    <struct name="VkPresentInfoKHR">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PRESENT_INFO_KHR" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4144,7 +4144,7 @@
       </member>
    </struct>
    <struct name="VkSwapchainCreateInfoKHR">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4204,7 +4204,7 @@
       </member>
    </struct>
    <struct name="VkDebugUtilsMessengerCallbackDataEXT">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="True">
@@ -4254,7 +4254,7 @@
       </member>
    </struct>
    <struct name="VkDebugUtilsObjectNameInfoEXT">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4275,7 +4275,7 @@
       </member>
    </struct>
    <struct name="VkDebugUtilsLabelEXT">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4295,7 +4295,7 @@
       </member>
    </struct>
    <struct name="VkDebugUtilsMessengerCreateInfoEXT">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4322,7 +4322,7 @@
       </member>
    </struct>
    <struct name="VkDebugUtilsObjectTagInfoEXT">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_TAG_INFO_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4369,7 +4369,7 @@
       </member>
    </struct>
    <struct name="VkMemoryBarrier">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_MEMORY_BARRIER" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4385,7 +4385,7 @@
       </member>
    </struct>
    <struct name="VkImageMemoryBarrier">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4478,7 +4478,7 @@
       </member>
    </struct>
    <struct name="VkBufferMemoryBarrier">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4509,7 +4509,7 @@
       </member>
    </struct>
    <struct name="VkRenderPassBeginInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4721,7 +4721,7 @@
       </member>
    </struct>
    <struct name="VkCommandBufferBeginInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4739,7 +4739,7 @@
       </member>
    </struct>
    <struct name="VkCommandBufferInheritanceInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4767,7 +4767,7 @@
       </member>
    </struct>
    <struct name="VkCommandBufferAllocateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4786,7 +4786,7 @@
       </member>
    </struct>
    <struct name="VkCommandPoolCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4802,7 +4802,7 @@
       </member>
    </struct>
    <struct name="VkRenderPassCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4941,7 +4941,7 @@
       </member>
    </struct>
    <struct name="VkFramebufferCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -4974,7 +4974,7 @@
       </member>
    </struct>
    <struct name="VkCopyDescriptorSet">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COPY_DESCRIPTOR_SET" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5005,7 +5005,7 @@
       </member>
    </struct>
    <struct name="VkWriteDescriptorSet">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5067,7 +5067,7 @@
       </member>
    </struct>
    <struct name="VkDescriptorSetAllocateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5088,7 +5088,7 @@
       </member>
    </struct>
    <struct name="VkDescriptorPoolCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5120,7 +5120,7 @@
       </member>
    </struct>
    <struct name="VkDescriptorSetLayoutCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5160,7 +5160,7 @@
       </member>
    </struct>
    <struct name="VkSamplerCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5218,7 +5218,7 @@
       </member>
    </struct>
    <struct name="VkPipelineLayoutCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5258,7 +5258,7 @@
       </member>
    </struct>
    <struct name="VkComputePipelineCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5283,7 +5283,7 @@
       </member>
    </struct>
    <struct name="VkPipelineShaderStageCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5341,7 +5341,7 @@
       </member>
    </struct>
    <struct name="VkGraphicsPipelineCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5422,7 +5422,7 @@
       </member>
    </struct>
    <struct name="VkPipelineDynamicStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5443,7 +5443,7 @@
       </member>
    </struct>
    <struct name="VkPipelineColorBlendStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5501,7 +5501,7 @@
       </member>
    </struct>
    <struct name="VkPipelineDepthStencilStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5564,7 +5564,7 @@
       </member>
    </struct>
    <struct name="VkPipelineMultisampleStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5597,7 +5597,7 @@
       </member>
    </struct>
    <struct name="VkPipelineRasterizationStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5640,7 +5640,7 @@
       </member>
    </struct>
    <struct name="VkPipelineViewportStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5669,7 +5669,7 @@
       </member>
    </struct>
    <struct name="VkPipelineTessellationStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5685,7 +5685,7 @@
       </member>
    </struct>
    <struct name="VkPipelineInputAssemblyStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5704,7 +5704,7 @@
       </member>
    </struct>
    <struct name="VkPipelineVertexInputStateCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5758,7 +5758,7 @@
       </member>
    </struct>
    <struct name="VkPipelineCacheCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5779,7 +5779,7 @@
       </member>
    </struct>
    <struct name="VkShaderModuleCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5800,7 +5800,7 @@
       </member>
    </struct>
    <struct name="VkImageViewCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5870,7 +5870,7 @@
       </member>
    </struct>
    <struct name="VkImageCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5921,7 +5921,7 @@
       </member>
    </struct>
    <struct name="VkBufferViewCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5946,7 +5946,7 @@
       </member>
    </struct>
    <struct name="VkBufferCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5976,7 +5976,7 @@
       </member>
    </struct>
    <struct name="VkQueryPoolCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_QUERY_POOL_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -5998,7 +5998,7 @@
       </member>
    </struct>
    <struct name="VkEventCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_EVENT_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6011,7 +6011,7 @@
       </member>
    </struct>
    <struct name="VkSemaphoreCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6024,7 +6024,7 @@
       </member>
    </struct>
    <struct name="VkFenceCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_FENCE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6037,7 +6037,7 @@
       </member>
    </struct>
    <struct name="VkBindSparseInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_BIND_SPARSE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6202,7 +6202,7 @@
       </member>
    </struct>
    <struct name="VkMappedMemoryRange">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6221,7 +6221,7 @@
       </member>
    </struct>
    <struct name="VkMemoryAllocateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6237,7 +6237,7 @@
       </member>
    </struct>
    <struct name="VkSubmitInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_SUBMIT_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6304,7 +6304,7 @@
       </member>
    </struct>
    <struct name="VkDeviceCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6517,7 +6517,7 @@
       </member>
    </struct>
    <struct name="VkDeviceQueueCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -6999,7 +6999,7 @@
       </member>
    </struct>
    <struct name="VkInstanceCreateInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">
@@ -7037,7 +7037,7 @@
       </member>
    </struct>
    <struct name="VkApplicationInfo">
-      <member name="sType" optional="False">
+      <member default_value="VK_STRUCTURE_TYPE_APPLICATION_INFO" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
       <member name="pNext" optional="False">

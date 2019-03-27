@@ -173,13 +173,19 @@ class OptionalTypedIdentifier:
         self.id = id
         self.optional = optional
 
+class DefaultOptionalTypedIdentifier:
+    def __init__(self, id: TypedIdentifier, optional: bool, default_value: Optional[str]):
+        self.id = id
+        self.optional = optional
+        self.default_value = default_value
+
 class StructureType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
-        self.members: List[OptionalTypedIdentifier] = []
+        self.members: List[DefaultOptionalTypedIdentifier] = []
 
-    def add_member(self, entity: TypedIdentifier, optional: bool):
-        self.members.append(OptionalTypedIdentifier(entity, optional))
+    def add_member(self, entity: TypedIdentifier, optional: bool, default_value: Optional[str]):
+        self.members.append(DefaultOptionalTypedIdentifier(entity, optional, default_value))
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
@@ -194,6 +200,8 @@ class StructureType(Entity):
             e = xml.SubElement(node, "member")
             e.attrib["name"] = m.id.name
             e.attrib["optional"] = str(m.optional)
+            if m.default_value:
+                e.attrib["default_value"] = m.default_value
             m.id.type.to_xml(e)
 
 class UnionType(Entity):
@@ -582,7 +590,10 @@ def parse_struct(type):
         optional = False
         if "optional" in member.attrib and member.attrib["optional"].find("true") != -1:
             optional = True
-        struct.add_member(entity, optional)
+        default_value = None
+        if "values" in member.attrib:
+            default_value = member.attrib["values"]
+        struct.add_member(entity, optional, default_value)
 
     STRUCTURE_TYPES[struct_name] = struct
 
@@ -673,7 +684,6 @@ def parse_funcpointer(type):
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
 # @Todo Parse length information
-# @Todo Parse default values
 # @Todo Parse success codes
 # @Todo Parse error codes
 
@@ -860,7 +870,7 @@ def parse_require(tag, extnumber: int, override_command_type: Optional[str]):
         elif x.tag == "command":
             entity = find_entity(x.attrib["name"])
             if override_command_type != None:
-                cast(Command, entity).type = override_command_type
+                entity.type = override_command_type
         elif x.tag == "comment":
             continue
         else:
