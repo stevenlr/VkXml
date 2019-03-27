@@ -3041,17 +3041,17 @@
          </pointer>
       </arg>
    </command>
-   <enum name="VkSystemAllocationScope">
+   <enum name="VkSystemAllocationScope" type="enum">
       <entry name="VK_SYSTEM_ALLOCATION_SCOPE_COMMAND">0</entry>
       <entry name="VK_SYSTEM_ALLOCATION_SCOPE_OBJECT">1</entry>
       <entry name="VK_SYSTEM_ALLOCATION_SCOPE_CACHE">2</entry>
       <entry name="VK_SYSTEM_ALLOCATION_SCOPE_DEVICE">3</entry>
       <entry name="VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE">4</entry>
    </enum>
-   <enum name="VkInternalAllocationType">
+   <enum name="VkInternalAllocationType" type="enum">
       <entry name="VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE">0</entry>
    </enum>
-   <enum name="VkStructureType">
+   <enum name="VkStructureType" type="enum">
       <entry name="VK_STRUCTURE_TYPE_APPLICATION_INFO">0</entry>
       <entry name="VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO">1</entry>
       <entry name="VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO">2</entry>
@@ -3110,7 +3110,7 @@
       <entry name="VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT">1000128003</entry>
       <entry name="VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT">1000128004</entry>
    </enum>
-   <enum name="VkResult">
+   <enum name="VkResult" type="enum">
       <entry name="VK_ERROR_OUT_OF_DATE_KHR">-1000001004</entry>
       <entry name="VK_ERROR_NATIVE_WINDOW_IN_USE_KHR">-1000000001</entry>
       <entry name="VK_ERROR_SURFACE_LOST_KHR">-1000000000</entry>
@@ -3134,17 +3134,17 @@
       <entry name="VK_INCOMPLETE">5</entry>
       <entry name="VK_SUBOPTIMAL_KHR">1000001003</entry>
    </enum>
-   <enum name="VkPresentModeKHR">
+   <enum name="VkPresentModeKHR" type="enum">
       <entry name="VK_PRESENT_MODE_IMMEDIATE_KHR">0</entry>
       <entry name="VK_PRESENT_MODE_MAILBOX_KHR">1</entry>
       <entry name="VK_PRESENT_MODE_FIFO_KHR">2</entry>
       <entry name="VK_PRESENT_MODE_FIFO_RELAXED_KHR">3</entry>
    </enum>
-   <enum name="VkColorSpaceKHR">
+   <enum name="VkColorSpaceKHR" type="enum">
       <entry name="VK_COLOR_SPACE_SRGB_NONLINEAR_KHR">0</entry>
       <entry name="VK_COLORSPACE_SRGB_NONLINEAR_KHR">0</entry>
    </enum>
-   <enum name="VkFormat">
+   <enum name="VkFormat" type="enum">
       <entry name="VK_FORMAT_UNDEFINED">0</entry>
       <entry name="VK_FORMAT_R4G4_UNORM_PACK8">1</entry>
       <entry name="VK_FORMAT_R4G4B4A4_UNORM_PACK16">2</entry>
@@ -3331,7 +3331,7 @@
       <entry name="VK_FORMAT_ASTC_12x12_UNORM_BLOCK">183</entry>
       <entry name="VK_FORMAT_ASTC_12x12_SRGB_BLOCK">184</entry>
    </enum>
-   <enum name="VkImageUsageFlagBits">
+   <enum name="VkImageUsageFlagBits" type="bitmask">
       <entry name="VK_IMAGE_USAGE_TRANSFER_SRC_BIT">1</entry>
       <entry name="VK_IMAGE_USAGE_TRANSFER_DST_BIT">2</entry>
       <entry name="VK_IMAGE_USAGE_SAMPLED_BIT">4</entry>
@@ -3341,13 +3341,13 @@
       <entry name="VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT">64</entry>
       <entry name="VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT">128</entry>
    </enum>
-   <enum name="VkCompositeAlphaFlagBitsKHR">
+   <enum name="VkCompositeAlphaFlagBitsKHR" type="bitmask">
       <entry name="VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR">1</entry>
       <entry name="VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR">2</entry>
       <entry name="VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR">4</entry>
       <entry name="VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR">8</entry>
    </enum>
-   <enum name="VkSurfaceTransformFlagBitsKHR">
+   <enum name="VkSurfaceTransformFlagBitsKHR" type="bitmask">
       <entry name="VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR">1</entry>
       <entry name="VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR">2</entry>
       <entry name="VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR">4</entry>
@@ -3358,7 +3358,7 @@
       <entry name="VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR">128</entry>
       <entry name="VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR">256</entry>
    </enum>
-   <enum name="VkObjectType">
+   <enum name="VkObjectType" type="enum">
       <entry name="VK_OBJECT_TYPE_UNKNOWN">0</entry>
       <entry name="VK_OBJECT_TYPE_INSTANCE">1</entry>
       <entry name="VK_OBJECT_TYPE_PHYSICAL_DEVICE">2</entry>
@@ -3389,12 +3389,12 @@
       <entry name="VK_OBJECT_TYPE_SWAPCHAIN_KHR">1000001000</entry>
       <entry name="VK_OBJECT_TYPE_DEBUG_UTILS_MESSENGER_EXT">1000128000</entry>
    </enum>
-   <enum name="VkSharingMode">
+   <enum name="VkSharingMode" type="enum">
       <entry name="VK_SHARING_MODE_EXCLUSIVE">0</entry>
       <entry name="VK_SHARING_MODE_CONCURRENT">1</entry>
    </enum>
-   <enum name="VkSwapchainCreateFlagBitsKHR"/>
-   <enum name="VkImageLayout">
+   <enum name="VkSwapchainCreateFlagBitsKHR" type="bitmask"/>
+   <enum name="VkImageLayout" type="enum">
       <entry name="VK_IMAGE_LAYOUT_UNDEFINED">0</entry>
       <entry name="VK_IMAGE_LAYOUT_GENERAL">1</entry>
       <entry name="VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL">2</entry>
@@ -3406,23 +3406,23 @@
       <entry name="VK_IMAGE_LAYOUT_PREINITIALIZED">8</entry>
       <entry name="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</entry>
    </enum>
-   <enum name="VkDebugUtilsMessageTypeFlagBitsEXT">
+   <enum name="VkDebugUtilsMessageTypeFlagBitsEXT" type="bitmask">
       <entry name="VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT">1</entry>
       <entry name="VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT">2</entry>
       <entry name="VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT">4</entry>
    </enum>
-   <enum name="VkDebugUtilsMessageSeverityFlagBitsEXT">
+   <enum name="VkDebugUtilsMessageSeverityFlagBitsEXT" type="bitmask">
       <entry name="VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT">1</entry>
       <entry name="VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT">16</entry>
       <entry name="VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT">256</entry>
       <entry name="VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT">4096</entry>
    </enum>
-   <enum name="VkVendorId">
+   <enum name="VkVendorId" type="enum">
       <entry name="VK_VENDOR_ID_VIV">65537</entry>
       <entry name="VK_VENDOR_ID_VSI">65538</entry>
       <entry name="VK_VENDOR_ID_KAZAN">65539</entry>
    </enum>
-   <enum name="VkAccessFlagBits">
+   <enum name="VkAccessFlagBits" type="bitmask">
       <entry name="VK_ACCESS_INDIRECT_COMMAND_READ_BIT">1</entry>
       <entry name="VK_ACCESS_INDEX_READ_BIT">2</entry>
       <entry name="VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT">4</entry>
@@ -3441,17 +3441,17 @@
       <entry name="VK_ACCESS_MEMORY_READ_BIT">32768</entry>
       <entry name="VK_ACCESS_MEMORY_WRITE_BIT">65536</entry>
    </enum>
-   <enum name="VkImageAspectFlagBits">
+   <enum name="VkImageAspectFlagBits" type="bitmask">
       <entry name="VK_IMAGE_ASPECT_COLOR_BIT">1</entry>
       <entry name="VK_IMAGE_ASPECT_DEPTH_BIT">2</entry>
       <entry name="VK_IMAGE_ASPECT_STENCIL_BIT">4</entry>
       <entry name="VK_IMAGE_ASPECT_METADATA_BIT">8</entry>
    </enum>
-   <enum name="VkSubpassContents">
+   <enum name="VkSubpassContents" type="enum">
       <entry name="VK_SUBPASS_CONTENTS_INLINE">0</entry>
       <entry name="VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS">1</entry>
    </enum>
-   <enum name="VkShaderStageFlagBits">
+   <enum name="VkShaderStageFlagBits" type="bitmask">
       <entry name="VK_SHADER_STAGE_VERTEX_BIT">1</entry>
       <entry name="VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT">2</entry>
       <entry name="VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT">4</entry>
@@ -3461,13 +3461,13 @@
       <entry name="VK_SHADER_STAGE_COMPUTE_BIT">32</entry>
       <entry name="VK_SHADER_STAGE_ALL">2147483647</entry>
    </enum>
-   <enum name="VkQueryResultFlagBits">
+   <enum name="VkQueryResultFlagBits" type="bitmask">
       <entry name="VK_QUERY_RESULT_64_BIT">1</entry>
       <entry name="VK_QUERY_RESULT_WAIT_BIT">2</entry>
       <entry name="VK_QUERY_RESULT_WITH_AVAILABILITY_BIT">4</entry>
       <entry name="VK_QUERY_RESULT_PARTIAL_BIT">8</entry>
    </enum>
-   <enum name="VkPipelineStageFlagBits">
+   <enum name="VkPipelineStageFlagBits" type="bitmask">
       <entry name="VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT">1</entry>
       <entry name="VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT">2</entry>
       <entry name="VK_PIPELINE_STAGE_VERTEX_INPUT_BIT">4</entry>
@@ -3486,33 +3486,33 @@
       <entry name="VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT">32768</entry>
       <entry name="VK_PIPELINE_STAGE_ALL_COMMANDS_BIT">65536</entry>
    </enum>
-   <enum name="VkQueryControlFlagBits">
+   <enum name="VkQueryControlFlagBits" type="bitmask">
       <entry name="VK_QUERY_CONTROL_PRECISE_BIT">1</entry>
    </enum>
-   <enum name="VkDependencyFlagBits">
+   <enum name="VkDependencyFlagBits" type="bitmask">
       <entry name="VK_DEPENDENCY_BY_REGION_BIT">1</entry>
    </enum>
-   <enum name="VkFilter">
+   <enum name="VkFilter" type="enum">
       <entry name="VK_FILTER_NEAREST">0</entry>
       <entry name="VK_FILTER_LINEAR">1</entry>
    </enum>
-   <enum name="VkIndexType">
+   <enum name="VkIndexType" type="enum">
       <entry name="VK_INDEX_TYPE_UINT16">0</entry>
       <entry name="VK_INDEX_TYPE_UINT32">1</entry>
    </enum>
-   <enum name="VkPipelineBindPoint">
+   <enum name="VkPipelineBindPoint" type="enum">
       <entry name="VK_PIPELINE_BIND_POINT_GRAPHICS">0</entry>
       <entry name="VK_PIPELINE_BIND_POINT_COMPUTE">1</entry>
    </enum>
-   <enum name="VkStencilFaceFlagBits">
+   <enum name="VkStencilFaceFlagBits" type="bitmask">
       <entry name="VK_STENCIL_FACE_FRONT_BIT">1</entry>
       <entry name="VK_STENCIL_FACE_BACK_BIT">2</entry>
       <entry name="VK_STENCIL_FRONT_AND_BACK">3</entry>
    </enum>
-   <enum name="VkCommandBufferResetFlagBits">
+   <enum name="VkCommandBufferResetFlagBits" type="bitmask">
       <entry name="VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT">1</entry>
    </enum>
-   <enum name="VkQueryPipelineStatisticFlagBits">
+   <enum name="VkQueryPipelineStatisticFlagBits" type="bitmask">
       <entry name="VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT">1</entry>
       <entry name="VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT">2</entry>
       <entry name="VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT">4</entry>
@@ -3525,33 +3525,33 @@
       <entry name="VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT">512</entry>
       <entry name="VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT">1024</entry>
    </enum>
-   <enum name="VkCommandBufferUsageFlagBits">
+   <enum name="VkCommandBufferUsageFlagBits" type="bitmask">
       <entry name="VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT">1</entry>
       <entry name="VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT">2</entry>
       <entry name="VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT">4</entry>
    </enum>
-   <enum name="VkCommandBufferLevel">
+   <enum name="VkCommandBufferLevel" type="enum">
       <entry name="VK_COMMAND_BUFFER_LEVEL_PRIMARY">0</entry>
       <entry name="VK_COMMAND_BUFFER_LEVEL_SECONDARY">1</entry>
    </enum>
-   <enum name="VkCommandPoolResetFlagBits">
+   <enum name="VkCommandPoolResetFlagBits" type="bitmask">
       <entry name="VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT">1</entry>
    </enum>
-   <enum name="VkCommandPoolCreateFlagBits">
+   <enum name="VkCommandPoolCreateFlagBits" type="bitmask">
       <entry name="VK_COMMAND_POOL_CREATE_TRANSIENT_BIT">1</entry>
       <entry name="VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT">2</entry>
    </enum>
-   <enum name="VkSubpassDescriptionFlagBits"/>
-   <enum name="VkAttachmentStoreOp">
+   <enum name="VkSubpassDescriptionFlagBits" type="bitmask"/>
+   <enum name="VkAttachmentStoreOp" type="enum">
       <entry name="VK_ATTACHMENT_STORE_OP_STORE">0</entry>
       <entry name="VK_ATTACHMENT_STORE_OP_DONT_CARE">1</entry>
    </enum>
-   <enum name="VkAttachmentLoadOp">
+   <enum name="VkAttachmentLoadOp" type="enum">
       <entry name="VK_ATTACHMENT_LOAD_OP_LOAD">0</entry>
       <entry name="VK_ATTACHMENT_LOAD_OP_CLEAR">1</entry>
       <entry name="VK_ATTACHMENT_LOAD_OP_DONT_CARE">2</entry>
    </enum>
-   <enum name="VkSampleCountFlagBits">
+   <enum name="VkSampleCountFlagBits" type="bitmask">
       <entry name="VK_SAMPLE_COUNT_1_BIT">1</entry>
       <entry name="VK_SAMPLE_COUNT_2_BIT">2</entry>
       <entry name="VK_SAMPLE_COUNT_4_BIT">4</entry>
@@ -3560,10 +3560,10 @@
       <entry name="VK_SAMPLE_COUNT_32_BIT">32</entry>
       <entry name="VK_SAMPLE_COUNT_64_BIT">64</entry>
    </enum>
-   <enum name="VkAttachmentDescriptionFlagBits">
+   <enum name="VkAttachmentDescriptionFlagBits" type="bitmask">
       <entry name="VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT">1</entry>
    </enum>
-   <enum name="VkDescriptorType">
+   <enum name="VkDescriptorType" type="enum">
       <entry name="VK_DESCRIPTOR_TYPE_SAMPLER">0</entry>
       <entry name="VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER">1</entry>
       <entry name="VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE">2</entry>
@@ -3576,11 +3576,11 @@
       <entry name="VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC">9</entry>
       <entry name="VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT">10</entry>
    </enum>
-   <enum name="VkDescriptorPoolCreateFlagBits">
+   <enum name="VkDescriptorPoolCreateFlagBits" type="bitmask">
       <entry name="VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT">1</entry>
    </enum>
-   <enum name="VkDescriptorSetLayoutCreateFlagBits"/>
-   <enum name="VkBorderColor">
+   <enum name="VkDescriptorSetLayoutCreateFlagBits" type="bitmask"/>
+   <enum name="VkBorderColor" type="enum">
       <entry name="VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK">0</entry>
       <entry name="VK_BORDER_COLOR_INT_TRANSPARENT_BLACK">1</entry>
       <entry name="VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK">2</entry>
@@ -3588,7 +3588,7 @@
       <entry name="VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE">4</entry>
       <entry name="VK_BORDER_COLOR_INT_OPAQUE_WHITE">5</entry>
    </enum>
-   <enum name="VkCompareOp">
+   <enum name="VkCompareOp" type="enum">
       <entry name="VK_COMPARE_OP_NEVER">0</entry>
       <entry name="VK_COMPARE_OP_LESS">1</entry>
       <entry name="VK_COMPARE_OP_EQUAL">2</entry>
@@ -3598,23 +3598,23 @@
       <entry name="VK_COMPARE_OP_GREATER_OR_EQUAL">6</entry>
       <entry name="VK_COMPARE_OP_ALWAYS">7</entry>
    </enum>
-   <enum name="VkSamplerAddressMode">
+   <enum name="VkSamplerAddressMode" type="enum">
       <entry name="VK_SAMPLER_ADDRESS_MODE_REPEAT">0</entry>
       <entry name="VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT">1</entry>
       <entry name="VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE">2</entry>
       <entry name="VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER">3</entry>
    </enum>
-   <enum name="VkSamplerMipmapMode">
+   <enum name="VkSamplerMipmapMode" type="enum">
       <entry name="VK_SAMPLER_MIPMAP_MODE_NEAREST">0</entry>
       <entry name="VK_SAMPLER_MIPMAP_MODE_LINEAR">1</entry>
    </enum>
-   <enum name="VkSamplerCreateFlagBits"/>
-   <enum name="VkPipelineCreateFlagBits">
+   <enum name="VkSamplerCreateFlagBits" type="bitmask"/>
+   <enum name="VkPipelineCreateFlagBits" type="bitmask">
       <entry name="VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT">1</entry>
       <entry name="VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT">2</entry>
       <entry name="VK_PIPELINE_CREATE_DERIVATIVE_BIT">4</entry>
    </enum>
-   <enum name="VkDynamicState">
+   <enum name="VkDynamicState" type="enum">
       <entry name="VK_DYNAMIC_STATE_VIEWPORT">0</entry>
       <entry name="VK_DYNAMIC_STATE_SCISSOR">1</entry>
       <entry name="VK_DYNAMIC_STATE_LINE_WIDTH">2</entry>
@@ -3625,20 +3625,20 @@
       <entry name="VK_DYNAMIC_STATE_STENCIL_WRITE_MASK">7</entry>
       <entry name="VK_DYNAMIC_STATE_STENCIL_REFERENCE">8</entry>
    </enum>
-   <enum name="VkColorComponentFlagBits">
+   <enum name="VkColorComponentFlagBits" type="bitmask">
       <entry name="VK_COLOR_COMPONENT_R_BIT">1</entry>
       <entry name="VK_COLOR_COMPONENT_G_BIT">2</entry>
       <entry name="VK_COLOR_COMPONENT_B_BIT">4</entry>
       <entry name="VK_COLOR_COMPONENT_A_BIT">8</entry>
    </enum>
-   <enum name="VkBlendOp">
+   <enum name="VkBlendOp" type="enum">
       <entry name="VK_BLEND_OP_ADD">0</entry>
       <entry name="VK_BLEND_OP_SUBTRACT">1</entry>
       <entry name="VK_BLEND_OP_REVERSE_SUBTRACT">2</entry>
       <entry name="VK_BLEND_OP_MIN">3</entry>
       <entry name="VK_BLEND_OP_MAX">4</entry>
    </enum>
-   <enum name="VkBlendFactor">
+   <enum name="VkBlendFactor" type="enum">
       <entry name="VK_BLEND_FACTOR_ZERO">0</entry>
       <entry name="VK_BLEND_FACTOR_ONE">1</entry>
       <entry name="VK_BLEND_FACTOR_SRC_COLOR">2</entry>
@@ -3659,7 +3659,7 @@
       <entry name="VK_BLEND_FACTOR_SRC1_ALPHA">17</entry>
       <entry name="VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA">18</entry>
    </enum>
-   <enum name="VkLogicOp">
+   <enum name="VkLogicOp" type="enum">
       <entry name="VK_LOGIC_OP_CLEAR">0</entry>
       <entry name="VK_LOGIC_OP_AND">1</entry>
       <entry name="VK_LOGIC_OP_AND_REVERSE">2</entry>
@@ -3677,7 +3677,7 @@
       <entry name="VK_LOGIC_OP_NAND">14</entry>
       <entry name="VK_LOGIC_OP_SET">15</entry>
    </enum>
-   <enum name="VkStencilOp">
+   <enum name="VkStencilOp" type="enum">
       <entry name="VK_STENCIL_OP_KEEP">0</entry>
       <entry name="VK_STENCIL_OP_ZERO">1</entry>
       <entry name="VK_STENCIL_OP_REPLACE">2</entry>
@@ -3687,22 +3687,22 @@
       <entry name="VK_STENCIL_OP_INCREMENT_AND_WRAP">6</entry>
       <entry name="VK_STENCIL_OP_DECREMENT_AND_WRAP">7</entry>
    </enum>
-   <enum name="VkFrontFace">
+   <enum name="VkFrontFace" type="enum">
       <entry name="VK_FRONT_FACE_COUNTER_CLOCKWISE">0</entry>
       <entry name="VK_FRONT_FACE_CLOCKWISE">1</entry>
    </enum>
-   <enum name="VkCullModeFlagBits">
+   <enum name="VkCullModeFlagBits" type="bitmask">
       <entry name="VK_CULL_MODE_NONE">0</entry>
       <entry name="VK_CULL_MODE_FRONT_BIT">1</entry>
       <entry name="VK_CULL_MODE_BACK_BIT">2</entry>
       <entry name="VK_CULL_MODE_FRONT_AND_BACK">3</entry>
    </enum>
-   <enum name="VkPolygonMode">
+   <enum name="VkPolygonMode" type="enum">
       <entry name="VK_POLYGON_MODE_FILL">0</entry>
       <entry name="VK_POLYGON_MODE_LINE">1</entry>
       <entry name="VK_POLYGON_MODE_POINT">2</entry>
    </enum>
-   <enum name="VkPrimitiveTopology">
+   <enum name="VkPrimitiveTopology" type="enum">
       <entry name="VK_PRIMITIVE_TOPOLOGY_POINT_LIST">0</entry>
       <entry name="VK_PRIMITIVE_TOPOLOGY_LINE_LIST">1</entry>
       <entry name="VK_PRIMITIVE_TOPOLOGY_LINE_STRIP">2</entry>
@@ -3715,11 +3715,11 @@
       <entry name="VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENCY">9</entry>
       <entry name="VK_PRIMITIVE_TOPOLOGY_PATCH_LIST">10</entry>
    </enum>
-   <enum name="VkVertexInputRate">
+   <enum name="VkVertexInputRate" type="enum">
       <entry name="VK_VERTEX_INPUT_RATE_VERTEX">0</entry>
       <entry name="VK_VERTEX_INPUT_RATE_INSTANCE">1</entry>
    </enum>
-   <enum name="VkComponentSwizzle">
+   <enum name="VkComponentSwizzle" type="enum">
       <entry name="VK_COMPONENT_SWIZZLE_IDENTITY">0</entry>
       <entry name="VK_COMPONENT_SWIZZLE_ZERO">1</entry>
       <entry name="VK_COMPONENT_SWIZZLE_ONE">2</entry>
@@ -3728,7 +3728,7 @@
       <entry name="VK_COMPONENT_SWIZZLE_B">5</entry>
       <entry name="VK_COMPONENT_SWIZZLE_A">6</entry>
    </enum>
-   <enum name="VkImageViewType">
+   <enum name="VkImageViewType" type="enum">
       <entry name="VK_IMAGE_VIEW_TYPE_1D">0</entry>
       <entry name="VK_IMAGE_VIEW_TYPE_2D">1</entry>
       <entry name="VK_IMAGE_VIEW_TYPE_3D">2</entry>
@@ -3737,24 +3737,24 @@
       <entry name="VK_IMAGE_VIEW_TYPE_2D_ARRAY">5</entry>
       <entry name="VK_IMAGE_VIEW_TYPE_CUBE_ARRAY">6</entry>
    </enum>
-   <enum name="VkImageViewCreateFlagBits"/>
-   <enum name="VkImageTiling">
+   <enum name="VkImageViewCreateFlagBits" type="bitmask"/>
+   <enum name="VkImageTiling" type="enum">
       <entry name="VK_IMAGE_TILING_OPTIMAL">0</entry>
       <entry name="VK_IMAGE_TILING_LINEAR">1</entry>
    </enum>
-   <enum name="VkImageType">
+   <enum name="VkImageType" type="enum">
       <entry name="VK_IMAGE_TYPE_1D">0</entry>
       <entry name="VK_IMAGE_TYPE_2D">1</entry>
       <entry name="VK_IMAGE_TYPE_3D">2</entry>
    </enum>
-   <enum name="VkImageCreateFlagBits">
+   <enum name="VkImageCreateFlagBits" type="bitmask">
       <entry name="VK_IMAGE_CREATE_SPARSE_BINDING_BIT">1</entry>
       <entry name="VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT">2</entry>
       <entry name="VK_IMAGE_CREATE_SPARSE_ALIASED_BIT">4</entry>
       <entry name="VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT">8</entry>
       <entry name="VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT">16</entry>
    </enum>
-   <enum name="VkBufferUsageFlagBits">
+   <enum name="VkBufferUsageFlagBits" type="bitmask">
       <entry name="VK_BUFFER_USAGE_TRANSFER_SRC_BIT">1</entry>
       <entry name="VK_BUFFER_USAGE_TRANSFER_DST_BIT">2</entry>
       <entry name="VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT">4</entry>
@@ -3765,52 +3765,52 @@
       <entry name="VK_BUFFER_USAGE_VERTEX_BUFFER_BIT">128</entry>
       <entry name="VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT">256</entry>
    </enum>
-   <enum name="VkBufferCreateFlagBits">
+   <enum name="VkBufferCreateFlagBits" type="bitmask">
       <entry name="VK_BUFFER_CREATE_SPARSE_BINDING_BIT">1</entry>
       <entry name="VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT">2</entry>
       <entry name="VK_BUFFER_CREATE_SPARSE_ALIASED_BIT">4</entry>
    </enum>
-   <enum name="VkQueryType">
+   <enum name="VkQueryType" type="enum">
       <entry name="VK_QUERY_TYPE_OCCLUSION">0</entry>
       <entry name="VK_QUERY_TYPE_PIPELINE_STATISTICS">1</entry>
       <entry name="VK_QUERY_TYPE_TIMESTAMP">2</entry>
    </enum>
-   <enum name="VkFenceCreateFlagBits">
+   <enum name="VkFenceCreateFlagBits" type="bitmask">
       <entry name="VK_FENCE_CREATE_SIGNALED_BIT">1</entry>
    </enum>
-   <enum name="VkSparseMemoryBindFlagBits">
+   <enum name="VkSparseMemoryBindFlagBits" type="bitmask">
       <entry name="VK_SPARSE_MEMORY_BIND_METADATA_BIT">1</entry>
    </enum>
-   <enum name="VkSparseImageFormatFlagBits">
+   <enum name="VkSparseImageFormatFlagBits" type="bitmask">
       <entry name="VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT">1</entry>
       <entry name="VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT">2</entry>
       <entry name="VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT">4</entry>
    </enum>
-   <enum name="VkDeviceQueueCreateFlagBits"/>
-   <enum name="VkMemoryHeapFlagBits">
+   <enum name="VkDeviceQueueCreateFlagBits" type="bitmask"/>
+   <enum name="VkMemoryHeapFlagBits" type="bitmask">
       <entry name="VK_MEMORY_HEAP_DEVICE_LOCAL_BIT">1</entry>
    </enum>
-   <enum name="VkMemoryPropertyFlagBits">
+   <enum name="VkMemoryPropertyFlagBits" type="bitmask">
       <entry name="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT">1</entry>
       <entry name="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT">2</entry>
       <entry name="VK_MEMORY_PROPERTY_HOST_COHERENT_BIT">4</entry>
       <entry name="VK_MEMORY_PROPERTY_HOST_CACHED_BIT">8</entry>
       <entry name="VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT">16</entry>
    </enum>
-   <enum name="VkQueueFlagBits">
+   <enum name="VkQueueFlagBits" type="bitmask">
       <entry name="VK_QUEUE_GRAPHICS_BIT">1</entry>
       <entry name="VK_QUEUE_COMPUTE_BIT">2</entry>
       <entry name="VK_QUEUE_TRANSFER_BIT">4</entry>
       <entry name="VK_QUEUE_SPARSE_BINDING_BIT">8</entry>
    </enum>
-   <enum name="VkPhysicalDeviceType">
+   <enum name="VkPhysicalDeviceType" type="enum">
       <entry name="VK_PHYSICAL_DEVICE_TYPE_OTHER">0</entry>
       <entry name="VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU">1</entry>
       <entry name="VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU">2</entry>
       <entry name="VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU">3</entry>
       <entry name="VK_PHYSICAL_DEVICE_TYPE_CPU">4</entry>
    </enum>
-   <enum name="VkFormatFeatureFlagBits">
+   <enum name="VkFormatFeatureFlagBits" type="bitmask">
       <entry name="VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT">1</entry>
       <entry name="VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT">2</entry>
       <entry name="VK_FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT">4</entry>
@@ -3825,7 +3825,7 @@
       <entry name="VK_FORMAT_FEATURE_BLIT_DST_BIT">2048</entry>
       <entry name="VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT">4096</entry>
    </enum>
-   <enum name="VkPipelineCacheHeaderVersion">
+   <enum name="VkPipelineCacheHeaderVersion" type="enum">
       <entry name="VK_PIPELINE_CACHE_HEADER_VERSION_ONE">1</entry>
    </enum>
    <function-pointer name="PFN_vkInternalFreeNotification">

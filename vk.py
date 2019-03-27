@@ -148,9 +148,10 @@ class HandleType(Entity):
 
 
 class EnumType(Entity):
-    def __init__(self, name: str):
+    def __init__(self, name: str, type: str):
         Entity.__init__(self, name)
         self.values: Dict[str, int] = {}
+        self.type = type
 
     def add_value(self, name: str, value: int):
         self.values[name] = value
@@ -163,6 +164,7 @@ class EnumType(Entity):
     def to_xml(self, parent: xml.Element):
         node = xml.SubElement(parent, "enum")
         node.attrib["name"] = self.name
+        node.attrib["type"] = self.type
         for k in sorted(self.values.items(), key=lambda kv: kv[1]):
             e = xml.SubElement(node, "entry")
             e.attrib["name"] = k[0]
@@ -500,8 +502,8 @@ def parse_enum(type):
         ALIAS_TYPES[name] = AliasType(name, type.attrib["alias"])
     else:
         enums = ROOT.find("./enums[@name='%s']" % name)
-        enum = EnumType(name)
         if enums != None:
+            enum = EnumType(name, enums.attrib["type"])
             enum_type = enums.attrib["type"]
             values = {}
             for e in enums.findall("./enum"):
@@ -511,7 +513,7 @@ def parse_enum(type):
                     enum.add_value(e.attrib["name"], 1 << int(e.attrib["bitpos"]))
                 else:
                     enum.add_value(e.attrib["name"], int(e.attrib["value"], 0))
-        ENUM_TYPES[name] = enum
+            ENUM_TYPES[name] = enum
 
 def parse_enum_extends(tag, extnumber: int) -> Entity:
     base_enum_name = tag.attrib["extends"]
