@@ -26,12 +26,27 @@ class Entity:
         node = xml.SubElement(parent, "prelude-type")
         node.attrib["name"] = self.name
 
+    @staticmethod
+    def from_xml(node: xml.Element):
+        return Entity(node.attrib["name"])
+
 class Type:
     def get_base_type(self):
         return None
 
     def to_xml(self, parent: xml.Element):
         pass
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Optional[Type]:
+        if node.tag == "type":
+            return TypeReference.from_xml(node)
+        elif node.tag == "pointer":
+            return PointerType.from_xml(node)
+        elif node.tag == "array":
+            return ArrayType.from_xml(node)
+        else:
+            return None
 
 class TypeReference(Type):
     def __init__(self, name: str, is_const: bool):
@@ -46,6 +61,13 @@ class TypeReference(Type):
         node.attrib["const"] = str(self.is_const)
         node.text = self.name
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Optional[Type]:
+        is_const = False
+        if node.attrib["const"] == "True":
+            is_const = True
+        return TypeReference(node.text, is_const)
+
 class PointerType(Type):
     def __init__(self, inner: Type, is_const: bool):
         self.inner = inner
@@ -59,6 +81,13 @@ class PointerType(Type):
         node.attrib["const"] = str(self.is_const)
         self.inner.to_xml(node)
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Optional[Type]:
+        is_const = False
+        if node.attrib["const"] == "True":
+            is_const = True
+        return PointerType(Type.from_xml(node[0]), is_const)
+
 class ArrayType(Type):
     def __init__(self, inner: Type, length: int):
         self.inner = inner
@@ -71,6 +100,10 @@ class ArrayType(Type):
         node = xml.SubElement(parent, "array")
         node.attrib["length"] = str(self.length)
         self.inner.to_xml(node)
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Optional[Type]:
+        return ArrayType(Type.from_xml(node[0]), int(node.attrib["length"]))
 
 class TypedIdentifier:
     def __init__(self, name: str, type: Type):
@@ -92,6 +125,10 @@ class BaseType(Entity):
         node.attrib["name"] = self.name
         node.attrib["type"] = self.alias
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return BaseType(node.attrib["name"], node.attrib["type"])
+
 
 class AliasType(Entity):
     def __init__(self, name: str, alias: str):
@@ -108,6 +145,10 @@ class AliasType(Entity):
         node.attrib["name"] = self.name
         node.attrib["type"] = self.alias
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return AliasType(node.attrib["name"], node.attrib["type"])
+
 class BitmaskType(Entity):
     def __init__(self, name: str, alias: str):
         Entity.__init__(self, name)
@@ -123,27 +164,34 @@ class BitmaskType(Entity):
         node.attrib["name"] = self.name
         node.attrib["flags"] = self.alias
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return BitmaskType(node.attrib["name"], node.attrib["flags"])
+
 class HandleType(Entity):
     def __init__(self, name: str, dispatchable: bool):
         Entity.__init__(self, name)
-        self.dispatchable = dispatchable
+        if dispatchable:
+            self.type = "uintptr_t"
+        else:
+            self.type = "uint64_t"
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
-        if self.dispatchable:
-            depset.add_dep("uintptr_t")
-        else:
-            depset.add_dep("uint64_t")
+        depset.add_dep(self.type)
         return depset
 
     def to_xml(self, parent: xml.Element):
         node = xml.SubElement(parent, "handle")
         node.attrib["name"] = self.name
-        if self.dispatchable:
-            node.attrib["type"] = "uintptr_t"
-        else:
-            node.attrib["type"] = "uint64_t"
+        node.attrib["type"] = self.type
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        if node.attrib["type"] == "uintptr_t":
+            return HandleType(node.attrib["name"], True)
+        else:
+            return HandleType(node.attrib["name"], False)
 
 class EnumType(Entity):
     def __init__(self, name: str, type: str):
@@ -167,6 +215,13 @@ class EnumType(Entity):
             e = xml.SubElement(node, "entry")
             e.attrib["name"] = k[0]
             e.text = str(k[1])
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        enum = EnumType(node.attrib["name"], node.attrib["type"])
+        for child in node:
+            enum.values[child.attrib["name"]] = int(child.text)
+        return enum
 
 class OptionalTypedIdentifier:
     def __init__(self, id: TypedIdentifier, optional: bool):
@@ -207,6 +262,18 @@ class StructureType(Entity):
                 e.attrib["length"] = m.length
             m.id.type.to_xml(e)
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        struct = StructureType(node.attrib["name"])
+        for m in node:
+            optional = False
+            if m.attrib["optional"] == "True":
+                optional = True
+            id = TypedIdentifier(m.attrib["name"], Type.from_xml(m[0]))
+            member = StructureMember(id, optional, node.get("default_value"), node.get("length"))
+            struct.members.append(member)
+        return struct
+
 class UnionType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -228,6 +295,14 @@ class UnionType(Entity):
             e = xml.SubElement(node, "member")
             e.attrib["name"] = m.name
             m.type.to_xml(e)
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        union = UnionType(node.attrib["name"])
+        for m in node:
+            id = TypedIdentifier(m.attrib["name"], Type.from_xml(m[0]))
+            union.members.append(id)
+        return union
 
 class FunctionPrototype:
     def __init__(self, return_type: Type):
@@ -252,6 +327,17 @@ class FunctionPrototype:
             node.attrib["optional"] = str(arg.optional)
             arg.id.type.to_xml(node)
 
+    @staticmethod
+    def from_xml(node: xml.Element):
+        proto = FunctionPrototype(Type.from_xml(node.find("./return-type")))
+        for m in node.findall("./arg"):
+            optional = False
+            if m.attrib["optional"] == "True":
+                optional = True
+            id = OptionalTypedIdentifier(TypedIdentifier(m.attrib["name"], Type.from_xml(m[0])), optional)
+            proto.arguments.append(id)
+        return proto
+
 class Constant(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
@@ -268,6 +354,9 @@ class IntegerConstant(Constant):
         node.attrib["size"] = str(self.size)
         node.text = str(self.value)
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return IntegerConstant(node.attrib["name"], int(node.text), int(node.attrib["size"]))
 
 class RealConstant(Constant):
     def __init__(self, name: str, value: float, size: int):
@@ -281,6 +370,10 @@ class RealConstant(Constant):
         node.attrib["size"] = str(self.size)
         node.text = str(self.value)
 
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return RealConstant(node.attrib["name"], float(node.text), int(node.attrib["size"]))
+
 class StringConstant(Constant):
     def __init__(self, name: str, value: str):
         Constant.__init__(self, name)
@@ -290,6 +383,10 @@ class StringConstant(Constant):
         node = xml.SubElement(parent, "string-constant")
         node.attrib["name"] = self.name
         node.text = self.value
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        return StringConstant(node.attrib["name"], node.text)
 
 class FunctionPointerType(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
@@ -303,6 +400,11 @@ class FunctionPointerType(Entity):
         node = xml.SubElement(parent, "function-pointer")
         node.attrib["name"] = self.name
         self.prototype.to_xml(node)
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        proto = FunctionPrototype.from_xml(node)
+        return FunctionPointerType(node.attrib["name"], proto)
 
 class Command(Entity):
     def __init__(self, name: str, prototype: FunctionPrototype):
@@ -318,3 +420,10 @@ class Command(Entity):
         node.attrib["name"] = self.name
         node.attrib["type"] = self.type
         self.prototype.to_xml(node)
+
+    @staticmethod
+    def from_xml(node: xml.Element) -> Entity:
+        proto = FunctionPrototype.from_xml(node)
+        cmd = Command(node.attrib["name"], proto)
+        cmd.type = node.attrib["type"]
+        return cmd

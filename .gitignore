@@ -1,2 +1,3 @@
 .mypy_cache
 vk.xml
+__pycache__
