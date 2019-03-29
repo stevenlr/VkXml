@@ -329,7 +329,7 @@ class FunctionPrototype:
 
     @staticmethod
     def from_xml(node: xml.Element):
-        proto = FunctionPrototype(Type.from_xml(node.find("./return-type")))
+        proto = FunctionPrototype(Type.from_xml(node.find("./return-type")[0]))
         for m in node.findall("./arg"):
             optional = False
             if m.attrib["optional"] == "True":

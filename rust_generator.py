@@ -1,0 +1,274 @@
+from loader import *
+from model import *
+import re
+
+model = load_model("output.xml")
+
+# https://stackoverflow.com/a/41510011
+RE_WORDS = re.compile(r'''
+    # Find words in a string. Order matters!
+    [A-Z]+(?=[A-Z][a-z]) |  # All upper case before a capitalized word
+    [A-Z]?[a-z]+ |  # Capitalized words / all lower case
+    [A-Z]+ |  # All upper case
+    \d+  # Numbers
+''', re.VERBOSE)
+
+def pascal_case_split(identifier):
+    matches = re.finditer(RE_WORDS, identifier)
+    return [m.group(0) for m in matches]
+
+def remove_prefix(s: str, p: str) -> str:
+    if s.startswith(p):
+        return s[len(p):]
+    else:
+        return s
+
+def upper_snake_to_pascal(s: str) -> str:
+    return "".join([x[0].upper() + x[1:] for x in s.lower().split("_")])
+
+def camel_to_snake(s: str) -> str:
+    tokens = pascal_case_split(s)
+    return "_".join(tokens).lower()
+
+def format_enum_value(s: str, p: str) -> str:
+    tokens = pascal_case_split(p)
+    prefix1 = "_".join(tokens).upper() + "_"
+    prefix2 = "_".join(tokens[:-1]).upper() + "_"
+    attempt = remove_prefix(s, prefix1)
+    if attempt == s:
+        attempt = remove_prefix(s, prefix2)
+    if attempt[0].isdigit():
+        attempt = "K_" + attempt
+    return attempt.upper()
+
+def format_bitmask_value(s: str, p: str) -> str:
+    p = p.replace("FlagBits", "")
+    tokens = pascal_case_split(p)
+    prefix1 = "_".join(tokens).upper() + "_"
+    prefix2 = "_".join(tokens[:-1]).upper() + "_"
+    attempt = remove_prefix(s, prefix1)
+    if attempt == s:
+        attempt = remove_prefix(s, prefix2)
+    if attempt[0].isdigit():
+        attempt = "K_" + attempt
+    return attempt.upper()
+
+def to_rust_type(name: str) -> str:
+    if name == "uint8_t":
+        return "u8"
+    elif name == "int8_t":
+        return "i8"
+    elif name == "uint16_t":
+        return "u16"
+    elif name == "int16_t":
+        return "i16"
+    elif name == "uint32_t":
+        return "u32"
+    elif name == "int32_t":
+        return "i32"
+    elif name == "uint64_t":
+        return "u64"
+    elif name == "int64_t":
+        return "i64"
+    elif name == "uintptr_t":
+        return "usize"
+    elif name == "float":
+        return "f32"
+    elif name == "char":
+        return "u8"
+    elif name == "void":
+        return "core::ffi::c_void"
+    elif name == "size_t":
+        return "usize"
+    elif name.startswith("PFN_vk"):
+        return "Pfn" + remove_prefix(name, "PFN_vk")
+    else:
+        return remove_prefix(name, "Vk")
+
+def to_rust_type_deep(t: Type) -> str:
+    def to_rust_type_deep_inner(t: Type) -> str:
+        if isinstance(t, TypeReference):
+            if t.is_const:
+                return "const " + to_rust_type(t.name)
+            else:
+                return "mut " + to_rust_type(t.name)
+        elif isinstance(t, PointerType):
+            inner = to_rust_type_deep_inner(t.inner)
+            if t.is_const:
+                return "const *" + inner
+            else:
+                return "mut *" + inner
+        elif isinstance(t, ArrayType):
+            inner = to_rust_type_deep(t.inner)
+            return "[%s; %d]" % (inner, t.length)
+        else:
+            return ""
+    t_str = to_rust_type_deep_inner(t)
+    return remove_prefix(remove_prefix(t_str, "mut "), "const ")
+
+fp = open("src/vk.rs", "w+")
+
+fp.write("pub type HINSTANCE = usize;\n")
+fp.write("pub type HWND = usize;\n")
+fp.write("\n")
+
+for t in model["integer_constants"]:
+    fp.write("pub const %s: u%d = %d;\n" % (remove_prefix(t.name, "VK_"), t.size, t.value))
+fp.write("\n")
+
+for t in model["real_constants"]:
+    fp.write("pub const %s: f%d = %f;\n" % (remove_prefix(t.name, "VK_"), t.size, t.value))
+fp.write("\n")
+
+for t in model["string_constants"]:
+    fp.write("pub const %s: &str = \"%s\";\n" % (remove_prefix(t.name, "VK_"), t.value))
+    fp.write("pub const %s__C: &[u8] = b\"%s\\0\";\n" % (remove_prefix(t.name, "VK_"), t.value))
+fp.write("\n")
+
+for t in model["base_types"]:
+    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), to_rust_type(t.alias)))
+fp.write("\n")
+
+for t in model["bitmask_types"]:
+    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), remove_prefix(to_rust_type(t.alias), "Vk")))
+fp.write("\n")
+
+for t in model["handle_types"]:
+    fp.write("#[repr(transparent)]\n")
+    fp.write("#[derive(Copy, Clone, PartialEq, Eq)]\n")
+    type_name = remove_prefix(t.name, "Vk")
+    rust_type = to_rust_type(t.type)
+    fp.write("pub struct %s(%s);\n" % (type_name, rust_type))
+    fp.write("impl %s {\n" % type_name)
+    fp.write("    #[inline]\n")
+    fp.write("    pub fn from_raw(r: %s) -> Self {\n" % rust_type)
+    fp.write("        Self(r)\n")
+    fp.write("    }\n\n")
+    fp.write("    #[inline]\n")
+    fp.write("    pub fn as_raw(&self) -> %s {\n" % rust_type)
+    fp.write("        self.0\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
+
+for t in model["alias_types"]:
+    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), remove_prefix(to_rust_type(t.alias), "Vk")))
+fp.write("\n")
+
+for t in model["enum_types"]:
+    if t.type != "enum":
+        continue
+
+    enum_name = remove_prefix(t.name, "Vk")
+    fp.write("#[repr(transparent)]\n")
+    fp.write("#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]\n")
+    fp.write("pub struct %s(u32);\n" % enum_name)
+    fp.write("impl %s {\n" % enum_name)
+    for v in t.values:
+        value = t.values[v]
+        v = remove_prefix(v, "VK_")
+        v = format_enum_value(v, enum_name)
+        if value < 0:
+            fp.write("    pub const %s: %s = %s(%di32 as u32);\n" % (v, enum_name, enum_name, value))
+        else:
+            fp.write("    pub const %s: %s = %s(%d);\n" % (v, enum_name, enum_name, value))
+    fp.write("}\n\n")
+
+for t in model["enum_types"]:
+    if t.type != "bitmask":
+        continue
+
+    enum_name = remove_prefix(t.name, "Vk")
+    fp.write("#[repr(transparent)]\n")
+    fp.write("#[derive(Default, Copy, Clone, PartialOrd, Ord, PartialEq, Eq, Hash)]\n")
+    fp.write("pub struct %s(Flags);\n" % enum_name)
+    fp.write("impl %s {\n" % enum_name)
+    for v in t.values:
+        value = t.values[v]
+        v = remove_prefix(v, "VK_")
+        v = format_bitmask_value(v, enum_name)
+        if value < 0:
+            fp.write("    pub const %s: %s = %s(%di32 as u32);\n" % (v, enum_name, enum_name, value))
+        else:
+            fp.write("    pub const %s: %s = %s(%d);\n" % (v, enum_name, enum_name, value))
+    fp.write("\n")
+    fp.write("    #[inline]\n")
+    fp.write("    pub fn contains(&self, other: &Self) -> bool { return (self.0 & other.0) == other.0; }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitOr for %s {\n" % enum_name)
+    fp.write("    type Output = %s;\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitor(self, rhs: Self) -> Self { Self(self.0 | rhs.0) }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitOrAssign for %s {\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitor_assign(&mut self, rhs: Self) { self.0 |= rhs.0; }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitAnd for %s {\n" % enum_name)
+    fp.write("    type Output = %s;\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitand(self, rhs: Self) -> Self { Self(self.0 & rhs.0) }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitAndAssign for %s {\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitand_assign(&mut self, rhs: Self) { self.0 &= rhs.0; }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitXor for %s {\n" % enum_name)
+    fp.write("    type Output = %s;\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitxor(self, rhs: Self) -> Self { Self(self.0 ^ rhs.0) }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::BitXorAssign for %s {\n" % enum_name)
+    fp.write("    #[inline]\n")
+    fp.write("    fn bitxor_assign(&mut self, rhs: Self) { self.0 ^= rhs.0; }\n")
+    fp.write("}\n\n")
+
+for t in model["structure_types"]:
+    struct_name = remove_prefix(t.name, "Vk")
+    fp.write("#[repr(C)]\n")
+    fp.write("#[derive(Copy, Clone)]\n")
+    fp.write("pub struct %s {\n" % struct_name)
+    for m in t.members:
+        member_name = m.id.name
+        member_name = camel_to_snake(member_name)
+        if member_name == "type":
+            member_name = "kind"
+        fp.write("    pub %s: %s,\n" % (member_name, to_rust_type_deep(m.id.type)))
+    fp.write("}\n\n")
+
+for t in model["union_types"]:
+    struct_name = remove_prefix(t.name, "Vk")
+    fp.write("#[repr(C)]\n")
+    fp.write("#[derive(Copy, Clone)]\n")
+    fp.write("pub union %s {\n" % struct_name)
+    for m in t.members:
+        member_name = m.name
+        member_name = camel_to_snake(member_name)
+        if member_name == "type":
+            member_name = "kind"
+        fp.write("    pub %s: %s,\n" % (member_name, to_rust_type_deep(m.type)))
+    fp.write("}\n\n")
+
+for t in model["function_pointer_types"]:
+    fn_name = remove_prefix(t.name, "PFN_vk")
+    fp.write("pub type Pfn%s = extern \"system\" fn(\n" % fn_name)
+    for a in t.prototype.arguments:
+        fp.write("    %s: %s,\n" % (camel_to_snake(a.id.name), to_rust_type_deep(a.id.type)))
+    fp.write(")")
+    if not isinstance(t.prototype.return_type, TypeReference) or t.prototype.return_type.name != "void":
+        fp.write(" -> %s" % to_rust_type_deep(t.prototype.return_type))
+    fp.write(";\n\n")
+
+for t in model["commands"]:
+    fn_name = remove_prefix(t.name, "vk")
+    fp.write("pub type Pfn%s = extern \"system\" fn(\n" % fn_name)
+    for a in t.prototype.arguments:
+        arg_name = camel_to_snake(a.id.name)
+        if arg_name == "type":
+            arg_name = "kind"
+        fp.write("    %s: %s,\n" % (arg_name, to_rust_type_deep(a.id.type)))
+    fp.write(")")
+    if not isinstance(t.prototype.return_type, TypeReference) or t.prototype.return_type.name != "void":
+        fp.write(" -> %s" % to_rust_type_deep(t.prototype.return_type))
+    fp.write(";\n\n")
+
+fp.close()
