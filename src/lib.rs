@@ -1,3 +1,3 @@
-mod vk;
+mod types;
 
-pub use vk::*;
+pub use types::*;

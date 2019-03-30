@@ -81,9 +81,9 @@ def to_rust_type(name: str) -> str:
     elif name == "size_t":
         return "usize"
     elif name.startswith("PFN_vk"):
-        return "Pfn" + remove_prefix(name, "PFN_vk")
+        return "PfnVk" + remove_prefix(name, "PFN_vk")
     else:
-        return remove_prefix(name, "Vk")
+        return name
 
 def to_rust_type_deep(t: Type) -> str:
     def to_rust_type_deep_inner(t: Type) -> str:
@@ -106,37 +106,37 @@ def to_rust_type_deep(t: Type) -> str:
     t_str = to_rust_type_deep_inner(t)
     return remove_prefix(remove_prefix(t_str, "mut "), "const ")
 
-fp = open("src/vk.rs", "w+")
+fp = open("src/types.rs", "w+")
 
 fp.write("pub type HINSTANCE = usize;\n")
 fp.write("pub type HWND = usize;\n")
 fp.write("\n")
 
 for t in model["integer_constants"]:
-    fp.write("pub const %s: u%d = %d;\n" % (remove_prefix(t.name, "VK_"), t.size, t.value))
+    fp.write("pub const %s: u%d = %d;\n" % (t.name, t.size, t.value))
 fp.write("\n")
 
 for t in model["real_constants"]:
-    fp.write("pub const %s: f%d = %f;\n" % (remove_prefix(t.name, "VK_"), t.size, t.value))
+    fp.write("pub const %s: f%d = %f;\n" % (t.name, t.size, t.value))
 fp.write("\n")
 
 for t in model["string_constants"]:
-    fp.write("pub const %s: &str = \"%s\";\n" % (remove_prefix(t.name, "VK_"), t.value))
-    fp.write("pub const %s__C: &[u8] = b\"%s\\0\";\n" % (remove_prefix(t.name, "VK_"), t.value))
+    fp.write("pub const %s: &str = \"%s\";\n" % (t.name, t.value))
+    fp.write("pub const %s__C: &[u8] = b\"%s\\0\";\n" % (t.name, t.value))
 fp.write("\n")
 
 for t in model["base_types"]:
-    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), to_rust_type(t.alias)))
+    fp.write("pub type %s = %s;\n" % (t.name, to_rust_type(t.alias)))
 fp.write("\n")
 
 for t in model["bitmask_types"]:
-    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), remove_prefix(to_rust_type(t.alias), "Vk")))
+    fp.write("pub type %s = %s;\n" % (t.name, to_rust_type(t.alias)))
 fp.write("\n")
 
 for t in model["handle_types"]:
     fp.write("#[repr(transparent)]\n")
     fp.write("#[derive(Copy, Clone, PartialEq, Eq)]\n")
-    type_name = remove_prefix(t.name, "Vk")
+    type_name = t.name
     rust_type = to_rust_type(t.type)
     fp.write("pub struct %s(%s);\n" % (type_name, rust_type))
     fp.write("impl %s {\n" % type_name)
@@ -151,21 +151,20 @@ for t in model["handle_types"]:
     fp.write("}\n\n")
 
 for t in model["alias_types"]:
-    fp.write("pub type %s = %s;\n" % (remove_prefix(t.name, "Vk"), remove_prefix(to_rust_type(t.alias), "Vk")))
+    fp.write("pub type %s = %s;\n" % (t.name, to_rust_type(t.alias)))
 fp.write("\n")
 
 for t in model["enum_types"]:
     if t.type != "enum":
         continue
 
-    enum_name = remove_prefix(t.name, "Vk")
+    enum_name = t.name
     fp.write("#[repr(transparent)]\n")
     fp.write("#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]\n")
     fp.write("pub struct %s(u32);\n" % enum_name)
     fp.write("impl %s {\n" % enum_name)
     for v in t.values:
         value = t.values[v]
-        v = remove_prefix(v, "VK_")
         v = format_enum_value(v, enum_name)
         if value < 0:
             fp.write("    pub const %s: %s = %s(%di32 as u32);\n" % (v, enum_name, enum_name, value))
@@ -177,14 +176,13 @@ for t in model["enum_types"]:
     if t.type != "bitmask":
         continue
 
-    enum_name = remove_prefix(t.name, "Vk")
+    enum_name = t.name
     fp.write("#[repr(transparent)]\n")
     fp.write("#[derive(Default, Copy, Clone, PartialOrd, Ord, PartialEq, Eq, Hash)]\n")
-    fp.write("pub struct %s(Flags);\n" % enum_name)
+    fp.write("pub struct %s(VkFlags);\n" % enum_name)
     fp.write("impl %s {\n" % enum_name)
     for v in t.values:
         value = t.values[v]
-        v = remove_prefix(v, "VK_")
         v = format_bitmask_value(v, enum_name)
         if value < 0:
             fp.write("    pub const %s: %s = %s(%di32 as u32);\n" % (v, enum_name, enum_name, value))
@@ -223,7 +221,7 @@ for t in model["enum_types"]:
     fp.write("}\n\n")
 
 for t in model["structure_types"]:
-    struct_name = remove_prefix(t.name, "Vk")
+    struct_name = t.name
     fp.write("#[repr(C)]\n")
     fp.write("#[derive(Copy, Clone)]\n")
     fp.write("pub struct %s {\n" % struct_name)
@@ -236,7 +234,7 @@ for t in model["structure_types"]:
     fp.write("}\n\n")
 
 for t in model["union_types"]:
-    struct_name = remove_prefix(t.name, "Vk")
+    struct_name = t.name
     fp.write("#[repr(C)]\n")
     fp.write("#[derive(Copy, Clone)]\n")
     fp.write("pub union %s {\n" % struct_name)
@@ -249,8 +247,8 @@ for t in model["union_types"]:
     fp.write("}\n\n")
 
 for t in model["function_pointer_types"]:
-    fn_name = remove_prefix(t.name, "PFN_vk")
-    fp.write("pub type Pfn%s = extern \"system\" fn(\n" % fn_name)
+    fn_name = "PfnVk" + t.name[6:]
+    fp.write("pub type %s = extern \"system\" fn(\n" % fn_name)
     for a in t.prototype.arguments:
         fp.write("    %s: %s,\n" % (camel_to_snake(a.id.name), to_rust_type_deep(a.id.type)))
     fp.write(")")
@@ -259,8 +257,8 @@ for t in model["function_pointer_types"]:
     fp.write(";\n\n")
 
 for t in model["commands"]:
-    fn_name = remove_prefix(t.name, "vk")
-    fp.write("pub type Pfn%s = extern \"system\" fn(\n" % fn_name)
+    fn_name = t.name
+    fp.write("pub type PfnVk%s = extern \"system\" fn(\n" % fn_name[2:])
     for a in t.prototype.arguments:
         arg_name = camel_to_snake(a.id.name)
         if arg_name == "type":
