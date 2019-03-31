@@ -4215,7 +4215,7 @@
       <member name="flags" optional="True">
          <type const="False">VkDebugUtilsMessengerCallbackDataFlagsEXT</type>
       </member>
-      <member name="pMessageIdName" optional="True">
+      <member length="null-terminated" name="pMessageIdName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -4223,7 +4223,7 @@
       <member name="messageIdNumber" optional="True">
          <type const="False">int32_t</type>
       </member>
-      <member name="pMessage" optional="False">
+      <member length="null-terminated" name="pMessage" optional="False">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -4268,7 +4268,7 @@
       <member name="objectHandle" optional="False">
          <type const="False">uint64_t</type>
       </member>
-      <member name="pObjectName" optional="True">
+      <member length="null-terminated" name="pObjectName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -4283,7 +4283,7 @@
             <type const="True">void</type>
          </pointer>
       </member>
-      <member name="pLabelName" optional="False">
+      <member length="null-terminated" name="pLabelName" optional="False">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -4294,7 +4294,7 @@
          </array>
       </member>
    </struct>
-   <struct name="VkDebugUtilsMessengerCreateInfoEXT">
+   <struct extends="VkInstanceCreateInfo" name="VkDebugUtilsMessengerCreateInfoEXT">
       <member default_value="VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT" name="sType" optional="False">
          <type const="False">VkStructureType</type>
       </member>
@@ -5300,7 +5300,7 @@
       <member name="module" optional="False">
          <type const="False">VkShaderModule</type>
       </member>
-      <member name="pName" optional="False">
+      <member length="null-terminated" name="pName" optional="False">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -5584,7 +5584,7 @@
       <member name="minSampleShading" optional="False">
          <type const="False">float</type>
       </member>
-      <member name="pSampleMask" optional="True">
+      <member length="(rasterizationSamples + 31) / 32" name="pSampleMask" optional="True">
          <pointer const="False">
             <type const="True">VkSampleMask</type>
          </pointer>
@@ -5793,7 +5793,7 @@
       <member name="codeSize" optional="False">
          <type const="False">size_t</type>
       </member>
-      <member name="pCode" optional="False">
+      <member length="codeSize / 4" name="pCode" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -7045,7 +7045,7 @@
             <type const="True">void</type>
          </pointer>
       </member>
-      <member name="pApplicationName" optional="True">
+      <member length="null-terminated" name="pApplicationName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -7053,7 +7053,7 @@
       <member name="applicationVersion" optional="False">
          <type const="False">uint32_t</type>
       </member>
-      <member name="pEngineName" optional="True">
+      <member length="null-terminated" name="pEngineName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>

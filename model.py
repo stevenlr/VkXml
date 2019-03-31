@@ -239,6 +239,7 @@ class StructureType(Entity):
     def __init__(self, name: str):
         Entity.__init__(self, name)
         self.members: List[StructureMember] = []
+        self.extends: List[str] = []
 
     def add_member(self, entity: TypedIdentifier, optional: bool, default_value: Optional[str], length: Optional[str]):
         self.members.append(StructureMember(entity, optional, default_value, length))
@@ -252,6 +253,8 @@ class StructureType(Entity):
     def to_xml(self, parent: xml.Element):
         node = xml.SubElement(parent, "struct")
         node.attrib["name"] = self.name
+        if len(self.extends) > 0:
+            node.attrib["extends"] = ",".join(self.extends)
         for m in self.members:
             e = xml.SubElement(node, "member")
             e.attrib["name"] = m.id.name
@@ -265,6 +268,8 @@ class StructureType(Entity):
     @staticmethod
     def from_xml(node: xml.Element) -> Entity:
         struct = StructureType(node.attrib["name"])
+        if "extends" in node.attrib:
+            struct.extends = node.attrib["extends"].split(",")
         for m in node:
             optional = False
             if m.attrib["optional"] == "True":

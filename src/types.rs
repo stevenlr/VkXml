@@ -3218,6 +3218,8 @@ pub struct VkAllocationCallbacks {
     pub pfn_internal_free: PfnVkInternalFreeNotification,
 }
 
+pub trait ExtendsAllocationCallbacks { }
+
 impl Default for VkAllocationCallbacks {
     fn default() -> Self {
         Self {
@@ -3241,6 +3243,8 @@ pub struct VkWin32SurfaceCreateInfoKHR {
     pub hwnd: HWND,
 }
 
+pub trait ExtendsWin32SurfaceCreateInfoKHR { }
+
 impl Default for VkWin32SurfaceCreateInfoKHR {
     fn default() -> Self {
         Self {
@@ -3259,6 +3263,8 @@ pub struct VkSurfaceFormatKHR {
     pub format: VkFormat,
     pub color_space: VkColorSpaceKHR,
 }
+
+pub trait ExtendsSurfaceFormatKHR { }
 
 impl Default for VkSurfaceFormatKHR {
     fn default() -> Self {
@@ -3284,6 +3290,8 @@ pub struct VkSurfaceCapabilitiesKHR {
     pub supported_usage_flags: VkImageUsageFlags,
 }
 
+pub trait ExtendsSurfaceCapabilitiesKHR { }
+
 impl Default for VkSurfaceCapabilitiesKHR {
     fn default() -> Self {
         Self {
@@ -3308,6 +3316,8 @@ pub struct VkExtent2D {
     pub height: u32,
 }
 
+pub trait ExtendsExtent2D { }
+
 impl Default for VkExtent2D {
     fn default() -> Self {
         Self {
@@ -3329,6 +3339,8 @@ pub struct VkPresentInfoKHR {
     pub p_image_indices: *const u32,
     pub p_results: *mut VkResult,
 }
+
+pub trait ExtendsPresentInfoKHR { }
 
 impl Default for VkPresentInfoKHR {
     fn default() -> Self {
@@ -3367,6 +3379,8 @@ pub struct VkSwapchainCreateInfoKHR {
     pub clipped: VkBool32,
     pub old_swapchain: VkSwapchainKHR,
 }
+
+pub trait ExtendsSwapchainCreateInfoKHR { }
 
 impl Default for VkSwapchainCreateInfoKHR {
     fn default() -> Self {
@@ -3410,6 +3424,8 @@ pub struct VkDebugUtilsMessengerCallbackDataEXT {
     pub p_objects: *const VkDebugUtilsObjectNameInfoEXT,
 }
 
+pub trait ExtendsDebugUtilsMessengerCallbackDataEXT { }
+
 impl Default for VkDebugUtilsMessengerCallbackDataEXT {
     fn default() -> Self {
         Self {
@@ -3439,6 +3455,8 @@ pub struct VkDebugUtilsObjectNameInfoEXT {
     pub p_object_name: *const u8,
 }
 
+pub trait ExtendsDebugUtilsObjectNameInfoEXT { }
+
 impl Default for VkDebugUtilsObjectNameInfoEXT {
     fn default() -> Self {
         Self {
@@ -3459,6 +3477,8 @@ pub struct VkDebugUtilsLabelEXT {
     pub p_label_name: *const u8,
     pub color: [f32; 4],
 }
+
+pub trait ExtendsDebugUtilsLabelEXT { }
 
 impl Default for VkDebugUtilsLabelEXT {
     fn default() -> Self {
@@ -3482,6 +3502,9 @@ pub struct VkDebugUtilsMessengerCreateInfoEXT {
     pub pfn_user_callback: PfnVkDebugUtilsMessengerCallbackEXT,
     pub p_user_data: *mut core::ffi::c_void,
 }
+
+pub trait ExtendsDebugUtilsMessengerCreateInfoEXT { }
+impl ExtendsInstanceCreateInfo for VkDebugUtilsMessengerCreateInfoEXT { }
 
 impl Default for VkDebugUtilsMessengerCreateInfoEXT {
     fn default() -> Self {
@@ -3509,6 +3532,8 @@ pub struct VkDebugUtilsObjectTagInfoEXT {
     pub p_tag: *const core::ffi::c_void,
 }
 
+pub trait ExtendsDebugUtilsObjectTagInfoEXT { }
+
 impl Default for VkDebugUtilsObjectTagInfoEXT {
     fn default() -> Self {
         Self {
@@ -3530,6 +3555,8 @@ pub struct VkBaseInStructure {
     pub p_next: *const VkBaseInStructure,
 }
 
+pub trait ExtendsBaseInStructure { }
+
 impl Default for VkBaseInStructure {
     fn default() -> Self {
         Self {
@@ -3545,6 +3572,8 @@ pub struct VkBaseOutStructure {
     pub s_type: VkStructureType,
     pub p_next: *mut VkBaseOutStructure,
 }
+
+pub trait ExtendsBaseOutStructure { }
 
 impl Default for VkBaseOutStructure {
     fn default() -> Self {
@@ -3563,6 +3592,8 @@ pub struct VkMemoryBarrier {
     pub src_access_mask: VkAccessFlags,
     pub dst_access_mask: VkAccessFlags,
 }
+
+pub trait ExtendsMemoryBarrier { }
 
 impl Default for VkMemoryBarrier {
     fn default() -> Self {
@@ -3589,6 +3620,8 @@ pub struct VkImageMemoryBarrier {
     pub image: VkImage,
     pub subresource_range: VkImageSubresourceRange,
 }
+
+pub trait ExtendsImageMemoryBarrier { }
 
 impl Default for VkImageMemoryBarrier {
     fn default() -> Self {
@@ -3617,6 +3650,8 @@ pub struct VkImageSubresourceRange {
     pub layer_count: u32,
 }
 
+pub trait ExtendsImageSubresourceRange { }
+
 impl Default for VkImageSubresourceRange {
     fn default() -> Self {
         Self {
@@ -3637,6 +3672,8 @@ pub struct VkDrawIndirectCommand {
     pub first_vertex: u32,
     pub first_instance: u32,
 }
+
+pub trait ExtendsDrawIndirectCommand { }
 
 impl Default for VkDrawIndirectCommand {
     fn default() -> Self {
@@ -3659,6 +3696,8 @@ pub struct VkDrawIndexedIndirectCommand {
     pub first_instance: u32,
 }
 
+pub trait ExtendsDrawIndexedIndirectCommand { }
+
 impl Default for VkDrawIndexedIndirectCommand {
     fn default() -> Self {
         Self {
@@ -3678,6 +3717,8 @@ pub struct VkDispatchIndirectCommand {
     pub y: u32,
     pub z: u32,
 }
+
+pub trait ExtendsDispatchIndirectCommand { }
 
 impl Default for VkDispatchIndirectCommand {
     fn default() -> Self {
@@ -3702,6 +3743,8 @@ pub struct VkBufferMemoryBarrier {
     pub offset: VkDeviceSize,
     pub size: VkDeviceSize,
 }
+
+pub trait ExtendsBufferMemoryBarrier { }
 
 impl Default for VkBufferMemoryBarrier {
     fn default() -> Self {
@@ -3731,6 +3774,8 @@ pub struct VkRenderPassBeginInfo {
     pub p_clear_values: *const VkClearValue,
 }
 
+pub trait ExtendsRenderPassBeginInfo { }
+
 impl Default for VkRenderPassBeginInfo {
     fn default() -> Self {
         Self {
@@ -3752,6 +3797,8 @@ pub struct VkClearDepthStencilValue {
     pub stencil: u32,
 }
 
+pub trait ExtendsClearDepthStencilValue { }
+
 impl Default for VkClearDepthStencilValue {
     fn default() -> Self {
         Self {
@@ -3768,6 +3815,8 @@ pub struct VkRect2D {
     pub extent: VkExtent2D,
 }
 
+pub trait ExtendsRect2D { }
+
 impl Default for VkRect2D {
     fn default() -> Self {
         Self {
@@ -3783,6 +3832,8 @@ pub struct VkOffset2D {
     pub x: i32,
     pub y: i32,
 }
+
+pub trait ExtendsOffset2D { }
 
 impl Default for VkOffset2D {
     fn default() -> Self {
@@ -3802,6 +3853,8 @@ pub struct VkImageResolve {
     pub dst_offset: VkOffset3D,
     pub extent: VkExtent3D,
 }
+
+pub trait ExtendsImageResolve { }
 
 impl Default for VkImageResolve {
     fn default() -> Self {
@@ -3823,6 +3876,8 @@ pub struct VkExtent3D {
     pub depth: u32,
 }
 
+pub trait ExtendsExtent3D { }
+
 impl Default for VkExtent3D {
     fn default() -> Self {
         Self {
@@ -3840,6 +3895,8 @@ pub struct VkOffset3D {
     pub y: i32,
     pub z: i32,
 }
+
+pub trait ExtendsOffset3D { }
 
 impl Default for VkOffset3D {
     fn default() -> Self {
@@ -3860,6 +3917,8 @@ pub struct VkImageSubresourceLayers {
     pub layer_count: u32,
 }
 
+pub trait ExtendsImageSubresourceLayers { }
+
 impl Default for VkImageSubresourceLayers {
     fn default() -> Self {
         Self {
@@ -3879,6 +3938,8 @@ pub struct VkClearRect {
     pub layer_count: u32,
 }
 
+pub trait ExtendsClearRect { }
+
 impl Default for VkClearRect {
     fn default() -> Self {
         Self {
@@ -3896,6 +3957,8 @@ pub struct VkClearAttachment {
     pub color_attachment: u32,
     pub clear_value: VkClearValue,
 }
+
+pub trait ExtendsClearAttachment { }
 
 impl Default for VkClearAttachment {
     fn default() -> Self {
@@ -3917,6 +3980,8 @@ pub struct VkBufferImageCopy {
     pub image_offset: VkOffset3D,
     pub image_extent: VkExtent3D,
 }
+
+pub trait ExtendsBufferImageCopy { }
 
 impl Default for VkBufferImageCopy {
     fn default() -> Self {
@@ -3940,6 +4005,8 @@ pub struct VkImageBlit {
     pub dst_offsets: [VkOffset3D; 2],
 }
 
+pub trait ExtendsImageBlit { }
+
 impl Default for VkImageBlit {
     fn default() -> Self {
         Self {
@@ -3961,6 +4028,8 @@ pub struct VkImageCopy {
     pub extent: VkExtent3D,
 }
 
+pub trait ExtendsImageCopy { }
+
 impl Default for VkImageCopy {
     fn default() -> Self {
         Self {
@@ -3980,6 +4049,8 @@ pub struct VkBufferCopy {
     pub dst_offset: VkDeviceSize,
     pub size: VkDeviceSize,
 }
+
+pub trait ExtendsBufferCopy { }
 
 impl Default for VkBufferCopy {
     fn default() -> Self {
@@ -4002,6 +4073,8 @@ pub struct VkViewport {
     pub max_depth: f32,
 }
 
+pub trait ExtendsViewport { }
+
 impl Default for VkViewport {
     fn default() -> Self {
         Self {
@@ -4023,6 +4096,8 @@ pub struct VkCommandBufferBeginInfo {
     pub flags: VkCommandBufferUsageFlags,
     pub p_inheritance_info: *const VkCommandBufferInheritanceInfo,
 }
+
+pub trait ExtendsCommandBufferBeginInfo { }
 
 impl Default for VkCommandBufferBeginInfo {
     fn default() -> Self {
@@ -4047,6 +4122,8 @@ pub struct VkCommandBufferInheritanceInfo {
     pub query_flags: VkQueryControlFlags,
     pub pipeline_statistics: VkQueryPipelineStatisticFlags,
 }
+
+pub trait ExtendsCommandBufferInheritanceInfo { }
 
 impl Default for VkCommandBufferInheritanceInfo {
     fn default() -> Self {
@@ -4073,6 +4150,8 @@ pub struct VkCommandBufferAllocateInfo {
     pub command_buffer_count: u32,
 }
 
+pub trait ExtendsCommandBufferAllocateInfo { }
+
 impl Default for VkCommandBufferAllocateInfo {
     fn default() -> Self {
         Self {
@@ -4093,6 +4172,8 @@ pub struct VkCommandPoolCreateInfo {
     pub flags: VkCommandPoolCreateFlags,
     pub queue_family_index: u32,
 }
+
+pub trait ExtendsCommandPoolCreateInfo { }
 
 impl Default for VkCommandPoolCreateInfo {
     fn default() -> Self {
@@ -4118,6 +4199,8 @@ pub struct VkRenderPassCreateInfo {
     pub dependency_count: u32,
     pub p_dependencies: *const VkSubpassDependency,
 }
+
+pub trait ExtendsRenderPassCreateInfo { }
 
 impl Default for VkRenderPassCreateInfo {
     fn default() -> Self {
@@ -4146,6 +4229,8 @@ pub struct VkSubpassDependency {
     pub dst_access_mask: VkAccessFlags,
     pub dependency_flags: VkDependencyFlags,
 }
+
+pub trait ExtendsSubpassDependency { }
 
 impl Default for VkSubpassDependency {
     fn default() -> Self {
@@ -4176,6 +4261,8 @@ pub struct VkSubpassDescription {
     pub p_preserve_attachments: *const u32,
 }
 
+pub trait ExtendsSubpassDescription { }
+
 impl Default for VkSubpassDescription {
     fn default() -> Self {
         Self {
@@ -4200,6 +4287,8 @@ pub struct VkAttachmentReference {
     pub layout: VkImageLayout,
 }
 
+pub trait ExtendsAttachmentReference { }
+
 impl Default for VkAttachmentReference {
     fn default() -> Self {
         Self {
@@ -4222,6 +4311,8 @@ pub struct VkAttachmentDescription {
     pub initial_layout: VkImageLayout,
     pub final_layout: VkImageLayout,
 }
+
+pub trait ExtendsAttachmentDescription { }
 
 impl Default for VkAttachmentDescription {
     fn default() -> Self {
@@ -4253,6 +4344,8 @@ pub struct VkFramebufferCreateInfo {
     pub layers: u32,
 }
 
+pub trait ExtendsFramebufferCreateInfo { }
+
 impl Default for VkFramebufferCreateInfo {
     fn default() -> Self {
         Self {
@@ -4282,6 +4375,8 @@ pub struct VkCopyDescriptorSet {
     pub dst_array_element: u32,
     pub descriptor_count: u32,
 }
+
+pub trait ExtendsCopyDescriptorSet { }
 
 impl Default for VkCopyDescriptorSet {
     fn default() -> Self {
@@ -4314,6 +4409,8 @@ pub struct VkWriteDescriptorSet {
     pub p_texel_buffer_view: *const VkBufferView,
 }
 
+pub trait ExtendsWriteDescriptorSet { }
+
 impl Default for VkWriteDescriptorSet {
     fn default() -> Self {
         Self {
@@ -4339,6 +4436,8 @@ pub struct VkDescriptorBufferInfo {
     pub range: VkDeviceSize,
 }
 
+pub trait ExtendsDescriptorBufferInfo { }
+
 impl Default for VkDescriptorBufferInfo {
     fn default() -> Self {
         Self {
@@ -4356,6 +4455,8 @@ pub struct VkDescriptorImageInfo {
     pub image_view: VkImageView,
     pub image_layout: VkImageLayout,
 }
+
+pub trait ExtendsDescriptorImageInfo { }
 
 impl Default for VkDescriptorImageInfo {
     fn default() -> Self {
@@ -4376,6 +4477,8 @@ pub struct VkDescriptorSetAllocateInfo {
     pub descriptor_set_count: u32,
     pub p_set_layouts: *const VkDescriptorSetLayout,
 }
+
+pub trait ExtendsDescriptorSetAllocateInfo { }
 
 impl Default for VkDescriptorSetAllocateInfo {
     fn default() -> Self {
@@ -4400,6 +4503,8 @@ pub struct VkDescriptorPoolCreateInfo {
     pub p_pool_sizes: *const VkDescriptorPoolSize,
 }
 
+pub trait ExtendsDescriptorPoolCreateInfo { }
+
 impl Default for VkDescriptorPoolCreateInfo {
     fn default() -> Self {
         Self {
@@ -4420,6 +4525,8 @@ pub struct VkDescriptorPoolSize {
     pub descriptor_count: u32,
 }
 
+pub trait ExtendsDescriptorPoolSize { }
+
 impl Default for VkDescriptorPoolSize {
     fn default() -> Self {
         Self {
@@ -4438,6 +4545,8 @@ pub struct VkDescriptorSetLayoutCreateInfo {
     pub binding_count: u32,
     pub p_bindings: *const VkDescriptorSetLayoutBinding,
 }
+
+pub trait ExtendsDescriptorSetLayoutCreateInfo { }
 
 impl Default for VkDescriptorSetLayoutCreateInfo {
     fn default() -> Self {
@@ -4460,6 +4569,8 @@ pub struct VkDescriptorSetLayoutBinding {
     pub stage_flags: VkShaderStageFlags,
     pub p_immutable_samplers: *const VkSampler,
 }
+
+pub trait ExtendsDescriptorSetLayoutBinding { }
 
 impl Default for VkDescriptorSetLayoutBinding {
     fn default() -> Self {
@@ -4495,6 +4606,8 @@ pub struct VkSamplerCreateInfo {
     pub border_color: VkBorderColor,
     pub unnormalized_coordinates: VkBool32,
 }
+
+pub trait ExtendsSamplerCreateInfo { }
 
 impl Default for VkSamplerCreateInfo {
     fn default() -> Self {
@@ -4533,6 +4646,8 @@ pub struct VkPipelineLayoutCreateInfo {
     pub p_push_constant_ranges: *const VkPushConstantRange,
 }
 
+pub trait ExtendsPipelineLayoutCreateInfo { }
+
 impl Default for VkPipelineLayoutCreateInfo {
     fn default() -> Self {
         Self {
@@ -4555,6 +4670,8 @@ pub struct VkPushConstantRange {
     pub size: u32,
 }
 
+pub trait ExtendsPushConstantRange { }
+
 impl Default for VkPushConstantRange {
     fn default() -> Self {
         Self {
@@ -4576,6 +4693,8 @@ pub struct VkComputePipelineCreateInfo {
     pub base_pipeline_handle: VkPipeline,
     pub base_pipeline_index: i32,
 }
+
+pub trait ExtendsComputePipelineCreateInfo { }
 
 impl Default for VkComputePipelineCreateInfo {
     fn default() -> Self {
@@ -4603,6 +4722,8 @@ pub struct VkPipelineShaderStageCreateInfo {
     pub p_specialization_info: *const VkSpecializationInfo,
 }
 
+pub trait ExtendsPipelineShaderStageCreateInfo { }
+
 impl Default for VkPipelineShaderStageCreateInfo {
     fn default() -> Self {
         Self {
@@ -4626,6 +4747,8 @@ pub struct VkSpecializationInfo {
     pub p_data: *const core::ffi::c_void,
 }
 
+pub trait ExtendsSpecializationInfo { }
+
 impl Default for VkSpecializationInfo {
     fn default() -> Self {
         Self {
@@ -4644,6 +4767,8 @@ pub struct VkSpecializationMapEntry {
     pub offset: u32,
     pub size: usize,
 }
+
+pub trait ExtendsSpecializationMapEntry { }
 
 impl Default for VkSpecializationMapEntry {
     fn default() -> Self {
@@ -4678,6 +4803,8 @@ pub struct VkGraphicsPipelineCreateInfo {
     pub base_pipeline_handle: VkPipeline,
     pub base_pipeline_index: i32,
 }
+
+pub trait ExtendsGraphicsPipelineCreateInfo { }
 
 impl Default for VkGraphicsPipelineCreateInfo {
     fn default() -> Self {
@@ -4715,6 +4842,8 @@ pub struct VkPipelineDynamicStateCreateInfo {
     pub p_dynamic_states: *const VkDynamicState,
 }
 
+pub trait ExtendsPipelineDynamicStateCreateInfo { }
+
 impl Default for VkPipelineDynamicStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -4739,6 +4868,8 @@ pub struct VkPipelineColorBlendStateCreateInfo {
     pub p_attachments: *const VkPipelineColorBlendAttachmentState,
     pub blend_constants: [f32; 4],
 }
+
+pub trait ExtendsPipelineColorBlendStateCreateInfo { }
 
 impl Default for VkPipelineColorBlendStateCreateInfo {
     fn default() -> Self {
@@ -4767,6 +4898,8 @@ pub struct VkPipelineColorBlendAttachmentState {
     pub alpha_blend_op: VkBlendOp,
     pub color_write_mask: VkColorComponentFlags,
 }
+
+pub trait ExtendsPipelineColorBlendAttachmentState { }
 
 impl Default for VkPipelineColorBlendAttachmentState {
     fn default() -> Self {
@@ -4800,6 +4933,8 @@ pub struct VkPipelineDepthStencilStateCreateInfo {
     pub max_depth_bounds: f32,
 }
 
+pub trait ExtendsPipelineDepthStencilStateCreateInfo { }
+
 impl Default for VkPipelineDepthStencilStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -4831,6 +4966,8 @@ pub struct VkStencilOpState {
     pub reference: u32,
 }
 
+pub trait ExtendsStencilOpState { }
+
 impl Default for VkStencilOpState {
     fn default() -> Self {
         Self {
@@ -4858,6 +4995,8 @@ pub struct VkPipelineMultisampleStateCreateInfo {
     pub alpha_to_coverage_enable: VkBool32,
     pub alpha_to_one_enable: VkBool32,
 }
+
+pub trait ExtendsPipelineMultisampleStateCreateInfo { }
 
 impl Default for VkPipelineMultisampleStateCreateInfo {
     fn default() -> Self {
@@ -4893,6 +5032,8 @@ pub struct VkPipelineRasterizationStateCreateInfo {
     pub line_width: f32,
 }
 
+pub trait ExtendsPipelineRasterizationStateCreateInfo { }
+
 impl Default for VkPipelineRasterizationStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -4925,6 +5066,8 @@ pub struct VkPipelineViewportStateCreateInfo {
     pub p_scissors: *const VkRect2D,
 }
 
+pub trait ExtendsPipelineViewportStateCreateInfo { }
+
 impl Default for VkPipelineViewportStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -4948,6 +5091,8 @@ pub struct VkPipelineTessellationStateCreateInfo {
     pub patch_control_points: u32,
 }
 
+pub trait ExtendsPipelineTessellationStateCreateInfo { }
+
 impl Default for VkPipelineTessellationStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -4968,6 +5113,8 @@ pub struct VkPipelineInputAssemblyStateCreateInfo {
     pub topology: VkPrimitiveTopology,
     pub primitive_restart_enable: VkBool32,
 }
+
+pub trait ExtendsPipelineInputAssemblyStateCreateInfo { }
 
 impl Default for VkPipelineInputAssemblyStateCreateInfo {
     fn default() -> Self {
@@ -4993,6 +5140,8 @@ pub struct VkPipelineVertexInputStateCreateInfo {
     pub p_vertex_attribute_descriptions: *const VkVertexInputAttributeDescription,
 }
 
+pub trait ExtendsPipelineVertexInputStateCreateInfo { }
+
 impl Default for VkPipelineVertexInputStateCreateInfo {
     fn default() -> Self {
         Self {
@@ -5016,6 +5165,8 @@ pub struct VkVertexInputAttributeDescription {
     pub offset: u32,
 }
 
+pub trait ExtendsVertexInputAttributeDescription { }
+
 impl Default for VkVertexInputAttributeDescription {
     fn default() -> Self {
         Self {
@@ -5034,6 +5185,8 @@ pub struct VkVertexInputBindingDescription {
     pub stride: u32,
     pub input_rate: VkVertexInputRate,
 }
+
+pub trait ExtendsVertexInputBindingDescription { }
 
 impl Default for VkVertexInputBindingDescription {
     fn default() -> Self {
@@ -5054,6 +5207,8 @@ pub struct VkPipelineCacheCreateInfo {
     pub initial_data_size: usize,
     pub p_initial_data: *const core::ffi::c_void,
 }
+
+pub trait ExtendsPipelineCacheCreateInfo { }
 
 impl Default for VkPipelineCacheCreateInfo {
     fn default() -> Self {
@@ -5076,6 +5231,8 @@ pub struct VkShaderModuleCreateInfo {
     pub code_size: usize,
     pub p_code: *const u32,
 }
+
+pub trait ExtendsShaderModuleCreateInfo { }
 
 impl Default for VkShaderModuleCreateInfo {
     fn default() -> Self {
@@ -5102,6 +5259,8 @@ pub struct VkImageViewCreateInfo {
     pub subresource_range: VkImageSubresourceRange,
 }
 
+pub trait ExtendsImageViewCreateInfo { }
+
 impl Default for VkImageViewCreateInfo {
     fn default() -> Self {
         Self {
@@ -5126,6 +5285,8 @@ pub struct VkComponentMapping {
     pub a: VkComponentSwizzle,
 }
 
+pub trait ExtendsComponentMapping { }
+
 impl Default for VkComponentMapping {
     fn default() -> Self {
         Self {
@@ -5147,6 +5308,8 @@ pub struct VkSubresourceLayout {
     pub depth_pitch: VkDeviceSize,
 }
 
+pub trait ExtendsSubresourceLayout { }
+
 impl Default for VkSubresourceLayout {
     fn default() -> Self {
         Self {
@@ -5166,6 +5329,8 @@ pub struct VkImageSubresource {
     pub mip_level: u32,
     pub array_layer: u32,
 }
+
+pub trait ExtendsImageSubresource { }
 
 impl Default for VkImageSubresource {
     fn default() -> Self {
@@ -5196,6 +5361,8 @@ pub struct VkImageCreateInfo {
     pub p_queue_family_indices: *const u32,
     pub initial_layout: VkImageLayout,
 }
+
+pub trait ExtendsImageCreateInfo { }
 
 impl Default for VkImageCreateInfo {
     fn default() -> Self {
@@ -5231,6 +5398,8 @@ pub struct VkBufferViewCreateInfo {
     pub range: VkDeviceSize,
 }
 
+pub trait ExtendsBufferViewCreateInfo { }
+
 impl Default for VkBufferViewCreateInfo {
     fn default() -> Self {
         Self {
@@ -5258,6 +5427,8 @@ pub struct VkBufferCreateInfo {
     pub p_queue_family_indices: *const u32,
 }
 
+pub trait ExtendsBufferCreateInfo { }
+
 impl Default for VkBufferCreateInfo {
     fn default() -> Self {
         Self {
@@ -5284,6 +5455,8 @@ pub struct VkQueryPoolCreateInfo {
     pub pipeline_statistics: VkQueryPipelineStatisticFlags,
 }
 
+pub trait ExtendsQueryPoolCreateInfo { }
+
 impl Default for VkQueryPoolCreateInfo {
     fn default() -> Self {
         Self {
@@ -5305,6 +5478,8 @@ pub struct VkEventCreateInfo {
     pub flags: VkEventCreateFlags,
 }
 
+pub trait ExtendsEventCreateInfo { }
+
 impl Default for VkEventCreateInfo {
     fn default() -> Self {
         Self {
@@ -5323,6 +5498,8 @@ pub struct VkSemaphoreCreateInfo {
     pub flags: VkSemaphoreCreateFlags,
 }
 
+pub trait ExtendsSemaphoreCreateInfo { }
+
 impl Default for VkSemaphoreCreateInfo {
     fn default() -> Self {
         Self {
@@ -5340,6 +5517,8 @@ pub struct VkFenceCreateInfo {
     pub p_next: *const core::ffi::c_void,
     pub flags: VkFenceCreateFlags,
 }
+
+pub trait ExtendsFenceCreateInfo { }
 
 impl Default for VkFenceCreateInfo {
     fn default() -> Self {
@@ -5368,6 +5547,8 @@ pub struct VkBindSparseInfo {
     pub p_signal_semaphores: *const VkSemaphore,
 }
 
+pub trait ExtendsBindSparseInfo { }
+
 impl Default for VkBindSparseInfo {
     fn default() -> Self {
         Self {
@@ -5395,6 +5576,8 @@ pub struct VkSparseImageMemoryBindInfo {
     pub p_binds: *const VkSparseImageMemoryBind,
 }
 
+pub trait ExtendsSparseImageMemoryBindInfo { }
+
 impl Default for VkSparseImageMemoryBindInfo {
     fn default() -> Self {
         Self {
@@ -5415,6 +5598,8 @@ pub struct VkSparseImageMemoryBind {
     pub memory_offset: VkDeviceSize,
     pub flags: VkSparseMemoryBindFlags,
 }
+
+pub trait ExtendsSparseImageMemoryBind { }
 
 impl Default for VkSparseImageMemoryBind {
     fn default() -> Self {
@@ -5437,6 +5622,8 @@ pub struct VkSparseImageOpaqueMemoryBindInfo {
     pub p_binds: *const VkSparseMemoryBind,
 }
 
+pub trait ExtendsSparseImageOpaqueMemoryBindInfo { }
+
 impl Default for VkSparseImageOpaqueMemoryBindInfo {
     fn default() -> Self {
         Self {
@@ -5456,6 +5643,8 @@ pub struct VkSparseMemoryBind {
     pub memory_offset: VkDeviceSize,
     pub flags: VkSparseMemoryBindFlags,
 }
+
+pub trait ExtendsSparseMemoryBind { }
 
 impl Default for VkSparseMemoryBind {
     fn default() -> Self {
@@ -5477,6 +5666,8 @@ pub struct VkSparseBufferMemoryBindInfo {
     pub p_binds: *const VkSparseMemoryBind,
 }
 
+pub trait ExtendsSparseBufferMemoryBindInfo { }
+
 impl Default for VkSparseBufferMemoryBindInfo {
     fn default() -> Self {
         Self {
@@ -5494,6 +5685,8 @@ pub struct VkSparseImageFormatProperties {
     pub image_granularity: VkExtent3D,
     pub flags: VkSparseImageFormatFlags,
 }
+
+pub trait ExtendsSparseImageFormatProperties { }
 
 impl Default for VkSparseImageFormatProperties {
     fn default() -> Self {
@@ -5515,6 +5708,8 @@ pub struct VkSparseImageMemoryRequirements {
     pub image_mip_tail_stride: VkDeviceSize,
 }
 
+pub trait ExtendsSparseImageMemoryRequirements { }
+
 impl Default for VkSparseImageMemoryRequirements {
     fn default() -> Self {
         Self {
@@ -5534,6 +5729,8 @@ pub struct VkMemoryRequirements {
     pub alignment: VkDeviceSize,
     pub memory_type_bits: u32,
 }
+
+pub trait ExtendsMemoryRequirements { }
 
 impl Default for VkMemoryRequirements {
     fn default() -> Self {
@@ -5555,6 +5752,8 @@ pub struct VkMappedMemoryRange {
     pub size: VkDeviceSize,
 }
 
+pub trait ExtendsMappedMemoryRange { }
+
 impl Default for VkMappedMemoryRange {
     fn default() -> Self {
         Self {
@@ -5575,6 +5774,8 @@ pub struct VkMemoryAllocateInfo {
     pub allocation_size: VkDeviceSize,
     pub memory_type_index: u32,
 }
+
+pub trait ExtendsMemoryAllocateInfo { }
 
 impl Default for VkMemoryAllocateInfo {
     fn default() -> Self {
@@ -5601,6 +5802,8 @@ pub struct VkSubmitInfo {
     pub p_signal_semaphores: *const VkSemaphore,
 }
 
+pub trait ExtendsSubmitInfo { }
+
 impl Default for VkSubmitInfo {
     fn default() -> Self {
         Self {
@@ -5626,6 +5829,8 @@ pub struct VkLayerProperties {
     pub description: [u8; 256],
 }
 
+pub trait ExtendsLayerProperties { }
+
 impl Default for VkLayerProperties {
     fn default() -> Self {
         Self {
@@ -5643,6 +5848,8 @@ pub struct VkExtensionProperties {
     pub extension_name: [u8; 256],
     pub spec_version: u32,
 }
+
+pub trait ExtendsExtensionProperties { }
 
 impl Default for VkExtensionProperties {
     fn default() -> Self {
@@ -5667,6 +5874,8 @@ pub struct VkDeviceCreateInfo {
     pub pp_enabled_extension_names: *const *const u8,
     pub p_enabled_features: *const VkPhysicalDeviceFeatures,
 }
+
+pub trait ExtendsDeviceCreateInfo { }
 
 impl Default for VkDeviceCreateInfo {
     fn default() -> Self {
@@ -5745,6 +5954,8 @@ pub struct VkPhysicalDeviceFeatures {
     pub inherited_queries: VkBool32,
 }
 
+pub trait ExtendsPhysicalDeviceFeatures { }
+
 impl Default for VkPhysicalDeviceFeatures {
     fn default() -> Self {
         Self {
@@ -5818,6 +6029,8 @@ pub struct VkDeviceQueueCreateInfo {
     pub p_queue_priorities: *const f32,
 }
 
+pub trait ExtendsDeviceQueueCreateInfo { }
+
 impl Default for VkDeviceQueueCreateInfo {
     fn default() -> Self {
         Self {
@@ -5840,6 +6053,8 @@ pub struct VkPhysicalDeviceMemoryProperties {
     pub memory_heaps: [VkMemoryHeap; 16],
 }
 
+pub trait ExtendsPhysicalDeviceMemoryProperties { }
+
 impl Default for VkPhysicalDeviceMemoryProperties {
     fn default() -> Self {
         Self {
@@ -5858,6 +6073,8 @@ pub struct VkMemoryHeap {
     pub flags: VkMemoryHeapFlags,
 }
 
+pub trait ExtendsMemoryHeap { }
+
 impl Default for VkMemoryHeap {
     fn default() -> Self {
         Self {
@@ -5873,6 +6090,8 @@ pub struct VkMemoryType {
     pub property_flags: VkMemoryPropertyFlags,
     pub heap_index: u32,
 }
+
+pub trait ExtendsMemoryType { }
 
 impl Default for VkMemoryType {
     fn default() -> Self {
@@ -5891,6 +6110,8 @@ pub struct VkQueueFamilyProperties {
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: VkExtent3D,
 }
+
+pub trait ExtendsQueueFamilyProperties { }
 
 impl Default for VkQueueFamilyProperties {
     fn default() -> Self {
@@ -5917,6 +6138,8 @@ pub struct VkPhysicalDeviceProperties {
     pub sparse_properties: VkPhysicalDeviceSparseProperties,
 }
 
+pub trait ExtendsPhysicalDeviceProperties { }
+
 impl Default for VkPhysicalDeviceProperties {
     fn default() -> Self {
         Self {
@@ -5942,6 +6165,8 @@ pub struct VkPhysicalDeviceSparseProperties {
     pub residency_aligned_mip_size: VkBool32,
     pub residency_non_resident_strict: VkBool32,
 }
+
+pub trait ExtendsPhysicalDeviceSparseProperties { }
 
 impl Default for VkPhysicalDeviceSparseProperties {
     fn default() -> Self {
@@ -6066,6 +6291,8 @@ pub struct VkPhysicalDeviceLimits {
     pub non_coherent_atom_size: VkDeviceSize,
 }
 
+pub trait ExtendsPhysicalDeviceLimits { }
+
 impl Default for VkPhysicalDeviceLimits {
     fn default() -> Self {
         Self {
@@ -6189,6 +6416,8 @@ pub struct VkImageFormatProperties {
     pub max_resource_size: VkDeviceSize,
 }
 
+pub trait ExtendsImageFormatProperties { }
+
 impl Default for VkImageFormatProperties {
     fn default() -> Self {
         Self {
@@ -6208,6 +6437,8 @@ pub struct VkFormatProperties {
     pub optimal_tiling_features: VkFormatFeatureFlags,
     pub buffer_features: VkFormatFeatureFlags,
 }
+
+pub trait ExtendsFormatProperties { }
 
 impl Default for VkFormatProperties {
     fn default() -> Self {
@@ -6231,6 +6462,8 @@ pub struct VkInstanceCreateInfo {
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const *const u8,
 }
+
+pub trait ExtendsInstanceCreateInfo { }
 
 impl Default for VkInstanceCreateInfo {
     fn default() -> Self {
@@ -6258,6 +6491,8 @@ pub struct VkApplicationInfo {
     pub engine_version: u32,
     pub api_version: u32,
 }
+
+pub trait ExtendsApplicationInfo { }
 
 impl Default for VkApplicationInfo {
     fn default() -> Self {

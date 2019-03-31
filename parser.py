@@ -277,6 +277,10 @@ def parse_struct(type):
     struct_name = type.attrib["name"]
     struct = StructureType(struct_name)
 
+    if "structextends" in type.attrib:
+        extends_list = type.attrib["structextends"].split(",")
+        struct.extends = extends_list
+
     for member in type.findall("./member"):
         entity = parse_typed_entity(stringify_tag_except_comment(member))
 
@@ -294,6 +298,11 @@ def parse_struct(type):
             for member_name in type.findall("./member/name"):
                 if member_name.text == length_value:
                     length = length_value
+            if length_value == "null-terminated":
+                length = "null-terminated"
+
+        if length == None and "altlen" in member.attrib:
+            length = member.attrib["altlen"]
 
         struct.add_member(entity, optional, default_value, length)
 

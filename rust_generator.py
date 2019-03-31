@@ -262,6 +262,10 @@ for t in model["structure_types"]:
             member_name = "kind"
         fp.write("    pub %s: %s,\n" % (member_name, to_rust_type_deep(m.id.type)))
     fp.write("}\n\n")
+    fp.write("pub trait Extends%s { }\n" % remove_prefix(struct_name, "Vk"))
+    for extends in t.extends:
+        fp.write("impl Extends%s for %s { }\n" % (remove_prefix(extends, "Vk"), struct_name))
+    fp.write("\n")
     fp.write("impl Default for %s {\n" % struct_name)
     fp.write("    fn default() -> Self {\n")
     fp.write("        Self {\n")
@@ -369,27 +373,87 @@ write_commands_collection(fp, "device", "DeviceCommands")
 fp.close()
 
 fp = open("src/builders.rs", "w+")
+fp.write("use crate::utils::*;\n")
 fp.write("use crate::types::*;\n\n")
 
 for t in model["structure_types"]:
     struct_name = t.name
-    fp.write("pub struct %sBuilder {\n" % struct_name)
+    fp.write("pub struct %sBuilder<'a> {\n" % struct_name)
     fp.write("    s: %s,\n" % struct_name)
+    fp.write("    _p: core::marker::PhantomData<&'a ()>,\n")
     fp.write("}\n\n")
-    fp.write("impl %sBuilder {\n" % struct_name)
+    fp.write("impl<'a> %sBuilder<'a> {\n" % struct_name)
     fp.write("    pub fn new() -> Self {\n")
     fp.write("        Self {\n")
     fp.write("            s: %s::default(),\n" % struct_name)
+    fp.write("            _p: core::marker::PhantomData,\n")
     fp.write("        }\n")
-    fp.write("    }\n")
-    fp.write("}\n\n")
-    fp.write("impl core::ops::Deref for %sBuilder {\n" % struct_name)
+    fp.write("    }")
+    for m in t.members:
+        member_name = camel_to_snake(m.id.name)
+        if member_name == "type":
+            member_name = "kind"
+        if member_name == "p_next":
+            fp.write("\n\n    pub fn push_next<T: Extends%s>(mut self, next: &'a mut T) -> %sBuilder<'a> {\n" % (remove_prefix(struct_name, "Vk"), struct_name))
+            fp.write("        unsafe {\n")
+            fp.write("            let last = get_last_base_out_struct_chain(next as *mut T as *mut VkBaseOutStructure);\n")
+            fp.write("            (*last).p_next = self.s.p_next as _;\n")
+            fp.write("            self.s.p_next = core::mem::transmute(next);\n")
+            fp.write("        }\n")
+        elif isinstance(m.id.type, TypeReference) and m.id.type.name == "VkBool32":
+            fp.write("\n\n    pub fn %s(mut self, value: bool) -> %sBuilder<'a> {\n" % (member_name, struct_name))
+            fp.write("        self.s.%s = if value { VK_TRUE } else { VK_FALSE };\n" % member_name)
+        elif isinstance(m.id.type, PointerType) and m.length != None:
+            length_code = ""
+            length_simple_match = re.match("^([a-zA-Z_][a-zA-Z0-9_]*)$", m.length)
+            length_complex_match = re.match("^([a-zA-Z_][a-zA-Z0-9_]*) / ([0-9]+)+$", m.length)
+            if length_complex_match:
+                length_code = "self.s.%s = (values.len() * %s) as _;" % (camel_to_snake(length_complex_match.group(1)), length_complex_match.group(2))
+            elif length_simple_match:
+                length_code = "self.s.%s = values.len() as _;" % camel_to_snake(m.length)
+            else:
+                length_code = ""
+            if not m.id.type.inner.is_const:
+                fp.write("\n\n    pub fn %s(mut self, values: &'a mut[%s]) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        %s\n" % length_code)
+                fp.write("        self.s.%s = values.as_mut_ptr();\n" % camel_to_snake(m.id.name))
+            else:
+                fp.write("\n\n    pub fn %s(mut self, values: &'a [%s]) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        %s\n" % length_code)
+                fp.write("        self.s.%s = values.as_ptr();\n" % camel_to_snake(m.id.name))
+        elif isinstance(m.id.type, PointerType) and m.optional:
+            if not m.id.type.inner.is_const:
+                fp.write("\n\n    pub fn %s(mut self, value: Option<&'a mut %s>) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        self.s.%s = match value {\n" % member_name)
+                fp.write("            Some(r) => r,\n")
+                fp.write("            None => core::ptr::null_mut(),\n")
+                fp.write("        };\n")
+            else:
+                fp.write("\n\n    pub fn %s(mut self, value: Option<&'a %s>) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        self.s.%s = match value {\n" % member_name)
+                fp.write("            Some(r) => r,\n")
+                fp.write("            None => core::ptr::null(),\n")
+                fp.write("        };\n")
+        elif isinstance(m.id.type, PointerType) and not m.optional:
+            if not m.id.type.inner.is_const:
+                fp.write("\n\n    pub fn %s(mut self, value: &'a mut %s) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        self.s.%s = value;\n" % member_name)
+            else:
+                fp.write("\n\n    pub fn %s(mut self, value: &'a %s) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type.inner), struct_name))
+                fp.write("        self.s.%s = value;\n" % member_name)
+        else:
+            fp.write("\n\n    pub fn %s(mut self, value: %s) -> %sBuilder<'a> {\n" % (member_name, to_rust_type_deep(m.id.type), struct_name))
+            fp.write("        self.s.%s = value;\n" % member_name)
+        fp.write("        self\n")
+        fp.write("    }")
+    fp.write("\n}\n\n")
+    fp.write("impl<'a> core::ops::Deref for %sBuilder<'a> {\n" % struct_name)
     fp.write("    type Target = %s;\n\n" % struct_name)
     fp.write("    fn deref(&self) -> &Self::Target {\n")
     fp.write("        &self.s\n")
     fp.write("    }\n")
     fp.write("}\n\n")
-    fp.write("impl core::ops::DerefMut for %sBuilder {\n" % struct_name)
+    fp.write("impl<'a> core::ops::DerefMut for %sBuilder<'a> {\n" % struct_name)
     fp.write("    fn deref_mut(&mut self) -> &mut Self::Target {\n")
     fp.write("        &mut self.s\n")
     fp.write("    }\n")
