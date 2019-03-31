@@ -53,6 +53,32 @@ def format_bitmask_value(s: str, p: str) -> str:
         attempt = "K_" + attempt
     return attempt.upper()
 
+def make_default_value_type(name: str, t: Type) -> str:
+    if isinstance(t, PointerType):
+        if t.inner.is_const:
+            return "core::ptr::null()"
+        else:
+            return "core::ptr::null_mut()"
+    elif isinstance(t, ArrayType):
+        default_value = make_default_value_type("", t.inner)
+        return "[" + (", ".join([default_value] * int(t.length))) + "]"
+    elif isinstance(t, TypeReference):
+        if t.name == "float":
+            return "0.0"
+        elif name.startswith("pfn"):
+            return "unsafe { core::mem::zeroed() }"
+        elif t.name.startswith("Vk"):
+            return to_rust_type(t.name) + "::default()"
+        else:
+            return "0"
+    return "0"
+
+def make_default_value(m: StructureMember) -> str:
+    if m.id.name == "sType" and m.default_value:
+        return "VkStructureType::" + remove_prefix(m.default_value, "VK_STRUCTURE_TYPE_")
+    else:
+        return make_default_value_type(m.id.name, m.id.type)
+
 def to_rust_type(name: str) -> str:
     if name == "uint8_t":
         return "u8"
@@ -135,11 +161,15 @@ fp.write("\n")
 
 for t in model["handle_types"]:
     fp.write("#[repr(transparent)]\n")
-    fp.write("#[derive(Copy, Clone, PartialEq, Eq)]\n")
+    fp.write("#[derive(Default, Copy, Clone, PartialEq, Eq)]\n")
     type_name = t.name
     rust_type = to_rust_type(t.type)
     fp.write("pub struct %s(%s);\n" % (type_name, rust_type))
     fp.write("impl %s {\n" % type_name)
+    fp.write("    #[inline]\n")
+    fp.write("    pub fn null() -> Self {\n")
+    fp.write("        Self(0)\n")
+    fp.write("    }\n\n")
     fp.write("    #[inline]\n")
     fp.write("    pub fn from_raw(r: %s) -> Self {\n" % rust_type)
     fp.write("        Self(r)\n")
@@ -160,7 +190,7 @@ for t in model["enum_types"]:
 
     enum_name = t.name
     fp.write("#[repr(transparent)]\n")
-    fp.write("#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]\n")
+    fp.write("#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]\n")
     fp.write("pub struct %s(u32);\n" % enum_name)
     fp.write("impl %s {\n" % enum_name)
     for v in t.values:
@@ -232,6 +262,18 @@ for t in model["structure_types"]:
             member_name = "kind"
         fp.write("    pub %s: %s,\n" % (member_name, to_rust_type_deep(m.id.type)))
     fp.write("}\n\n")
+    fp.write("impl Default for %s {\n" % struct_name)
+    fp.write("    fn default() -> Self {\n")
+    fp.write("        Self {\n")
+    for m in t.members:
+        member_name = camel_to_snake(m.id.name)
+        if member_name == "type":
+            member_name = "kind"
+        default_value = make_default_value(m)
+        fp.write("            %s: %s,\n" % (member_name, default_value))
+    fp.write("        }\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
 
 for t in model["union_types"]:
     struct_name = t.name
@@ -244,6 +286,11 @@ for t in model["union_types"]:
         if member_name == "type":
             member_name = "kind"
         fp.write("    pub %s: %s,\n" % (member_name, to_rust_type_deep(m.type)))
+    fp.write("}\n\n")
+    fp.write("impl Default for %s {\n" % struct_name)
+    fp.write("    fn default() -> Self {\n")
+    fp.write("        unsafe { core::mem::zeroed() }\n")
+    fp.write("    }\n")
     fp.write("}\n\n")
 
 for t in model["function_pointer_types"]:
@@ -318,5 +365,34 @@ write_commands_collection(fp, "static", "StaticCommands")
 write_commands_collection(fp, "entry", "EntryCommands")
 write_commands_collection(fp, "instance", "InstanceCommands")
 write_commands_collection(fp, "device", "DeviceCommands")
+
+fp.close()
+
+fp = open("src/builders.rs", "w+")
+fp.write("use crate::types::*;\n\n")
+
+for t in model["structure_types"]:
+    struct_name = t.name
+    fp.write("pub struct %sBuilder {\n" % struct_name)
+    fp.write("    s: %s,\n" % struct_name)
+    fp.write("}\n\n")
+    fp.write("impl %sBuilder {\n" % struct_name)
+    fp.write("    pub fn new() -> Self {\n")
+    fp.write("        Self {\n")
+    fp.write("            s: %s::default(),\n" % struct_name)
+    fp.write("        }\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::Deref for %sBuilder {\n" % struct_name)
+    fp.write("    type Target = %s;\n\n" % struct_name)
+    fp.write("    fn deref(&self) -> &Self::Target {\n")
+    fp.write("        &self.s\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
+    fp.write("impl core::ops::DerefMut for %sBuilder {\n" % struct_name)
+    fp.write("    fn deref_mut(&mut self) -> &mut Self::Target {\n")
+    fp.write("        &mut self.s\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
 
 fp.close()

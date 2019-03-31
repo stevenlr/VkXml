@@ -270,7 +270,7 @@ class StructureType(Entity):
             if m.attrib["optional"] == "True":
                 optional = True
             id = TypedIdentifier(m.attrib["name"], Type.from_xml(m[0]))
-            member = StructureMember(id, optional, node.get("default_value"), node.get("length"))
+            member = StructureMember(id, optional, m.get("default_value"), m.get("length"))
             struct.members.append(member)
         return struct
 

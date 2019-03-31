@@ -72,10 +72,15 @@ pub type VkSampleCountFlags = VkSampleCountFlagBits;
 pub type VkFormatFeatureFlags = VkFormatFeatureFlagBits;
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkPhysicalDevice(usize);
 impl VkPhysicalDevice {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: usize) -> Self {
         Self(r)
     }
@@ -87,10 +92,15 @@ impl VkPhysicalDevice {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkSurfaceKHR(u64);
 impl VkSurfaceKHR {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -102,10 +112,15 @@ impl VkSurfaceKHR {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkInstance(usize);
 impl VkInstance {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: usize) -> Self {
         Self(r)
     }
@@ -117,10 +132,15 @@ impl VkInstance {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkSwapchainKHR(u64);
 impl VkSwapchainKHR {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -132,10 +152,15 @@ impl VkSwapchainKHR {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkSemaphore(u64);
 impl VkSemaphore {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -147,10 +172,15 @@ impl VkSemaphore {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkQueue(usize);
 impl VkQueue {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: usize) -> Self {
         Self(r)
     }
@@ -162,10 +192,15 @@ impl VkQueue {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkFence(u64);
 impl VkFence {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -177,10 +212,15 @@ impl VkFence {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDevice(usize);
 impl VkDevice {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: usize) -> Self {
         Self(r)
     }
@@ -192,10 +232,15 @@ impl VkDevice {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkImage(u64);
 impl VkImage {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -207,10 +252,15 @@ impl VkImage {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDebugUtilsMessengerEXT(u64);
 impl VkDebugUtilsMessengerEXT {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -222,9 +272,14 @@ impl VkDebugUtilsMessengerEXT {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkCommandBuffer(usize);
 impl VkCommandBuffer {
+    #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
     #[inline]
     pub fn from_raw(r: usize) -> Self {
         Self(r)
@@ -237,10 +292,15 @@ impl VkCommandBuffer {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkBuffer(u64);
 impl VkBuffer {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -252,10 +312,15 @@ impl VkBuffer {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkFramebuffer(u64);
 impl VkFramebuffer {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -267,10 +332,15 @@ impl VkFramebuffer {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkRenderPass(u64);
 impl VkRenderPass {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -282,10 +352,15 @@ impl VkRenderPass {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkPipelineLayout(u64);
 impl VkPipelineLayout {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -297,10 +372,15 @@ impl VkPipelineLayout {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkQueryPool(u64);
 impl VkQueryPool {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -312,10 +392,15 @@ impl VkQueryPool {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkEvent(u64);
 impl VkEvent {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -327,10 +412,15 @@ impl VkEvent {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDescriptorSet(u64);
 impl VkDescriptorSet {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -342,10 +432,15 @@ impl VkDescriptorSet {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkPipeline(u64);
 impl VkPipeline {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -357,10 +452,15 @@ impl VkPipeline {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkCommandPool(u64);
 impl VkCommandPool {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -372,10 +472,15 @@ impl VkCommandPool {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkImageView(u64);
 impl VkImageView {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -387,10 +492,15 @@ impl VkImageView {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkBufferView(u64);
 impl VkBufferView {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -402,10 +512,15 @@ impl VkBufferView {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkSampler(u64);
 impl VkSampler {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -417,10 +532,15 @@ impl VkSampler {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDescriptorPool(u64);
 impl VkDescriptorPool {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -432,10 +552,15 @@ impl VkDescriptorPool {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDescriptorSetLayout(u64);
 impl VkDescriptorSetLayout {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -447,10 +572,15 @@ impl VkDescriptorSetLayout {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkShaderModule(u64);
 impl VkShaderModule {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -462,10 +592,15 @@ impl VkShaderModule {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkPipelineCache(u64);
 impl VkPipelineCache {
     #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
+    #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
     }
@@ -477,9 +612,14 @@ impl VkPipelineCache {
 }
 
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct VkDeviceMemory(u64);
 impl VkDeviceMemory {
+    #[inline]
+    pub fn null() -> Self {
+        Self(0)
+    }
+
     #[inline]
     pub fn from_raw(r: u64) -> Self {
         Self(r)
@@ -519,7 +659,7 @@ pub type VkDeviceCreateFlags = VkFlags;
 pub type VkInstanceCreateFlags = VkFlags;
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSystemAllocationScope(u32);
 impl VkSystemAllocationScope {
     pub const COMMAND: VkSystemAllocationScope = VkSystemAllocationScope(0);
@@ -530,14 +670,14 @@ impl VkSystemAllocationScope {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkInternalAllocationType(u32);
 impl VkInternalAllocationType {
     pub const EXECUTABLE: VkInternalAllocationType = VkInternalAllocationType(0);
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkStructureType(u32);
 impl VkStructureType {
     pub const APPLICATION_INFO: VkStructureType = VkStructureType(0);
@@ -600,7 +740,7 @@ impl VkStructureType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkResult(u32);
 impl VkResult {
     pub const ERROR_OUT_OF_DATE_KHR: VkResult = VkResult(-1000001004i32 as u32);
@@ -628,7 +768,7 @@ impl VkResult {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPresentModeKHR(u32);
 impl VkPresentModeKHR {
     pub const IMMEDIATE_KHR: VkPresentModeKHR = VkPresentModeKHR(0);
@@ -638,7 +778,7 @@ impl VkPresentModeKHR {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkColorSpaceKHR(u32);
 impl VkColorSpaceKHR {
     pub const SRGB_NONLINEAR_KHR: VkColorSpaceKHR = VkColorSpaceKHR(0);
@@ -646,7 +786,7 @@ impl VkColorSpaceKHR {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkFormat(u32);
 impl VkFormat {
     pub const UNDEFINED: VkFormat = VkFormat(0);
@@ -837,7 +977,7 @@ impl VkFormat {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkObjectType(u32);
 impl VkObjectType {
     pub const UNKNOWN: VkObjectType = VkObjectType(0);
@@ -872,7 +1012,7 @@ impl VkObjectType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSharingMode(u32);
 impl VkSharingMode {
     pub const EXCLUSIVE: VkSharingMode = VkSharingMode(0);
@@ -880,7 +1020,7 @@ impl VkSharingMode {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageLayout(u32);
 impl VkImageLayout {
     pub const UNDEFINED: VkImageLayout = VkImageLayout(0);
@@ -896,7 +1036,7 @@ impl VkImageLayout {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkVendorId(u32);
 impl VkVendorId {
     pub const VIV: VkVendorId = VkVendorId(65537);
@@ -905,7 +1045,7 @@ impl VkVendorId {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSubpassContents(u32);
 impl VkSubpassContents {
     pub const INLINE: VkSubpassContents = VkSubpassContents(0);
@@ -913,7 +1053,7 @@ impl VkSubpassContents {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkFilter(u32);
 impl VkFilter {
     pub const NEAREST: VkFilter = VkFilter(0);
@@ -921,7 +1061,7 @@ impl VkFilter {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkIndexType(u32);
 impl VkIndexType {
     pub const UINT16: VkIndexType = VkIndexType(0);
@@ -929,7 +1069,7 @@ impl VkIndexType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPipelineBindPoint(u32);
 impl VkPipelineBindPoint {
     pub const GRAPHICS: VkPipelineBindPoint = VkPipelineBindPoint(0);
@@ -937,7 +1077,7 @@ impl VkPipelineBindPoint {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkCommandBufferLevel(u32);
 impl VkCommandBufferLevel {
     pub const PRIMARY: VkCommandBufferLevel = VkCommandBufferLevel(0);
@@ -945,7 +1085,7 @@ impl VkCommandBufferLevel {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkAttachmentStoreOp(u32);
 impl VkAttachmentStoreOp {
     pub const STORE: VkAttachmentStoreOp = VkAttachmentStoreOp(0);
@@ -953,7 +1093,7 @@ impl VkAttachmentStoreOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkAttachmentLoadOp(u32);
 impl VkAttachmentLoadOp {
     pub const LOAD: VkAttachmentLoadOp = VkAttachmentLoadOp(0);
@@ -962,7 +1102,7 @@ impl VkAttachmentLoadOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkDescriptorType(u32);
 impl VkDescriptorType {
     pub const SAMPLER: VkDescriptorType = VkDescriptorType(0);
@@ -979,7 +1119,7 @@ impl VkDescriptorType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkBorderColor(u32);
 impl VkBorderColor {
     pub const FLOAT_TRANSPARENT_BLACK: VkBorderColor = VkBorderColor(0);
@@ -991,7 +1131,7 @@ impl VkBorderColor {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkCompareOp(u32);
 impl VkCompareOp {
     pub const NEVER: VkCompareOp = VkCompareOp(0);
@@ -1005,7 +1145,7 @@ impl VkCompareOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSamplerAddressMode(u32);
 impl VkSamplerAddressMode {
     pub const REPEAT: VkSamplerAddressMode = VkSamplerAddressMode(0);
@@ -1015,7 +1155,7 @@ impl VkSamplerAddressMode {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSamplerMipmapMode(u32);
 impl VkSamplerMipmapMode {
     pub const NEAREST: VkSamplerMipmapMode = VkSamplerMipmapMode(0);
@@ -1023,7 +1163,7 @@ impl VkSamplerMipmapMode {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkDynamicState(u32);
 impl VkDynamicState {
     pub const VIEWPORT: VkDynamicState = VkDynamicState(0);
@@ -1038,7 +1178,7 @@ impl VkDynamicState {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkBlendOp(u32);
 impl VkBlendOp {
     pub const ADD: VkBlendOp = VkBlendOp(0);
@@ -1049,7 +1189,7 @@ impl VkBlendOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkBlendFactor(u32);
 impl VkBlendFactor {
     pub const ZERO: VkBlendFactor = VkBlendFactor(0);
@@ -1074,7 +1214,7 @@ impl VkBlendFactor {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkLogicOp(u32);
 impl VkLogicOp {
     pub const CLEAR: VkLogicOp = VkLogicOp(0);
@@ -1096,7 +1236,7 @@ impl VkLogicOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkStencilOp(u32);
 impl VkStencilOp {
     pub const KEEP: VkStencilOp = VkStencilOp(0);
@@ -1110,7 +1250,7 @@ impl VkStencilOp {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkFrontFace(u32);
 impl VkFrontFace {
     pub const COUNTER_CLOCKWISE: VkFrontFace = VkFrontFace(0);
@@ -1118,7 +1258,7 @@ impl VkFrontFace {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPolygonMode(u32);
 impl VkPolygonMode {
     pub const FILL: VkPolygonMode = VkPolygonMode(0);
@@ -1127,7 +1267,7 @@ impl VkPolygonMode {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPrimitiveTopology(u32);
 impl VkPrimitiveTopology {
     pub const POINT_LIST: VkPrimitiveTopology = VkPrimitiveTopology(0);
@@ -1144,7 +1284,7 @@ impl VkPrimitiveTopology {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkVertexInputRate(u32);
 impl VkVertexInputRate {
     pub const VERTEX: VkVertexInputRate = VkVertexInputRate(0);
@@ -1152,7 +1292,7 @@ impl VkVertexInputRate {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkComponentSwizzle(u32);
 impl VkComponentSwizzle {
     pub const IDENTITY: VkComponentSwizzle = VkComponentSwizzle(0);
@@ -1165,7 +1305,7 @@ impl VkComponentSwizzle {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageViewType(u32);
 impl VkImageViewType {
     pub const K_1D: VkImageViewType = VkImageViewType(0);
@@ -1178,7 +1318,7 @@ impl VkImageViewType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageTiling(u32);
 impl VkImageTiling {
     pub const OPTIMAL: VkImageTiling = VkImageTiling(0);
@@ -1186,7 +1326,7 @@ impl VkImageTiling {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageType(u32);
 impl VkImageType {
     pub const K_1D: VkImageType = VkImageType(0);
@@ -1195,7 +1335,7 @@ impl VkImageType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkQueryType(u32);
 impl VkQueryType {
     pub const OCCLUSION: VkQueryType = VkQueryType(0);
@@ -1204,7 +1344,7 @@ impl VkQueryType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPhysicalDeviceType(u32);
 impl VkPhysicalDeviceType {
     pub const OTHER: VkPhysicalDeviceType = VkPhysicalDeviceType(0);
@@ -1215,7 +1355,7 @@ impl VkPhysicalDeviceType {
 }
 
 #[repr(transparent)]
-#[derive(PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
+#[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPipelineCacheHeaderVersion(u32);
 impl VkPipelineCacheHeaderVersion {
     pub const ONE: VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion(1);
@@ -3078,6 +3218,19 @@ pub struct VkAllocationCallbacks {
     pub pfn_internal_free: PfnVkInternalFreeNotification,
 }
 
+impl Default for VkAllocationCallbacks {
+    fn default() -> Self {
+        Self {
+            p_user_data: core::ptr::null_mut(),
+            pfn_allocation: unsafe { core::mem::zeroed() },
+            pfn_reallocation: unsafe { core::mem::zeroed() },
+            pfn_free: unsafe { core::mem::zeroed() },
+            pfn_internal_allocation: unsafe { core::mem::zeroed() },
+            pfn_internal_free: unsafe { core::mem::zeroed() },
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkWin32SurfaceCreateInfoKHR {
@@ -3088,11 +3241,32 @@ pub struct VkWin32SurfaceCreateInfoKHR {
     pub hwnd: HWND,
 }
 
+impl Default for VkWin32SurfaceCreateInfoKHR {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::WIN32_SURFACE_CREATE_INFO_KHR,
+            p_next: core::ptr::null(),
+            flags: VkWin32SurfaceCreateFlagsKHR::default(),
+            hinstance: 0,
+            hwnd: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSurfaceFormatKHR {
     pub format: VkFormat,
     pub color_space: VkColorSpaceKHR,
+}
+
+impl Default for VkSurfaceFormatKHR {
+    fn default() -> Self {
+        Self {
+            format: VkFormat::default(),
+            color_space: VkColorSpaceKHR::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3110,11 +3284,37 @@ pub struct VkSurfaceCapabilitiesKHR {
     pub supported_usage_flags: VkImageUsageFlags,
 }
 
+impl Default for VkSurfaceCapabilitiesKHR {
+    fn default() -> Self {
+        Self {
+            min_image_count: 0,
+            max_image_count: 0,
+            current_extent: VkExtent2D::default(),
+            min_image_extent: VkExtent2D::default(),
+            max_image_extent: VkExtent2D::default(),
+            max_image_array_layers: 0,
+            supported_transforms: VkSurfaceTransformFlagsKHR::default(),
+            current_transform: VkSurfaceTransformFlagBitsKHR::default(),
+            supported_composite_alpha: VkCompositeAlphaFlagsKHR::default(),
+            supported_usage_flags: VkImageUsageFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkExtent2D {
     pub width: u32,
     pub height: u32,
+}
+
+impl Default for VkExtent2D {
+    fn default() -> Self {
+        Self {
+            width: 0,
+            height: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3128,6 +3328,21 @@ pub struct VkPresentInfoKHR {
     pub p_swapchains: *const VkSwapchainKHR,
     pub p_image_indices: *const u32,
     pub p_results: *mut VkResult,
+}
+
+impl Default for VkPresentInfoKHR {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PRESENT_INFO_KHR,
+            p_next: core::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: core::ptr::null(),
+            swapchain_count: 0,
+            p_swapchains: core::ptr::null(),
+            p_image_indices: core::ptr::null(),
+            p_results: core::ptr::null_mut(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3153,6 +3368,31 @@ pub struct VkSwapchainCreateInfoKHR {
     pub old_swapchain: VkSwapchainKHR,
 }
 
+impl Default for VkSwapchainCreateInfoKHR {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::SWAPCHAIN_CREATE_INFO_KHR,
+            p_next: core::ptr::null(),
+            flags: VkSwapchainCreateFlagsKHR::default(),
+            surface: VkSurfaceKHR::default(),
+            min_image_count: 0,
+            image_format: VkFormat::default(),
+            image_color_space: VkColorSpaceKHR::default(),
+            image_extent: VkExtent2D::default(),
+            image_array_layers: 0,
+            image_usage: VkImageUsageFlags::default(),
+            image_sharing_mode: VkSharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: core::ptr::null(),
+            pre_transform: VkSurfaceTransformFlagBitsKHR::default(),
+            composite_alpha: VkCompositeAlphaFlagBitsKHR::default(),
+            present_mode: VkPresentModeKHR::default(),
+            clipped: VkBool32::default(),
+            old_swapchain: VkSwapchainKHR::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDebugUtilsMessengerCallbackDataEXT {
@@ -3170,6 +3410,25 @@ pub struct VkDebugUtilsMessengerCallbackDataEXT {
     pub p_objects: *const VkDebugUtilsObjectNameInfoEXT,
 }
 
+impl Default for VkDebugUtilsMessengerCallbackDataEXT {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
+            p_next: core::ptr::null(),
+            flags: VkDebugUtilsMessengerCallbackDataFlagsEXT::default(),
+            p_message_id_name: core::ptr::null(),
+            message_id_number: 0,
+            p_message: core::ptr::null(),
+            queue_label_count: 0,
+            p_queue_labels: core::ptr::null(),
+            cmd_buf_label_count: 0,
+            p_cmd_buf_labels: core::ptr::null(),
+            object_count: 0,
+            p_objects: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDebugUtilsObjectNameInfoEXT {
@@ -3180,6 +3439,18 @@ pub struct VkDebugUtilsObjectNameInfoEXT {
     pub p_object_name: *const u8,
 }
 
+impl Default for VkDebugUtilsObjectNameInfoEXT {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
+            p_next: core::ptr::null(),
+            object_type: VkObjectType::default(),
+            object_handle: 0,
+            p_object_name: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDebugUtilsLabelEXT {
@@ -3187,6 +3458,17 @@ pub struct VkDebugUtilsLabelEXT {
     pub p_next: *const core::ffi::c_void,
     pub p_label_name: *const u8,
     pub color: [f32; 4],
+}
+
+impl Default for VkDebugUtilsLabelEXT {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEBUG_UTILS_LABEL_EXT,
+            p_next: core::ptr::null(),
+            p_label_name: core::ptr::null(),
+            color: [0.0, 0.0, 0.0, 0.0],
+        }
+    }
 }
 
 #[repr(C)]
@@ -3201,6 +3483,20 @@ pub struct VkDebugUtilsMessengerCreateInfoEXT {
     pub p_user_data: *mut core::ffi::c_void,
 }
 
+impl Default for VkDebugUtilsMessengerCreateInfoEXT {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+            p_next: core::ptr::null(),
+            flags: VkDebugUtilsMessengerCreateFlagsEXT::default(),
+            message_severity: VkDebugUtilsMessageSeverityFlagsEXT::default(),
+            message_type: VkDebugUtilsMessageTypeFlagsEXT::default(),
+            pfn_user_callback: unsafe { core::mem::zeroed() },
+            p_user_data: core::ptr::null_mut(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDebugUtilsObjectTagInfoEXT {
@@ -3213,11 +3509,34 @@ pub struct VkDebugUtilsObjectTagInfoEXT {
     pub p_tag: *const core::ffi::c_void,
 }
 
+impl Default for VkDebugUtilsObjectTagInfoEXT {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
+            p_next: core::ptr::null(),
+            object_type: VkObjectType::default(),
+            object_handle: 0,
+            tag_name: 0,
+            tag_size: 0,
+            p_tag: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkBaseInStructure {
     pub s_type: VkStructureType,
     pub p_next: *const VkBaseInStructure,
+}
+
+impl Default for VkBaseInStructure {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::default(),
+            p_next: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3227,6 +3546,15 @@ pub struct VkBaseOutStructure {
     pub p_next: *mut VkBaseOutStructure,
 }
 
+impl Default for VkBaseOutStructure {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::default(),
+            p_next: core::ptr::null_mut(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkMemoryBarrier {
@@ -3234,6 +3562,17 @@ pub struct VkMemoryBarrier {
     pub p_next: *const core::ffi::c_void,
     pub src_access_mask: VkAccessFlags,
     pub dst_access_mask: VkAccessFlags,
+}
+
+impl Default for VkMemoryBarrier {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::MEMORY_BARRIER,
+            p_next: core::ptr::null(),
+            src_access_mask: VkAccessFlags::default(),
+            dst_access_mask: VkAccessFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3251,6 +3590,23 @@ pub struct VkImageMemoryBarrier {
     pub subresource_range: VkImageSubresourceRange,
 }
 
+impl Default for VkImageMemoryBarrier {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::IMAGE_MEMORY_BARRIER,
+            p_next: core::ptr::null(),
+            src_access_mask: VkAccessFlags::default(),
+            dst_access_mask: VkAccessFlags::default(),
+            old_layout: VkImageLayout::default(),
+            new_layout: VkImageLayout::default(),
+            src_queue_family_index: 0,
+            dst_queue_family_index: 0,
+            image: VkImage::default(),
+            subresource_range: VkImageSubresourceRange::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkImageSubresourceRange {
@@ -3261,6 +3617,18 @@ pub struct VkImageSubresourceRange {
     pub layer_count: u32,
 }
 
+impl Default for VkImageSubresourceRange {
+    fn default() -> Self {
+        Self {
+            aspect_mask: VkImageAspectFlags::default(),
+            base_mip_level: 0,
+            level_count: 0,
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDrawIndirectCommand {
@@ -3268,6 +3636,17 @@ pub struct VkDrawIndirectCommand {
     pub instance_count: u32,
     pub first_vertex: u32,
     pub first_instance: u32,
+}
+
+impl Default for VkDrawIndirectCommand {
+    fn default() -> Self {
+        Self {
+            vertex_count: 0,
+            instance_count: 0,
+            first_vertex: 0,
+            first_instance: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3280,12 +3659,34 @@ pub struct VkDrawIndexedIndirectCommand {
     pub first_instance: u32,
 }
 
+impl Default for VkDrawIndexedIndirectCommand {
+    fn default() -> Self {
+        Self {
+            index_count: 0,
+            instance_count: 0,
+            first_index: 0,
+            vertex_offset: 0,
+            first_instance: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDispatchIndirectCommand {
     pub x: u32,
     pub y: u32,
     pub z: u32,
+}
+
+impl Default for VkDispatchIndirectCommand {
+    fn default() -> Self {
+        Self {
+            x: 0,
+            y: 0,
+            z: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3302,6 +3703,22 @@ pub struct VkBufferMemoryBarrier {
     pub size: VkDeviceSize,
 }
 
+impl Default for VkBufferMemoryBarrier {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::BUFFER_MEMORY_BARRIER,
+            p_next: core::ptr::null(),
+            src_access_mask: VkAccessFlags::default(),
+            dst_access_mask: VkAccessFlags::default(),
+            src_queue_family_index: 0,
+            dst_queue_family_index: 0,
+            buffer: VkBuffer::default(),
+            offset: VkDeviceSize::default(),
+            size: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkRenderPassBeginInfo {
@@ -3314,11 +3731,34 @@ pub struct VkRenderPassBeginInfo {
     pub p_clear_values: *const VkClearValue,
 }
 
+impl Default for VkRenderPassBeginInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::RENDER_PASS_BEGIN_INFO,
+            p_next: core::ptr::null(),
+            render_pass: VkRenderPass::default(),
+            framebuffer: VkFramebuffer::default(),
+            render_area: VkRect2D::default(),
+            clear_value_count: 0,
+            p_clear_values: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkClearDepthStencilValue {
     pub depth: f32,
     pub stencil: u32,
+}
+
+impl Default for VkClearDepthStencilValue {
+    fn default() -> Self {
+        Self {
+            depth: 0.0,
+            stencil: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3328,11 +3768,29 @@ pub struct VkRect2D {
     pub extent: VkExtent2D,
 }
 
+impl Default for VkRect2D {
+    fn default() -> Self {
+        Self {
+            offset: VkOffset2D::default(),
+            extent: VkExtent2D::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkOffset2D {
     pub x: i32,
     pub y: i32,
+}
+
+impl Default for VkOffset2D {
+    fn default() -> Self {
+        Self {
+            x: 0,
+            y: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3345,6 +3803,18 @@ pub struct VkImageResolve {
     pub extent: VkExtent3D,
 }
 
+impl Default for VkImageResolve {
+    fn default() -> Self {
+        Self {
+            src_subresource: VkImageSubresourceLayers::default(),
+            src_offset: VkOffset3D::default(),
+            dst_subresource: VkImageSubresourceLayers::default(),
+            dst_offset: VkOffset3D::default(),
+            extent: VkExtent3D::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkExtent3D {
@@ -3353,12 +3823,32 @@ pub struct VkExtent3D {
     pub depth: u32,
 }
 
+impl Default for VkExtent3D {
+    fn default() -> Self {
+        Self {
+            width: 0,
+            height: 0,
+            depth: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkOffset3D {
     pub x: i32,
     pub y: i32,
     pub z: i32,
+}
+
+impl Default for VkOffset3D {
+    fn default() -> Self {
+        Self {
+            x: 0,
+            y: 0,
+            z: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3370,6 +3860,17 @@ pub struct VkImageSubresourceLayers {
     pub layer_count: u32,
 }
 
+impl Default for VkImageSubresourceLayers {
+    fn default() -> Self {
+        Self {
+            aspect_mask: VkImageAspectFlags::default(),
+            mip_level: 0,
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkClearRect {
@@ -3378,12 +3879,32 @@ pub struct VkClearRect {
     pub layer_count: u32,
 }
 
+impl Default for VkClearRect {
+    fn default() -> Self {
+        Self {
+            rect: VkRect2D::default(),
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkClearAttachment {
     pub aspect_mask: VkImageAspectFlags,
     pub color_attachment: u32,
     pub clear_value: VkClearValue,
+}
+
+impl Default for VkClearAttachment {
+    fn default() -> Self {
+        Self {
+            aspect_mask: VkImageAspectFlags::default(),
+            color_attachment: 0,
+            clear_value: VkClearValue::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3397,6 +3918,19 @@ pub struct VkBufferImageCopy {
     pub image_extent: VkExtent3D,
 }
 
+impl Default for VkBufferImageCopy {
+    fn default() -> Self {
+        Self {
+            buffer_offset: VkDeviceSize::default(),
+            buffer_row_length: 0,
+            buffer_image_height: 0,
+            image_subresource: VkImageSubresourceLayers::default(),
+            image_offset: VkOffset3D::default(),
+            image_extent: VkExtent3D::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkImageBlit {
@@ -3404,6 +3938,17 @@ pub struct VkImageBlit {
     pub src_offsets: [VkOffset3D; 2],
     pub dst_subresource: VkImageSubresourceLayers,
     pub dst_offsets: [VkOffset3D; 2],
+}
+
+impl Default for VkImageBlit {
+    fn default() -> Self {
+        Self {
+            src_subresource: VkImageSubresourceLayers::default(),
+            src_offsets: [VkOffset3D::default(), VkOffset3D::default()],
+            dst_subresource: VkImageSubresourceLayers::default(),
+            dst_offsets: [VkOffset3D::default(), VkOffset3D::default()],
+        }
+    }
 }
 
 #[repr(C)]
@@ -3416,12 +3961,34 @@ pub struct VkImageCopy {
     pub extent: VkExtent3D,
 }
 
+impl Default for VkImageCopy {
+    fn default() -> Self {
+        Self {
+            src_subresource: VkImageSubresourceLayers::default(),
+            src_offset: VkOffset3D::default(),
+            dst_subresource: VkImageSubresourceLayers::default(),
+            dst_offset: VkOffset3D::default(),
+            extent: VkExtent3D::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkBufferCopy {
     pub src_offset: VkDeviceSize,
     pub dst_offset: VkDeviceSize,
     pub size: VkDeviceSize,
+}
+
+impl Default for VkBufferCopy {
+    fn default() -> Self {
+        Self {
+            src_offset: VkDeviceSize::default(),
+            dst_offset: VkDeviceSize::default(),
+            size: VkDeviceSize::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3435,6 +4002,19 @@ pub struct VkViewport {
     pub max_depth: f32,
 }
 
+impl Default for VkViewport {
+    fn default() -> Self {
+        Self {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 0.0,
+            min_depth: 0.0,
+            max_depth: 0.0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkCommandBufferBeginInfo {
@@ -3442,6 +4022,17 @@ pub struct VkCommandBufferBeginInfo {
     pub p_next: *const core::ffi::c_void,
     pub flags: VkCommandBufferUsageFlags,
     pub p_inheritance_info: *const VkCommandBufferInheritanceInfo,
+}
+
+impl Default for VkCommandBufferBeginInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COMMAND_BUFFER_BEGIN_INFO,
+            p_next: core::ptr::null(),
+            flags: VkCommandBufferUsageFlags::default(),
+            p_inheritance_info: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3457,6 +4048,21 @@ pub struct VkCommandBufferInheritanceInfo {
     pub pipeline_statistics: VkQueryPipelineStatisticFlags,
 }
 
+impl Default for VkCommandBufferInheritanceInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COMMAND_BUFFER_INHERITANCE_INFO,
+            p_next: core::ptr::null(),
+            render_pass: VkRenderPass::default(),
+            subpass: 0,
+            framebuffer: VkFramebuffer::default(),
+            occlusion_query_enable: VkBool32::default(),
+            query_flags: VkQueryControlFlags::default(),
+            pipeline_statistics: VkQueryPipelineStatisticFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkCommandBufferAllocateInfo {
@@ -3467,6 +4073,18 @@ pub struct VkCommandBufferAllocateInfo {
     pub command_buffer_count: u32,
 }
 
+impl Default for VkCommandBufferAllocateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COMMAND_BUFFER_ALLOCATE_INFO,
+            p_next: core::ptr::null(),
+            command_pool: VkCommandPool::default(),
+            level: VkCommandBufferLevel::default(),
+            command_buffer_count: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkCommandPoolCreateInfo {
@@ -3474,6 +4092,17 @@ pub struct VkCommandPoolCreateInfo {
     pub p_next: *const core::ffi::c_void,
     pub flags: VkCommandPoolCreateFlags,
     pub queue_family_index: u32,
+}
+
+impl Default for VkCommandPoolCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COMMAND_POOL_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkCommandPoolCreateFlags::default(),
+            queue_family_index: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3490,6 +4119,22 @@ pub struct VkRenderPassCreateInfo {
     pub p_dependencies: *const VkSubpassDependency,
 }
 
+impl Default for VkRenderPassCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::RENDER_PASS_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkRenderPassCreateFlags::default(),
+            attachment_count: 0,
+            p_attachments: core::ptr::null(),
+            subpass_count: 0,
+            p_subpasses: core::ptr::null(),
+            dependency_count: 0,
+            p_dependencies: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSubpassDependency {
@@ -3500,6 +4145,20 @@ pub struct VkSubpassDependency {
     pub src_access_mask: VkAccessFlags,
     pub dst_access_mask: VkAccessFlags,
     pub dependency_flags: VkDependencyFlags,
+}
+
+impl Default for VkSubpassDependency {
+    fn default() -> Self {
+        Self {
+            src_subpass: 0,
+            dst_subpass: 0,
+            src_stage_mask: VkPipelineStageFlags::default(),
+            dst_stage_mask: VkPipelineStageFlags::default(),
+            src_access_mask: VkAccessFlags::default(),
+            dst_access_mask: VkAccessFlags::default(),
+            dependency_flags: VkDependencyFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3517,11 +4176,37 @@ pub struct VkSubpassDescription {
     pub p_preserve_attachments: *const u32,
 }
 
+impl Default for VkSubpassDescription {
+    fn default() -> Self {
+        Self {
+            flags: VkSubpassDescriptionFlags::default(),
+            pipeline_bind_point: VkPipelineBindPoint::default(),
+            input_attachment_count: 0,
+            p_input_attachments: core::ptr::null(),
+            color_attachment_count: 0,
+            p_color_attachments: core::ptr::null(),
+            p_resolve_attachments: core::ptr::null(),
+            p_depth_stencil_attachment: core::ptr::null(),
+            preserve_attachment_count: 0,
+            p_preserve_attachments: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkAttachmentReference {
     pub attachment: u32,
     pub layout: VkImageLayout,
+}
+
+impl Default for VkAttachmentReference {
+    fn default() -> Self {
+        Self {
+            attachment: 0,
+            layout: VkImageLayout::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3538,6 +4223,22 @@ pub struct VkAttachmentDescription {
     pub final_layout: VkImageLayout,
 }
 
+impl Default for VkAttachmentDescription {
+    fn default() -> Self {
+        Self {
+            flags: VkAttachmentDescriptionFlags::default(),
+            format: VkFormat::default(),
+            samples: VkSampleCountFlagBits::default(),
+            load_op: VkAttachmentLoadOp::default(),
+            store_op: VkAttachmentStoreOp::default(),
+            stencil_load_op: VkAttachmentLoadOp::default(),
+            stencil_store_op: VkAttachmentStoreOp::default(),
+            initial_layout: VkImageLayout::default(),
+            final_layout: VkImageLayout::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkFramebufferCreateInfo {
@@ -3552,6 +4253,22 @@ pub struct VkFramebufferCreateInfo {
     pub layers: u32,
 }
 
+impl Default for VkFramebufferCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::FRAMEBUFFER_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkFramebufferCreateFlags::default(),
+            render_pass: VkRenderPass::default(),
+            attachment_count: 0,
+            p_attachments: core::ptr::null(),
+            width: 0,
+            height: 0,
+            layers: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkCopyDescriptorSet {
@@ -3564,6 +4281,22 @@ pub struct VkCopyDescriptorSet {
     pub dst_binding: u32,
     pub dst_array_element: u32,
     pub descriptor_count: u32,
+}
+
+impl Default for VkCopyDescriptorSet {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COPY_DESCRIPTOR_SET,
+            p_next: core::ptr::null(),
+            src_set: VkDescriptorSet::default(),
+            src_binding: 0,
+            src_array_element: 0,
+            dst_set: VkDescriptorSet::default(),
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3581,12 +4314,39 @@ pub struct VkWriteDescriptorSet {
     pub p_texel_buffer_view: *const VkBufferView,
 }
 
+impl Default for VkWriteDescriptorSet {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::WRITE_DESCRIPTOR_SET,
+            p_next: core::ptr::null(),
+            dst_set: VkDescriptorSet::default(),
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 0,
+            descriptor_type: VkDescriptorType::default(),
+            p_image_info: core::ptr::null(),
+            p_buffer_info: core::ptr::null(),
+            p_texel_buffer_view: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDescriptorBufferInfo {
     pub buffer: VkBuffer,
     pub offset: VkDeviceSize,
     pub range: VkDeviceSize,
+}
+
+impl Default for VkDescriptorBufferInfo {
+    fn default() -> Self {
+        Self {
+            buffer: VkBuffer::default(),
+            offset: VkDeviceSize::default(),
+            range: VkDeviceSize::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3597,6 +4357,16 @@ pub struct VkDescriptorImageInfo {
     pub image_layout: VkImageLayout,
 }
 
+impl Default for VkDescriptorImageInfo {
+    fn default() -> Self {
+        Self {
+            sampler: VkSampler::default(),
+            image_view: VkImageView::default(),
+            image_layout: VkImageLayout::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDescriptorSetAllocateInfo {
@@ -3605,6 +4375,18 @@ pub struct VkDescriptorSetAllocateInfo {
     pub descriptor_pool: VkDescriptorPool,
     pub descriptor_set_count: u32,
     pub p_set_layouts: *const VkDescriptorSetLayout,
+}
+
+impl Default for VkDescriptorSetAllocateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
+            p_next: core::ptr::null(),
+            descriptor_pool: VkDescriptorPool::default(),
+            descriptor_set_count: 0,
+            p_set_layouts: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3618,11 +4400,33 @@ pub struct VkDescriptorPoolCreateInfo {
     pub p_pool_sizes: *const VkDescriptorPoolSize,
 }
 
+impl Default for VkDescriptorPoolCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DESCRIPTOR_POOL_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkDescriptorPoolCreateFlags::default(),
+            max_sets: 0,
+            pool_size_count: 0,
+            p_pool_sizes: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDescriptorPoolSize {
     pub kind: VkDescriptorType,
     pub descriptor_count: u32,
+}
+
+impl Default for VkDescriptorPoolSize {
+    fn default() -> Self {
+        Self {
+            kind: VkDescriptorType::default(),
+            descriptor_count: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3635,6 +4439,18 @@ pub struct VkDescriptorSetLayoutCreateInfo {
     pub p_bindings: *const VkDescriptorSetLayoutBinding,
 }
 
+impl Default for VkDescriptorSetLayoutCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkDescriptorSetLayoutCreateFlags::default(),
+            binding_count: 0,
+            p_bindings: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDescriptorSetLayoutBinding {
@@ -3643,6 +4459,18 @@ pub struct VkDescriptorSetLayoutBinding {
     pub descriptor_count: u32,
     pub stage_flags: VkShaderStageFlags,
     pub p_immutable_samplers: *const VkSampler,
+}
+
+impl Default for VkDescriptorSetLayoutBinding {
+    fn default() -> Self {
+        Self {
+            binding: 0,
+            descriptor_type: VkDescriptorType::default(),
+            descriptor_count: 0,
+            stage_flags: VkShaderStageFlags::default(),
+            p_immutable_samplers: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3668,6 +4496,31 @@ pub struct VkSamplerCreateInfo {
     pub unnormalized_coordinates: VkBool32,
 }
 
+impl Default for VkSamplerCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::SAMPLER_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkSamplerCreateFlags::default(),
+            mag_filter: VkFilter::default(),
+            min_filter: VkFilter::default(),
+            mipmap_mode: VkSamplerMipmapMode::default(),
+            address_mode_u: VkSamplerAddressMode::default(),
+            address_mode_v: VkSamplerAddressMode::default(),
+            address_mode_w: VkSamplerAddressMode::default(),
+            mip_lod_bias: 0.0,
+            anisotropy_enable: VkBool32::default(),
+            max_anisotropy: 0.0,
+            compare_enable: VkBool32::default(),
+            compare_op: VkCompareOp::default(),
+            min_lod: 0.0,
+            max_lod: 0.0,
+            border_color: VkBorderColor::default(),
+            unnormalized_coordinates: VkBool32::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineLayoutCreateInfo {
@@ -3680,12 +4533,36 @@ pub struct VkPipelineLayoutCreateInfo {
     pub p_push_constant_ranges: *const VkPushConstantRange,
 }
 
+impl Default for VkPipelineLayoutCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_LAYOUT_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineLayoutCreateFlags::default(),
+            set_layout_count: 0,
+            p_set_layouts: core::ptr::null(),
+            push_constant_range_count: 0,
+            p_push_constant_ranges: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPushConstantRange {
     pub stage_flags: VkShaderStageFlags,
     pub offset: u32,
     pub size: u32,
+}
+
+impl Default for VkPushConstantRange {
+    fn default() -> Self {
+        Self {
+            stage_flags: VkShaderStageFlags::default(),
+            offset: 0,
+            size: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3700,6 +4577,20 @@ pub struct VkComputePipelineCreateInfo {
     pub base_pipeline_index: i32,
 }
 
+impl Default for VkComputePipelineCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::COMPUTE_PIPELINE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineCreateFlags::default(),
+            stage: VkPipelineShaderStageCreateInfo::default(),
+            layout: VkPipelineLayout::default(),
+            base_pipeline_handle: VkPipeline::default(),
+            base_pipeline_index: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineShaderStageCreateInfo {
@@ -3712,6 +4603,20 @@ pub struct VkPipelineShaderStageCreateInfo {
     pub p_specialization_info: *const VkSpecializationInfo,
 }
 
+impl Default for VkPipelineShaderStageCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineShaderStageCreateFlags::default(),
+            stage: VkShaderStageFlagBits::default(),
+            module: VkShaderModule::default(),
+            p_name: core::ptr::null(),
+            p_specialization_info: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSpecializationInfo {
@@ -3721,12 +4626,33 @@ pub struct VkSpecializationInfo {
     pub p_data: *const core::ffi::c_void,
 }
 
+impl Default for VkSpecializationInfo {
+    fn default() -> Self {
+        Self {
+            map_entry_count: 0,
+            p_map_entries: core::ptr::null(),
+            data_size: 0,
+            p_data: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSpecializationMapEntry {
     pub ant_id: u32,
     pub offset: u32,
     pub size: usize,
+}
+
+impl Default for VkSpecializationMapEntry {
+    fn default() -> Self {
+        Self {
+            ant_id: 0,
+            offset: 0,
+            size: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3753,6 +4679,32 @@ pub struct VkGraphicsPipelineCreateInfo {
     pub base_pipeline_index: i32,
 }
 
+impl Default for VkGraphicsPipelineCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::GRAPHICS_PIPELINE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineCreateFlags::default(),
+            stage_count: 0,
+            p_stages: core::ptr::null(),
+            p_vertex_input_state: core::ptr::null(),
+            p_input_assembly_state: core::ptr::null(),
+            p_tessellation_state: core::ptr::null(),
+            p_viewport_state: core::ptr::null(),
+            p_rasterization_state: core::ptr::null(),
+            p_multisample_state: core::ptr::null(),
+            p_depth_stencil_state: core::ptr::null(),
+            p_color_blend_state: core::ptr::null(),
+            p_dynamic_state: core::ptr::null(),
+            layout: VkPipelineLayout::default(),
+            render_pass: VkRenderPass::default(),
+            subpass: 0,
+            base_pipeline_handle: VkPipeline::default(),
+            base_pipeline_index: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineDynamicStateCreateInfo {
@@ -3761,6 +4713,18 @@ pub struct VkPipelineDynamicStateCreateInfo {
     pub flags: VkPipelineDynamicStateCreateFlags,
     pub dynamic_state_count: u32,
     pub p_dynamic_states: *const VkDynamicState,
+}
+
+impl Default for VkPipelineDynamicStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineDynamicStateCreateFlags::default(),
+            dynamic_state_count: 0,
+            p_dynamic_states: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3776,6 +4740,21 @@ pub struct VkPipelineColorBlendStateCreateInfo {
     pub blend_constants: [f32; 4],
 }
 
+impl Default for VkPipelineColorBlendStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineColorBlendStateCreateFlags::default(),
+            logic_op_enable: VkBool32::default(),
+            logic_op: VkLogicOp::default(),
+            attachment_count: 0,
+            p_attachments: core::ptr::null(),
+            blend_constants: [0.0, 0.0, 0.0, 0.0],
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineColorBlendAttachmentState {
@@ -3787,6 +4766,21 @@ pub struct VkPipelineColorBlendAttachmentState {
     pub dst_alpha_blend_factor: VkBlendFactor,
     pub alpha_blend_op: VkBlendOp,
     pub color_write_mask: VkColorComponentFlags,
+}
+
+impl Default for VkPipelineColorBlendAttachmentState {
+    fn default() -> Self {
+        Self {
+            blend_enable: VkBool32::default(),
+            src_color_blend_factor: VkBlendFactor::default(),
+            dst_color_blend_factor: VkBlendFactor::default(),
+            color_blend_op: VkBlendOp::default(),
+            src_alpha_blend_factor: VkBlendFactor::default(),
+            dst_alpha_blend_factor: VkBlendFactor::default(),
+            alpha_blend_op: VkBlendOp::default(),
+            color_write_mask: VkColorComponentFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3806,6 +4800,25 @@ pub struct VkPipelineDepthStencilStateCreateInfo {
     pub max_depth_bounds: f32,
 }
 
+impl Default for VkPipelineDepthStencilStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineDepthStencilStateCreateFlags::default(),
+            depth_test_enable: VkBool32::default(),
+            depth_write_enable: VkBool32::default(),
+            depth_compare_op: VkCompareOp::default(),
+            depth_bounds_test_enable: VkBool32::default(),
+            stencil_test_enable: VkBool32::default(),
+            front: VkStencilOpState::default(),
+            back: VkStencilOpState::default(),
+            min_depth_bounds: 0.0,
+            max_depth_bounds: 0.0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkStencilOpState {
@@ -3816,6 +4829,20 @@ pub struct VkStencilOpState {
     pub compare_mask: u32,
     pub write_mask: u32,
     pub reference: u32,
+}
+
+impl Default for VkStencilOpState {
+    fn default() -> Self {
+        Self {
+            fail_op: VkStencilOp::default(),
+            pass_op: VkStencilOp::default(),
+            depth_fail_op: VkStencilOp::default(),
+            compare_op: VkCompareOp::default(),
+            compare_mask: 0,
+            write_mask: 0,
+            reference: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3830,6 +4857,22 @@ pub struct VkPipelineMultisampleStateCreateInfo {
     pub p_sample_mask: *const VkSampleMask,
     pub alpha_to_coverage_enable: VkBool32,
     pub alpha_to_one_enable: VkBool32,
+}
+
+impl Default for VkPipelineMultisampleStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineMultisampleStateCreateFlags::default(),
+            rasterization_samples: VkSampleCountFlagBits::default(),
+            sample_shading_enable: VkBool32::default(),
+            min_sample_shading: 0.0,
+            p_sample_mask: core::ptr::null(),
+            alpha_to_coverage_enable: VkBool32::default(),
+            alpha_to_one_enable: VkBool32::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3850,6 +4893,26 @@ pub struct VkPipelineRasterizationStateCreateInfo {
     pub line_width: f32,
 }
 
+impl Default for VkPipelineRasterizationStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineRasterizationStateCreateFlags::default(),
+            depth_clamp_enable: VkBool32::default(),
+            rasterizer_discard_enable: VkBool32::default(),
+            polygon_mode: VkPolygonMode::default(),
+            cull_mode: VkCullModeFlags::default(),
+            front_face: VkFrontFace::default(),
+            depth_bias_enable: VkBool32::default(),
+            depth_bias_constant_factor: 0.0,
+            depth_bias_clamp: 0.0,
+            depth_bias_slope_factor: 0.0,
+            line_width: 0.0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineViewportStateCreateInfo {
@@ -3862,6 +4925,20 @@ pub struct VkPipelineViewportStateCreateInfo {
     pub p_scissors: *const VkRect2D,
 }
 
+impl Default for VkPipelineViewportStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineViewportStateCreateFlags::default(),
+            viewport_count: 0,
+            p_viewports: core::ptr::null(),
+            scissor_count: 0,
+            p_scissors: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPipelineTessellationStateCreateInfo {
@@ -3869,6 +4946,17 @@ pub struct VkPipelineTessellationStateCreateInfo {
     pub p_next: *const core::ffi::c_void,
     pub flags: VkPipelineTessellationStateCreateFlags,
     pub patch_control_points: u32,
+}
+
+impl Default for VkPipelineTessellationStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineTessellationStateCreateFlags::default(),
+            patch_control_points: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3879,6 +4967,18 @@ pub struct VkPipelineInputAssemblyStateCreateInfo {
     pub flags: VkPipelineInputAssemblyStateCreateFlags,
     pub topology: VkPrimitiveTopology,
     pub primitive_restart_enable: VkBool32,
+}
+
+impl Default for VkPipelineInputAssemblyStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineInputAssemblyStateCreateFlags::default(),
+            topology: VkPrimitiveTopology::default(),
+            primitive_restart_enable: VkBool32::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3893,6 +4993,20 @@ pub struct VkPipelineVertexInputStateCreateInfo {
     pub p_vertex_attribute_descriptions: *const VkVertexInputAttributeDescription,
 }
 
+impl Default for VkPipelineVertexInputStateCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineVertexInputStateCreateFlags::default(),
+            vertex_binding_description_count: 0,
+            p_vertex_binding_descriptions: core::ptr::null(),
+            vertex_attribute_description_count: 0,
+            p_vertex_attribute_descriptions: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkVertexInputAttributeDescription {
@@ -3902,12 +5016,33 @@ pub struct VkVertexInputAttributeDescription {
     pub offset: u32,
 }
 
+impl Default for VkVertexInputAttributeDescription {
+    fn default() -> Self {
+        Self {
+            location: 0,
+            binding: 0,
+            format: VkFormat::default(),
+            offset: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkVertexInputBindingDescription {
     pub binding: u32,
     pub stride: u32,
     pub input_rate: VkVertexInputRate,
+}
+
+impl Default for VkVertexInputBindingDescription {
+    fn default() -> Self {
+        Self {
+            binding: 0,
+            stride: 0,
+            input_rate: VkVertexInputRate::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3920,6 +5055,18 @@ pub struct VkPipelineCacheCreateInfo {
     pub p_initial_data: *const core::ffi::c_void,
 }
 
+impl Default for VkPipelineCacheCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::PIPELINE_CACHE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkPipelineCacheCreateFlags::default(),
+            initial_data_size: 0,
+            p_initial_data: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkShaderModuleCreateInfo {
@@ -3928,6 +5075,18 @@ pub struct VkShaderModuleCreateInfo {
     pub flags: VkShaderModuleCreateFlags,
     pub code_size: usize,
     pub p_code: *const u32,
+}
+
+impl Default for VkShaderModuleCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::SHADER_MODULE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkShaderModuleCreateFlags::default(),
+            code_size: 0,
+            p_code: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3943,6 +5102,21 @@ pub struct VkImageViewCreateInfo {
     pub subresource_range: VkImageSubresourceRange,
 }
 
+impl Default for VkImageViewCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::IMAGE_VIEW_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkImageViewCreateFlags::default(),
+            image: VkImage::default(),
+            view_type: VkImageViewType::default(),
+            format: VkFormat::default(),
+            components: VkComponentMapping::default(),
+            subresource_range: VkImageSubresourceRange::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkComponentMapping {
@@ -3950,6 +5124,17 @@ pub struct VkComponentMapping {
     pub g: VkComponentSwizzle,
     pub b: VkComponentSwizzle,
     pub a: VkComponentSwizzle,
+}
+
+impl Default for VkComponentMapping {
+    fn default() -> Self {
+        Self {
+            r: VkComponentSwizzle::default(),
+            g: VkComponentSwizzle::default(),
+            b: VkComponentSwizzle::default(),
+            a: VkComponentSwizzle::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -3962,12 +5147,34 @@ pub struct VkSubresourceLayout {
     pub depth_pitch: VkDeviceSize,
 }
 
+impl Default for VkSubresourceLayout {
+    fn default() -> Self {
+        Self {
+            offset: VkDeviceSize::default(),
+            size: VkDeviceSize::default(),
+            row_pitch: VkDeviceSize::default(),
+            array_pitch: VkDeviceSize::default(),
+            depth_pitch: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkImageSubresource {
     pub aspect_mask: VkImageAspectFlags,
     pub mip_level: u32,
     pub array_layer: u32,
+}
+
+impl Default for VkImageSubresource {
+    fn default() -> Self {
+        Self {
+            aspect_mask: VkImageAspectFlags::default(),
+            mip_level: 0,
+            array_layer: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -3990,6 +5197,28 @@ pub struct VkImageCreateInfo {
     pub initial_layout: VkImageLayout,
 }
 
+impl Default for VkImageCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::IMAGE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkImageCreateFlags::default(),
+            image_type: VkImageType::default(),
+            format: VkFormat::default(),
+            extent: VkExtent3D::default(),
+            mip_levels: 0,
+            array_layers: 0,
+            samples: VkSampleCountFlagBits::default(),
+            tiling: VkImageTiling::default(),
+            usage: VkImageUsageFlags::default(),
+            sharing_mode: VkSharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: core::ptr::null(),
+            initial_layout: VkImageLayout::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkBufferViewCreateInfo {
@@ -4000,6 +5229,20 @@ pub struct VkBufferViewCreateInfo {
     pub format: VkFormat,
     pub offset: VkDeviceSize,
     pub range: VkDeviceSize,
+}
+
+impl Default for VkBufferViewCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::BUFFER_VIEW_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkBufferViewCreateFlags::default(),
+            buffer: VkBuffer::default(),
+            format: VkFormat::default(),
+            offset: VkDeviceSize::default(),
+            range: VkDeviceSize::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4015,6 +5258,21 @@ pub struct VkBufferCreateInfo {
     pub p_queue_family_indices: *const u32,
 }
 
+impl Default for VkBufferCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::BUFFER_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkBufferCreateFlags::default(),
+            size: VkDeviceSize::default(),
+            usage: VkBufferUsageFlags::default(),
+            sharing_mode: VkSharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkQueryPoolCreateInfo {
@@ -4026,12 +5284,35 @@ pub struct VkQueryPoolCreateInfo {
     pub pipeline_statistics: VkQueryPipelineStatisticFlags,
 }
 
+impl Default for VkQueryPoolCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::QUERY_POOL_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkQueryPoolCreateFlags::default(),
+            query_type: VkQueryType::default(),
+            query_count: 0,
+            pipeline_statistics: VkQueryPipelineStatisticFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkEventCreateInfo {
     pub s_type: VkStructureType,
     pub p_next: *const core::ffi::c_void,
     pub flags: VkEventCreateFlags,
+}
+
+impl Default for VkEventCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::EVENT_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkEventCreateFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4042,12 +5323,32 @@ pub struct VkSemaphoreCreateInfo {
     pub flags: VkSemaphoreCreateFlags,
 }
 
+impl Default for VkSemaphoreCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::SEMAPHORE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkSemaphoreCreateFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkFenceCreateInfo {
     pub s_type: VkStructureType,
     pub p_next: *const core::ffi::c_void,
     pub flags: VkFenceCreateFlags,
+}
+
+impl Default for VkFenceCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::FENCE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkFenceCreateFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4067,12 +5368,41 @@ pub struct VkBindSparseInfo {
     pub p_signal_semaphores: *const VkSemaphore,
 }
 
+impl Default for VkBindSparseInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::BIND_SPARSE_INFO,
+            p_next: core::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: core::ptr::null(),
+            buffer_bind_count: 0,
+            p_buffer_binds: core::ptr::null(),
+            image_opaque_bind_count: 0,
+            p_image_opaque_binds: core::ptr::null(),
+            image_bind_count: 0,
+            p_image_binds: core::ptr::null(),
+            signal_semaphore_count: 0,
+            p_signal_semaphores: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSparseImageMemoryBindInfo {
     pub image: VkImage,
     pub bind_count: u32,
     pub p_binds: *const VkSparseImageMemoryBind,
+}
+
+impl Default for VkSparseImageMemoryBindInfo {
+    fn default() -> Self {
+        Self {
+            image: VkImage::default(),
+            bind_count: 0,
+            p_binds: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4086,12 +5416,35 @@ pub struct VkSparseImageMemoryBind {
     pub flags: VkSparseMemoryBindFlags,
 }
 
+impl Default for VkSparseImageMemoryBind {
+    fn default() -> Self {
+        Self {
+            subresource: VkImageSubresource::default(),
+            offset: VkOffset3D::default(),
+            extent: VkExtent3D::default(),
+            memory: VkDeviceMemory::default(),
+            memory_offset: VkDeviceSize::default(),
+            flags: VkSparseMemoryBindFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSparseImageOpaqueMemoryBindInfo {
     pub image: VkImage,
     pub bind_count: u32,
     pub p_binds: *const VkSparseMemoryBind,
+}
+
+impl Default for VkSparseImageOpaqueMemoryBindInfo {
+    fn default() -> Self {
+        Self {
+            image: VkImage::default(),
+            bind_count: 0,
+            p_binds: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4104,6 +5457,18 @@ pub struct VkSparseMemoryBind {
     pub flags: VkSparseMemoryBindFlags,
 }
 
+impl Default for VkSparseMemoryBind {
+    fn default() -> Self {
+        Self {
+            resource_offset: VkDeviceSize::default(),
+            size: VkDeviceSize::default(),
+            memory: VkDeviceMemory::default(),
+            memory_offset: VkDeviceSize::default(),
+            flags: VkSparseMemoryBindFlags::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSparseBufferMemoryBindInfo {
@@ -4112,12 +5477,32 @@ pub struct VkSparseBufferMemoryBindInfo {
     pub p_binds: *const VkSparseMemoryBind,
 }
 
+impl Default for VkSparseBufferMemoryBindInfo {
+    fn default() -> Self {
+        Self {
+            buffer: VkBuffer::default(),
+            bind_count: 0,
+            p_binds: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkSparseImageFormatProperties {
     pub aspect_mask: VkImageAspectFlags,
     pub image_granularity: VkExtent3D,
     pub flags: VkSparseImageFormatFlags,
+}
+
+impl Default for VkSparseImageFormatProperties {
+    fn default() -> Self {
+        Self {
+            aspect_mask: VkImageAspectFlags::default(),
+            image_granularity: VkExtent3D::default(),
+            flags: VkSparseImageFormatFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4130,12 +5515,34 @@ pub struct VkSparseImageMemoryRequirements {
     pub image_mip_tail_stride: VkDeviceSize,
 }
 
+impl Default for VkSparseImageMemoryRequirements {
+    fn default() -> Self {
+        Self {
+            format_properties: VkSparseImageFormatProperties::default(),
+            image_mip_tail_first_lod: 0,
+            image_mip_tail_size: VkDeviceSize::default(),
+            image_mip_tail_offset: VkDeviceSize::default(),
+            image_mip_tail_stride: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkMemoryRequirements {
     pub size: VkDeviceSize,
     pub alignment: VkDeviceSize,
     pub memory_type_bits: u32,
+}
+
+impl Default for VkMemoryRequirements {
+    fn default() -> Self {
+        Self {
+            size: VkDeviceSize::default(),
+            alignment: VkDeviceSize::default(),
+            memory_type_bits: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -4148,6 +5555,18 @@ pub struct VkMappedMemoryRange {
     pub size: VkDeviceSize,
 }
 
+impl Default for VkMappedMemoryRange {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::MAPPED_MEMORY_RANGE,
+            p_next: core::ptr::null(),
+            memory: VkDeviceMemory::default(),
+            offset: VkDeviceSize::default(),
+            size: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkMemoryAllocateInfo {
@@ -4155,6 +5574,17 @@ pub struct VkMemoryAllocateInfo {
     pub p_next: *const core::ffi::c_void,
     pub allocation_size: VkDeviceSize,
     pub memory_type_index: u32,
+}
+
+impl Default for VkMemoryAllocateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::MEMORY_ALLOCATE_INFO,
+            p_next: core::ptr::null(),
+            allocation_size: VkDeviceSize::default(),
+            memory_type_index: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -4171,6 +5601,22 @@ pub struct VkSubmitInfo {
     pub p_signal_semaphores: *const VkSemaphore,
 }
 
+impl Default for VkSubmitInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::SUBMIT_INFO,
+            p_next: core::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: core::ptr::null(),
+            p_wait_dst_stage_mask: core::ptr::null(),
+            command_buffer_count: 0,
+            p_command_buffers: core::ptr::null(),
+            signal_semaphore_count: 0,
+            p_signal_semaphores: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkLayerProperties {
@@ -4180,11 +5626,31 @@ pub struct VkLayerProperties {
     pub description: [u8; 256],
 }
 
+impl Default for VkLayerProperties {
+    fn default() -> Self {
+        Self {
+            layer_name: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            spec_version: 0,
+            implementation_version: 0,
+            description: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkExtensionProperties {
     pub extension_name: [u8; 256],
     pub spec_version: u32,
+}
+
+impl Default for VkExtensionProperties {
+    fn default() -> Self {
+        Self {
+            extension_name: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            spec_version: 0,
+        }
+    }
 }
 
 #[repr(C)]
@@ -4200,6 +5666,23 @@ pub struct VkDeviceCreateInfo {
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const *const u8,
     pub p_enabled_features: *const VkPhysicalDeviceFeatures,
+}
+
+impl Default for VkDeviceCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEVICE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkDeviceCreateFlags::default(),
+            queue_create_info_count: 0,
+            p_queue_create_infos: core::ptr::null(),
+            enabled_layer_count: 0,
+            pp_enabled_layer_names: core::ptr::null(),
+            enabled_extension_count: 0,
+            pp_enabled_extension_names: core::ptr::null(),
+            p_enabled_features: core::ptr::null(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4262,6 +5745,68 @@ pub struct VkPhysicalDeviceFeatures {
     pub inherited_queries: VkBool32,
 }
 
+impl Default for VkPhysicalDeviceFeatures {
+    fn default() -> Self {
+        Self {
+            robust_buffer_access: VkBool32::default(),
+            full_draw_index_uint_32: VkBool32::default(),
+            image_cube_array: VkBool32::default(),
+            independent_blend: VkBool32::default(),
+            geometry_shader: VkBool32::default(),
+            tessellation_shader: VkBool32::default(),
+            sample_rate_shading: VkBool32::default(),
+            dual_src_blend: VkBool32::default(),
+            logic_op: VkBool32::default(),
+            multi_draw_indirect: VkBool32::default(),
+            draw_indirect_first_instance: VkBool32::default(),
+            depth_clamp: VkBool32::default(),
+            depth_bias_clamp: VkBool32::default(),
+            fill_mode_non_solid: VkBool32::default(),
+            depth_bounds: VkBool32::default(),
+            wide_lines: VkBool32::default(),
+            large_points: VkBool32::default(),
+            alpha_to_one: VkBool32::default(),
+            multi_viewport: VkBool32::default(),
+            sampler_anisotropy: VkBool32::default(),
+            texture_compression_etc_2: VkBool32::default(),
+            texture_compression_astc_ldr: VkBool32::default(),
+            texture_compression_bc: VkBool32::default(),
+            occlusion_query_precise: VkBool32::default(),
+            pipeline_statistics_query: VkBool32::default(),
+            vertex_pipeline_stores_and_atomics: VkBool32::default(),
+            fragment_stores_and_atomics: VkBool32::default(),
+            shader_tessellation_and_geometry_point_size: VkBool32::default(),
+            shader_image_gather_extended: VkBool32::default(),
+            shader_storage_image_extended_formats: VkBool32::default(),
+            shader_storage_image_multisample: VkBool32::default(),
+            shader_storage_image_read_without_format: VkBool32::default(),
+            shader_storage_image_write_without_format: VkBool32::default(),
+            shader_uniform_buffer_array_dynamic_indexing: VkBool32::default(),
+            shader_sampled_image_array_dynamic_indexing: VkBool32::default(),
+            shader_storage_buffer_array_dynamic_indexing: VkBool32::default(),
+            shader_storage_image_array_dynamic_indexing: VkBool32::default(),
+            shader_clip_distance: VkBool32::default(),
+            shader_cull_distance: VkBool32::default(),
+            shader_float_64: VkBool32::default(),
+            shader_int_64: VkBool32::default(),
+            shader_int_16: VkBool32::default(),
+            shader_resource_residency: VkBool32::default(),
+            shader_resource_min_lod: VkBool32::default(),
+            sparse_binding: VkBool32::default(),
+            sparse_residency_buffer: VkBool32::default(),
+            sparse_residency_image_2_d: VkBool32::default(),
+            sparse_residency_image_3_d: VkBool32::default(),
+            sparse_residency_2_samples: VkBool32::default(),
+            sparse_residency_4_samples: VkBool32::default(),
+            sparse_residency_8_samples: VkBool32::default(),
+            sparse_residency_16_samples: VkBool32::default(),
+            sparse_residency_aliased: VkBool32::default(),
+            variable_multisample_rate: VkBool32::default(),
+            inherited_queries: VkBool32::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkDeviceQueueCreateInfo {
@@ -4273,6 +5818,19 @@ pub struct VkDeviceQueueCreateInfo {
     pub p_queue_priorities: *const f32,
 }
 
+impl Default for VkDeviceQueueCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::DEVICE_QUEUE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkDeviceQueueCreateFlags::default(),
+            queue_family_index: 0,
+            queue_count: 0,
+            p_queue_priorities: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPhysicalDeviceMemoryProperties {
@@ -4282,11 +5840,31 @@ pub struct VkPhysicalDeviceMemoryProperties {
     pub memory_heaps: [VkMemoryHeap; 16],
 }
 
+impl Default for VkPhysicalDeviceMemoryProperties {
+    fn default() -> Self {
+        Self {
+            memory_type_count: 0,
+            memory_types: [VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default(), VkMemoryType::default()],
+            memory_heap_count: 0,
+            memory_heaps: [VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default(), VkMemoryHeap::default()],
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkMemoryHeap {
     pub size: VkDeviceSize,
     pub flags: VkMemoryHeapFlags,
+}
+
+impl Default for VkMemoryHeap {
+    fn default() -> Self {
+        Self {
+            size: VkDeviceSize::default(),
+            flags: VkMemoryHeapFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4296,6 +5874,15 @@ pub struct VkMemoryType {
     pub heap_index: u32,
 }
 
+impl Default for VkMemoryType {
+    fn default() -> Self {
+        Self {
+            property_flags: VkMemoryPropertyFlags::default(),
+            heap_index: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkQueueFamilyProperties {
@@ -4303,6 +5890,17 @@ pub struct VkQueueFamilyProperties {
     pub queue_count: u32,
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: VkExtent3D,
+}
+
+impl Default for VkQueueFamilyProperties {
+    fn default() -> Self {
+        Self {
+            queue_flags: VkQueueFlags::default(),
+            queue_count: 0,
+            timestamp_valid_bits: 0,
+            min_image_transfer_granularity: VkExtent3D::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4319,6 +5917,22 @@ pub struct VkPhysicalDeviceProperties {
     pub sparse_properties: VkPhysicalDeviceSparseProperties,
 }
 
+impl Default for VkPhysicalDeviceProperties {
+    fn default() -> Self {
+        Self {
+            api_version: 0,
+            driver_version: 0,
+            vendor_id: 0,
+            device_id: 0,
+            device_type: VkPhysicalDeviceType::default(),
+            device_name: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            pipeline_cache_uuid: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            limits: VkPhysicalDeviceLimits::default(),
+            sparse_properties: VkPhysicalDeviceSparseProperties::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkPhysicalDeviceSparseProperties {
@@ -4327,6 +5941,18 @@ pub struct VkPhysicalDeviceSparseProperties {
     pub residency_standard_3_d_block_shape: VkBool32,
     pub residency_aligned_mip_size: VkBool32,
     pub residency_non_resident_strict: VkBool32,
+}
+
+impl Default for VkPhysicalDeviceSparseProperties {
+    fn default() -> Self {
+        Self {
+            residency_standard_2_d_block_shape: VkBool32::default(),
+            residency_standard_2_d_multisample_block_shape: VkBool32::default(),
+            residency_standard_3_d_block_shape: VkBool32::default(),
+            residency_aligned_mip_size: VkBool32::default(),
+            residency_non_resident_strict: VkBool32::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4440,6 +6066,119 @@ pub struct VkPhysicalDeviceLimits {
     pub non_coherent_atom_size: VkDeviceSize,
 }
 
+impl Default for VkPhysicalDeviceLimits {
+    fn default() -> Self {
+        Self {
+            max_image_dimension_1_d: 0,
+            max_image_dimension_2_d: 0,
+            max_image_dimension_3_d: 0,
+            max_image_dimension_cube: 0,
+            max_image_array_layers: 0,
+            max_texel_buffer_elements: 0,
+            max_uniform_buffer_range: 0,
+            max_storage_buffer_range: 0,
+            max_push_constants_size: 0,
+            max_memory_allocation_count: 0,
+            max_sampler_allocation_count: 0,
+            buffer_image_granularity: VkDeviceSize::default(),
+            sparse_address_space_size: VkDeviceSize::default(),
+            max_bound_descriptor_sets: 0,
+            max_per_stage_descriptor_samplers: 0,
+            max_per_stage_descriptor_uniform_buffers: 0,
+            max_per_stage_descriptor_storage_buffers: 0,
+            max_per_stage_descriptor_sampled_images: 0,
+            max_per_stage_descriptor_storage_images: 0,
+            max_per_stage_descriptor_input_attachments: 0,
+            max_per_stage_resources: 0,
+            max_descriptor_set_samplers: 0,
+            max_descriptor_set_uniform_buffers: 0,
+            max_descriptor_set_uniform_buffers_dynamic: 0,
+            max_descriptor_set_storage_buffers: 0,
+            max_descriptor_set_storage_buffers_dynamic: 0,
+            max_descriptor_set_sampled_images: 0,
+            max_descriptor_set_storage_images: 0,
+            max_descriptor_set_input_attachments: 0,
+            max_vertex_input_attributes: 0,
+            max_vertex_input_bindings: 0,
+            max_vertex_input_attribute_offset: 0,
+            max_vertex_input_binding_stride: 0,
+            max_vertex_output_components: 0,
+            max_tessellation_generation_level: 0,
+            max_tessellation_patch_size: 0,
+            max_tessellation_control_per_vertex_input_components: 0,
+            max_tessellation_control_per_vertex_output_components: 0,
+            max_tessellation_control_per_patch_output_components: 0,
+            max_tessellation_control_total_output_components: 0,
+            max_tessellation_evaluation_input_components: 0,
+            max_tessellation_evaluation_output_components: 0,
+            max_geometry_shader_invocations: 0,
+            max_geometry_input_components: 0,
+            max_geometry_output_components: 0,
+            max_geometry_output_vertices: 0,
+            max_geometry_total_output_components: 0,
+            max_fragment_input_components: 0,
+            max_fragment_output_attachments: 0,
+            max_fragment_dual_src_attachments: 0,
+            max_fragment_combined_output_resources: 0,
+            max_compute_shared_memory_size: 0,
+            max_compute_work_group_count: [0, 0, 0],
+            max_compute_work_group_invocations: 0,
+            max_compute_work_group_size: [0, 0, 0],
+            sub_pixel_precision_bits: 0,
+            sub_texel_precision_bits: 0,
+            mipmap_precision_bits: 0,
+            max_draw_indexed_index_value: 0,
+            max_draw_indirect_count: 0,
+            max_sampler_lod_bias: 0.0,
+            max_sampler_anisotropy: 0.0,
+            max_viewports: 0,
+            max_viewport_dimensions: [0, 0],
+            viewport_bounds_range: [0.0, 0.0],
+            viewport_sub_pixel_bits: 0,
+            min_memory_map_alignment: 0,
+            min_texel_buffer_offset_alignment: VkDeviceSize::default(),
+            min_uniform_buffer_offset_alignment: VkDeviceSize::default(),
+            min_storage_buffer_offset_alignment: VkDeviceSize::default(),
+            min_texel_offset: 0,
+            max_texel_offset: 0,
+            min_texel_gather_offset: 0,
+            max_texel_gather_offset: 0,
+            min_interpolation_offset: 0.0,
+            max_interpolation_offset: 0.0,
+            sub_pixel_interpolation_offset_bits: 0,
+            max_framebuffer_width: 0,
+            max_framebuffer_height: 0,
+            max_framebuffer_layers: 0,
+            framebuffer_color_sample_counts: VkSampleCountFlags::default(),
+            framebuffer_depth_sample_counts: VkSampleCountFlags::default(),
+            framebuffer_stencil_sample_counts: VkSampleCountFlags::default(),
+            framebuffer_no_attachments_sample_counts: VkSampleCountFlags::default(),
+            max_color_attachments: 0,
+            sampled_image_color_sample_counts: VkSampleCountFlags::default(),
+            sampled_image_integer_sample_counts: VkSampleCountFlags::default(),
+            sampled_image_depth_sample_counts: VkSampleCountFlags::default(),
+            sampled_image_stencil_sample_counts: VkSampleCountFlags::default(),
+            storage_image_sample_counts: VkSampleCountFlags::default(),
+            max_sample_mask_words: 0,
+            timestamp_compute_and_graphics: VkBool32::default(),
+            timestamp_period: 0.0,
+            max_clip_distances: 0,
+            max_cull_distances: 0,
+            max_combined_clip_and_cull_distances: 0,
+            discrete_queue_priorities: 0,
+            point_size_range: [0.0, 0.0],
+            line_width_range: [0.0, 0.0],
+            point_size_granularity: 0.0,
+            line_width_granularity: 0.0,
+            strict_lines: VkBool32::default(),
+            standard_sample_locations: VkBool32::default(),
+            optimal_buffer_copy_offset_alignment: VkDeviceSize::default(),
+            optimal_buffer_copy_row_pitch_alignment: VkDeviceSize::default(),
+            non_coherent_atom_size: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkImageFormatProperties {
@@ -4450,12 +6189,34 @@ pub struct VkImageFormatProperties {
     pub max_resource_size: VkDeviceSize,
 }
 
+impl Default for VkImageFormatProperties {
+    fn default() -> Self {
+        Self {
+            max_extent: VkExtent3D::default(),
+            max_mip_levels: 0,
+            max_array_layers: 0,
+            sample_counts: VkSampleCountFlags::default(),
+            max_resource_size: VkDeviceSize::default(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkFormatProperties {
     pub linear_tiling_features: VkFormatFeatureFlags,
     pub optimal_tiling_features: VkFormatFeatureFlags,
     pub buffer_features: VkFormatFeatureFlags,
+}
+
+impl Default for VkFormatProperties {
+    fn default() -> Self {
+        Self {
+            linear_tiling_features: VkFormatFeatureFlags::default(),
+            optimal_tiling_features: VkFormatFeatureFlags::default(),
+            buffer_features: VkFormatFeatureFlags::default(),
+        }
+    }
 }
 
 #[repr(C)]
@@ -4471,6 +6232,21 @@ pub struct VkInstanceCreateInfo {
     pub pp_enabled_extension_names: *const *const u8,
 }
 
+impl Default for VkInstanceCreateInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::INSTANCE_CREATE_INFO,
+            p_next: core::ptr::null(),
+            flags: VkInstanceCreateFlags::default(),
+            p_application_info: core::ptr::null(),
+            enabled_layer_count: 0,
+            pp_enabled_layer_names: core::ptr::null(),
+            enabled_extension_count: 0,
+            pp_enabled_extension_names: core::ptr::null(),
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VkApplicationInfo {
@@ -4483,11 +6259,31 @@ pub struct VkApplicationInfo {
     pub api_version: u32,
 }
 
+impl Default for VkApplicationInfo {
+    fn default() -> Self {
+        Self {
+            s_type: VkStructureType::APPLICATION_INFO,
+            p_next: core::ptr::null(),
+            p_application_name: core::ptr::null(),
+            application_version: 0,
+            p_engine_name: core::ptr::null(),
+            engine_version: 0,
+            api_version: 0,
+        }
+    }
+}
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union VkClearValue {
     pub color: VkClearColorValue,
     pub depth_stencil: VkClearDepthStencilValue,
+}
+
+impl Default for VkClearValue {
+    fn default() -> Self {
+        unsafe { core::mem::zeroed() }
+    }
 }
 
 #[repr(C)]
@@ -4496,6 +6292,12 @@ pub union VkClearColorValue {
     pub float_32: [f32; 4],
     pub int_32: [i32; 4],
     pub uint_32: [u32; 4],
+}
+
+impl Default for VkClearColorValue {
+    fn default() -> Self {
+        unsafe { core::mem::zeroed() }
+    }
 }
 
 pub type PfnVkInternalFreeNotification = extern "system" fn(
