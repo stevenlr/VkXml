@@ -270,3 +270,53 @@ for t in model["commands"]:
     fp.write(";\n\n")
 
 fp.close()
+
+fp = open("src/commands.rs", "w+")
+fp.write("use crate::types::*;\n\n")
+
+def write_commands_collection(fp, type: str, struct_name: str):
+    fp.write("pub struct %s {\n" % struct_name)
+    for t in model["commands"]:
+        if t.type != type:
+            continue
+        fp.write("    pfn_%s: PfnVk%s,\n" % (camel_to_snake(t.name[2:]), t.name[2:]))
+    fp.write("}\n\n")
+    fp.write("impl %s {\n" % struct_name)
+    fp.write("    pub fn load(load_fn: impl Fn(&[u8]) -> PfnVkVoidFunction) -> Self {\n")
+    fp.write("        %s {\n" % struct_name)
+    for t in model["commands"]:
+        if t.type != type:
+            continue
+        fp.write("            pfn_%s: unsafe { core::mem::transmute(load_fn(b\"%s\\0\")) },\n" % (camel_to_snake(t.name[2:]), t.name))
+    fp.write("        }\n")
+    fp.write("    }\n")
+    for t in model["commands"]:
+        if t.type != type:
+            continue
+        fp.write("\n    pub unsafe fn %s(&self" % camel_to_snake(t.name[2:]))
+        for a in t.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+            fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep(a.id.type)))
+        fp.write(")")
+        if not isinstance(t.prototype.return_type, TypeReference) or t.prototype.return_type.name != "void":
+            fp.write(" -> %s" % to_rust_type_deep(t.prototype.return_type))
+        fp.write(" {\n")
+        inner_fn_name = "pfn_" + camel_to_snake(t.name[2:])
+        fp.write("        (self.%s)(" % inner_fn_name)
+        for a in t.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+            fp.write("\n            %s," % arg_name)
+        fp.write(")\n")
+        fp.write("    }\n")
+    fp.write("}\n\n")
+
+write_commands_collection(fp, "static", "StaticCommands")
+write_commands_collection(fp, "entry", "EntryCommands")
+write_commands_collection(fp, "instance", "InstanceCommands")
+write_commands_collection(fp, "device", "DeviceCommands")
+
+fp.close()
