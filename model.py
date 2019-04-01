@@ -223,11 +223,6 @@ class EnumType(Entity):
             enum.values[child.attrib["name"]] = int(child.text)
         return enum
 
-class OptionalTypedIdentifier:
-    def __init__(self, id: TypedIdentifier, optional: bool):
-        self.id = id
-        self.optional = optional
-
 class StructureMember:
     def __init__(self, id: TypedIdentifier, optional: bool, default_value: Optional[str], length: Optional[str]):
         self.id = id
@@ -309,13 +304,19 @@ class UnionType(Entity):
             union.members.append(id)
         return union
 
+class FunctionArgument:
+    def __init__(self, id: TypedIdentifier, optional: bool, length: Optional[str]):
+        self.id = id
+        self.optional = optional
+        self.length = length
+
 class FunctionPrototype:
     def __init__(self, return_type: Type):
         self.return_type = return_type
-        self.arguments: List[OptionalTypedIdentifier] = []
+        self.arguments: List[FunctionArgument] = []
 
-    def add_argument(self, arg: TypedIdentifier, optional: bool):
-        self.arguments.append(OptionalTypedIdentifier(arg, optional))
+    def add_argument(self, arg: TypedIdentifier, optional: bool, length: Optional[str]):
+        self.arguments.append(FunctionArgument(arg, optional, length))
 
     def make_depset(self) -> DependenciesSet:
         depset = DependenciesSet()
@@ -330,6 +331,8 @@ class FunctionPrototype:
             node = xml.SubElement(parent, "arg")
             node.attrib["name"] = arg.id.name
             node.attrib["optional"] = str(arg.optional)
+            if arg.length != None:
+                node.attrib["length"] = arg.length
             arg.id.type.to_xml(node)
 
     @staticmethod
@@ -339,8 +342,8 @@ class FunctionPrototype:
             optional = False
             if m.attrib["optional"] == "True":
                 optional = True
-            id = OptionalTypedIdentifier(TypedIdentifier(m.attrib["name"], Type.from_xml(m[0])), optional)
-            proto.arguments.append(id)
+            length = m.get("length")
+            proto.add_argument(TypedIdentifier(m.attrib["name"], Type.from_xml(m[0])), optional, length)
         return proto
 
 class Constant(Entity):

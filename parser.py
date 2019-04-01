@@ -390,7 +390,7 @@ def parse_funcpointer(type):
         arguments = [s.strip() for s in tokens.s.split(",")]
         for arg in arguments:
             entity = parse_typed_entity(arg)
-            prototype.add_argument(entity, False)
+            prototype.add_argument(entity, False, None)
 
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
@@ -418,9 +418,13 @@ def parse_command(tag):
         if "optional" in param_tag.attrib and param_tag.attrib["optional"].find("true") != -1:
             optional = True
 
+        length = None
+        if "len" in param_tag.attrib:
+            length = param_tag.attrib["len"]
+
         param_str = stringify_tag_except_comment(param_tag)
         param = parse_typed_entity(param_str)
-        prototype.add_argument(param, optional)
+        prototype.add_argument(param, optional, length)
 
     COMMANDS[name] = Command(name, prototype)
 

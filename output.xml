@@ -119,7 +119,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pPresentModes" optional="True">
+      <arg length="pPresentModeCount" name="pPresentModes" optional="True">
          <pointer const="False">
             <type const="False">VkPresentModeKHR</type>
          </pointer>
@@ -140,7 +140,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pSurfaceFormats" optional="True">
+      <arg length="pSurfaceFormatCount" name="pSurfaceFormats" optional="True">
          <pointer const="False">
             <type const="False">VkSurfaceFormatKHR</type>
          </pointer>
@@ -250,7 +250,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pSwapchainImages" optional="True">
+      <arg length="pSwapchainImageCount" name="pSwapchainImages" optional="True">
          <pointer const="False">
             <type const="False">VkImage</type>
          </pointer>
@@ -457,7 +457,7 @@
       <arg name="commandBufferCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pCommandBuffers" optional="False">
+      <arg length="commandBufferCount" name="pCommandBuffers" optional="False">
          <pointer const="False">
             <type const="True">VkCommandBuffer</type>
          </pointer>
@@ -517,7 +517,7 @@
       <arg name="size" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pValues" optional="False">
+      <arg length="size" name="pValues" optional="False">
          <pointer const="False">
             <type const="True">void</type>
          </pointer>
@@ -636,7 +636,7 @@
       <arg name="memoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pMemoryBarriers" optional="False">
+      <arg length="memoryBarrierCount" name="pMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkMemoryBarrier</type>
          </pointer>
@@ -644,7 +644,7 @@
       <arg name="bufferMemoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pBufferMemoryBarriers" optional="False">
+      <arg length="bufferMemoryBarrierCount" name="pBufferMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkBufferMemoryBarrier</type>
          </pointer>
@@ -652,7 +652,7 @@
       <arg name="imageMemoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pImageMemoryBarriers" optional="False">
+      <arg length="imageMemoryBarrierCount" name="pImageMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkImageMemoryBarrier</type>
          </pointer>
@@ -668,7 +668,7 @@
       <arg name="eventCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pEvents" optional="False">
+      <arg length="eventCount" name="pEvents" optional="False">
          <pointer const="False">
             <type const="True">VkEvent</type>
          </pointer>
@@ -682,7 +682,7 @@
       <arg name="memoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pMemoryBarriers" optional="False">
+      <arg length="memoryBarrierCount" name="pMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkMemoryBarrier</type>
          </pointer>
@@ -690,7 +690,7 @@
       <arg name="bufferMemoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pBufferMemoryBarriers" optional="False">
+      <arg length="bufferMemoryBarrierCount" name="pBufferMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkBufferMemoryBarrier</type>
          </pointer>
@@ -698,7 +698,7 @@
       <arg name="imageMemoryBarrierCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pImageMemoryBarriers" optional="False">
+      <arg length="imageMemoryBarrierCount" name="pImageMemoryBarriers" optional="False">
          <pointer const="False">
             <type const="True">VkImageMemoryBarrier</type>
          </pointer>
@@ -754,7 +754,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkImageResolve</type>
          </pointer>
@@ -770,7 +770,7 @@
       <arg name="attachmentCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pAttachments" optional="False">
+      <arg length="attachmentCount" name="pAttachments" optional="False">
          <pointer const="False">
             <type const="True">VkClearAttachment</type>
          </pointer>
@@ -778,7 +778,7 @@
       <arg name="rectCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRects" optional="False">
+      <arg length="rectCount" name="pRects" optional="False">
          <pointer const="False">
             <type const="True">VkClearRect</type>
          </pointer>
@@ -805,7 +805,7 @@
       <arg name="rangeCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRanges" optional="False">
+      <arg length="rangeCount" name="pRanges" optional="False">
          <pointer const="False">
             <type const="True">VkImageSubresourceRange</type>
          </pointer>
@@ -832,7 +832,7 @@
       <arg name="rangeCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRanges" optional="False">
+      <arg length="rangeCount" name="pRanges" optional="False">
          <pointer const="False">
             <type const="True">VkImageSubresourceRange</type>
          </pointer>
@@ -874,7 +874,7 @@
       <arg name="dataSize" optional="False">
          <type const="False">VkDeviceSize</type>
       </arg>
-      <arg name="pData" optional="False">
+      <arg length="dataSize" name="pData" optional="False">
          <pointer const="False">
             <type const="True">void</type>
          </pointer>
@@ -899,7 +899,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkBufferImageCopy</type>
          </pointer>
@@ -924,7 +924,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkBufferImageCopy</type>
          </pointer>
@@ -952,7 +952,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkImageBlit</type>
          </pointer>
@@ -983,7 +983,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkImageCopy</type>
          </pointer>
@@ -1005,7 +1005,7 @@
       <arg name="regionCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pRegions" optional="False">
+      <arg length="regionCount" name="pRegions" optional="False">
          <pointer const="False">
             <type const="True">VkBufferCopy</type>
          </pointer>
@@ -1138,12 +1138,12 @@
       <arg name="bindingCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pBuffers" optional="False">
+      <arg length="bindingCount" name="pBuffers" optional="False">
          <pointer const="False">
             <type const="True">VkBuffer</type>
          </pointer>
       </arg>
-      <arg name="pOffsets" optional="False">
+      <arg length="bindingCount" name="pOffsets" optional="False">
          <pointer const="False">
             <type const="True">VkDeviceSize</type>
          </pointer>
@@ -1185,7 +1185,7 @@
       <arg name="descriptorSetCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pDescriptorSets" optional="False">
+      <arg length="descriptorSetCount" name="pDescriptorSets" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorSet</type>
          </pointer>
@@ -1193,7 +1193,7 @@
       <arg name="dynamicOffsetCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pDynamicOffsets" optional="False">
+      <arg length="dynamicOffsetCount" name="pDynamicOffsets" optional="False">
          <pointer const="False">
             <type const="True">uint32_t</type>
          </pointer>
@@ -1309,7 +1309,7 @@
       <arg name="scissorCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pScissors" optional="False">
+      <arg length="scissorCount" name="pScissors" optional="False">
          <pointer const="False">
             <type const="True">VkRect2D</type>
          </pointer>
@@ -1328,7 +1328,7 @@
       <arg name="viewportCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pViewports" optional="False">
+      <arg length="viewportCount" name="pViewports" optional="False">
          <pointer const="False">
             <type const="True">VkViewport</type>
          </pointer>
@@ -1393,7 +1393,7 @@
       <arg name="commandBufferCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pCommandBuffers" optional="False">
+      <arg length="commandBufferCount" name="pCommandBuffers" optional="False">
          <pointer const="False">
             <type const="True">VkCommandBuffer</type>
          </pointer>
@@ -1411,7 +1411,7 @@
             <type const="True">VkCommandBufferAllocateInfo</type>
          </pointer>
       </arg>
-      <arg name="pCommandBuffers" optional="False">
+      <arg length="pAllocateInfo::commandBufferCount" name="pCommandBuffers" optional="False">
          <pointer const="False">
             <type const="False">VkCommandBuffer</type>
          </pointer>
@@ -1574,7 +1574,7 @@
       <arg name="descriptorWriteCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pDescriptorWrites" optional="False">
+      <arg length="descriptorWriteCount" name="pDescriptorWrites" optional="False">
          <pointer const="False">
             <type const="True">VkWriteDescriptorSet</type>
          </pointer>
@@ -1582,7 +1582,7 @@
       <arg name="descriptorCopyCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pDescriptorCopies" optional="False">
+      <arg length="descriptorCopyCount" name="pDescriptorCopies" optional="False">
          <pointer const="False">
             <type const="True">VkCopyDescriptorSet</type>
          </pointer>
@@ -1601,7 +1601,7 @@
       <arg name="descriptorSetCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pDescriptorSets" optional="False">
+      <arg length="descriptorSetCount" name="pDescriptorSets" optional="False">
          <pointer const="False">
             <type const="True">VkDescriptorSet</type>
          </pointer>
@@ -1619,7 +1619,7 @@
             <type const="True">VkDescriptorSetAllocateInfo</type>
          </pointer>
       </arg>
-      <arg name="pDescriptorSets" optional="False">
+      <arg length="pAllocateInfo::descriptorSetCount" name="pDescriptorSets" optional="False">
          <pointer const="False">
             <type const="False">VkDescriptorSet</type>
          </pointer>
@@ -1824,7 +1824,7 @@
       <arg name="createInfoCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pCreateInfos" optional="False">
+      <arg length="createInfoCount" name="pCreateInfos" optional="False">
          <pointer const="False">
             <type const="True">VkComputePipelineCreateInfo</type>
          </pointer>
@@ -1834,7 +1834,7 @@
             <type const="True">VkAllocationCallbacks</type>
          </pointer>
       </arg>
-      <arg name="pPipelines" optional="False">
+      <arg length="createInfoCount" name="pPipelines" optional="False">
          <pointer const="False">
             <type const="False">VkPipeline</type>
          </pointer>
@@ -1853,7 +1853,7 @@
       <arg name="createInfoCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pCreateInfos" optional="False">
+      <arg length="createInfoCount" name="pCreateInfos" optional="False">
          <pointer const="False">
             <type const="True">VkGraphicsPipelineCreateInfo</type>
          </pointer>
@@ -1863,7 +1863,7 @@
             <type const="True">VkAllocationCallbacks</type>
          </pointer>
       </arg>
-      <arg name="pPipelines" optional="False">
+      <arg length="createInfoCount" name="pPipelines" optional="False">
          <pointer const="False">
             <type const="False">VkPipeline</type>
          </pointer>
@@ -1882,7 +1882,7 @@
       <arg name="srcCacheCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pSrcCaches" optional="False">
+      <arg length="srcCacheCount" name="pSrcCaches" optional="False">
          <pointer const="False">
             <type const="True">VkPipelineCache</type>
          </pointer>
@@ -1903,7 +1903,7 @@
             <type const="False">size_t</type>
          </pointer>
       </arg>
-      <arg name="pData" optional="True">
+      <arg length="pDataSize" name="pData" optional="True">
          <pointer const="False">
             <type const="False">void</type>
          </pointer>
@@ -2183,7 +2183,7 @@
       <arg name="dataSize" optional="False">
          <type const="False">size_t</type>
       </arg>
-      <arg name="pData" optional="False">
+      <arg length="dataSize" name="pData" optional="False">
          <pointer const="False">
             <type const="False">void</type>
          </pointer>
@@ -2355,7 +2355,7 @@
       <arg name="fenceCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pFences" optional="False">
+      <arg length="fenceCount" name="pFences" optional="False">
          <pointer const="False">
             <type const="True">VkFence</type>
          </pointer>
@@ -2388,7 +2388,7 @@
       <arg name="fenceCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pFences" optional="False">
+      <arg length="fenceCount" name="pFences" optional="False">
          <pointer const="False">
             <type const="True">VkFence</type>
          </pointer>
@@ -2443,7 +2443,7 @@
       <arg name="bindInfoCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pBindInfo" optional="False">
+      <arg length="bindInfoCount" name="pBindInfo" optional="False">
          <pointer const="False">
             <type const="True">VkBindSparseInfo</type>
          </pointer>
@@ -2479,7 +2479,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pProperties" optional="True">
+      <arg length="pPropertyCount" name="pProperties" optional="True">
          <pointer const="False">
             <type const="False">VkSparseImageFormatProperties</type>
          </pointer>
@@ -2500,7 +2500,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pSparseMemoryRequirements" optional="True">
+      <arg length="pSparseMemoryRequirementCount" name="pSparseMemoryRequirements" optional="True">
          <pointer const="False">
             <type const="False">VkSparseImageMemoryRequirements</type>
          </pointer>
@@ -2598,7 +2598,7 @@
       <arg name="memoryRangeCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pMemoryRanges" optional="False">
+      <arg length="memoryRangeCount" name="pMemoryRanges" optional="False">
          <pointer const="False">
             <type const="True">VkMappedMemoryRange</type>
          </pointer>
@@ -2614,7 +2614,7 @@
       <arg name="memoryRangeCount" optional="False">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pMemoryRanges" optional="False">
+      <arg length="memoryRangeCount" name="pMemoryRanges" optional="False">
          <pointer const="False">
             <type const="True">VkMappedMemoryRange</type>
          </pointer>
@@ -2723,7 +2723,7 @@
       <arg name="submitCount" optional="True">
          <type const="False">uint32_t</type>
       </arg>
-      <arg name="pSubmits" optional="False">
+      <arg length="submitCount" name="pSubmits" optional="False">
          <pointer const="False">
             <type const="True">VkSubmitInfo</type>
          </pointer>
@@ -2763,7 +2763,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pProperties" optional="True">
+      <arg length="pPropertyCount" name="pProperties" optional="True">
          <pointer const="False">
             <type const="False">VkLayerProperties</type>
          </pointer>
@@ -2778,7 +2778,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pProperties" optional="True">
+      <arg length="pPropertyCount" name="pProperties" optional="True">
          <pointer const="False">
             <type const="False">VkLayerProperties</type>
          </pointer>
@@ -2791,7 +2791,7 @@
       <arg name="physicalDevice" optional="False">
          <type const="False">VkPhysicalDevice</type>
       </arg>
-      <arg name="pLayerName" optional="True">
+      <arg length="null-terminated" name="pLayerName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -2801,7 +2801,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pProperties" optional="True">
+      <arg length="pPropertyCount" name="pProperties" optional="True">
          <pointer const="False">
             <type const="False">VkExtensionProperties</type>
          </pointer>
@@ -2811,7 +2811,7 @@
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
-      <arg name="pLayerName" optional="True">
+      <arg length="null-terminated" name="pLayerName" optional="True">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -2821,7 +2821,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pProperties" optional="True">
+      <arg length="pPropertyCount" name="pProperties" optional="True">
          <pointer const="False">
             <type const="False">VkExtensionProperties</type>
          </pointer>
@@ -2870,7 +2870,7 @@
       <arg name="device" optional="False">
          <type const="False">VkDevice</type>
       </arg>
-      <arg name="pName" optional="False">
+      <arg length="null-terminated" name="pName" optional="False">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -2883,7 +2883,7 @@
       <arg name="instance" optional="True">
          <type const="False">VkInstance</type>
       </arg>
-      <arg name="pName" optional="False">
+      <arg length="null-terminated" name="pName" optional="False">
          <pointer const="False">
             <type const="True">char</type>
          </pointer>
@@ -2914,7 +2914,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pQueueFamilyProperties" optional="True">
+      <arg length="pQueueFamilyPropertyCount" name="pQueueFamilyProperties" optional="True">
          <pointer const="False">
             <type const="False">VkQueueFamilyProperties</type>
          </pointer>
@@ -3002,7 +3002,7 @@
             <type const="False">uint32_t</type>
          </pointer>
       </arg>
-      <arg name="pPhysicalDevices" optional="True">
+      <arg length="pPhysicalDeviceCount" name="pPhysicalDevices" optional="True">
          <pointer const="False">
             <type const="False">VkPhysicalDevice</type>
          </pointer>

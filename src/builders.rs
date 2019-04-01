@@ -505,7 +505,7 @@ impl<'a> VkDebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     }
 
     pub fn p_message_id_name(mut self, values: &'a [u8]) -> VkDebugUtilsMessengerCallbackDataEXTBuilder<'a> {
-
+        
         self.s.p_message_id_name = values.as_ptr();
         self
     }
@@ -516,7 +516,7 @@ impl<'a> VkDebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     }
 
     pub fn p_message(mut self, values: &'a [u8]) -> VkDebugUtilsMessengerCallbackDataEXTBuilder<'a> {
-
+        
         self.s.p_message = values.as_ptr();
         self
     }
@@ -607,7 +607,7 @@ impl<'a> VkDebugUtilsObjectNameInfoEXTBuilder<'a> {
     }
 
     pub fn p_object_name(mut self, values: &'a [u8]) -> VkDebugUtilsObjectNameInfoEXTBuilder<'a> {
-
+        
         self.s.p_object_name = values.as_ptr();
         self
     }
@@ -655,7 +655,7 @@ impl<'a> VkDebugUtilsLabelEXTBuilder<'a> {
     }
 
     pub fn p_label_name(mut self, values: &'a [u8]) -> VkDebugUtilsLabelEXTBuilder<'a> {
-
+        
         self.s.p_label_name = values.as_ptr();
         self
     }
@@ -3541,7 +3541,7 @@ impl<'a> VkPipelineShaderStageCreateInfoBuilder<'a> {
     }
 
     pub fn p_name(mut self, values: &'a [u8]) -> VkPipelineShaderStageCreateInfoBuilder<'a> {
-
+        
         self.s.p_name = values.as_ptr();
         self
     }
@@ -4216,7 +4216,7 @@ impl<'a> VkPipelineMultisampleStateCreateInfoBuilder<'a> {
     }
 
     pub fn p_sample_mask(mut self, values: &'a [VkSampleMask]) -> VkPipelineMultisampleStateCreateInfoBuilder<'a> {
-
+        
         self.s.p_sample_mask = values.as_ptr();
         self
     }
@@ -7730,7 +7730,7 @@ impl<'a> VkApplicationInfoBuilder<'a> {
     }
 
     pub fn p_application_name(mut self, values: &'a [u8]) -> VkApplicationInfoBuilder<'a> {
-
+        
         self.s.p_application_name = values.as_ptr();
         self
     }
@@ -7741,7 +7741,7 @@ impl<'a> VkApplicationInfoBuilder<'a> {
     }
 
     pub fn p_engine_name(mut self, values: &'a [u8]) -> VkApplicationInfoBuilder<'a> {
-
+        
         self.s.p_engine_name = values.as_ptr();
         self
     }
