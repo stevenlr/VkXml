@@ -418,15 +418,12 @@ def parse_command(tag):
         if "optional" in param_tag.attrib and param_tag.attrib["optional"].find("true") != -1:
             optional = True
 
-        length = None
-        if "len" in param_tag.attrib:
-            length = param_tag.attrib["len"]
-
+        length = param_tag.get("len")
         param_str = stringify_tag_except_comment(param_tag)
         param = parse_typed_entity(param_str)
         prototype.add_argument(param, optional, length)
 
-    COMMANDS[name] = Command(name, prototype)
+    COMMANDS[name] = Command(name, prototype, tag.get("successcodes"))
 
 def parse_feature(tag):
     FEATURES[tag.attrib["name"]] = Feature(tag.attrib["name"], tag.attrib["number"])

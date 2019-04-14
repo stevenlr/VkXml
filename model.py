@@ -415,10 +415,11 @@ class FunctionPointerType(Entity):
         return FunctionPointerType(node.attrib["name"], proto)
 
 class Command(Entity):
-    def __init__(self, name: str, prototype: FunctionPrototype):
+    def __init__(self, name: str, prototype: FunctionPrototype, successcodes: Optional[str]):
         Entity.__init__(self, name)
         self.prototype = prototype
         self.type = CMD_TYPE_INSTANCE
+        self.successcodes = successcodes
 
     def make_depset(self) -> DependenciesSet:
         return self.prototype.make_depset()
@@ -427,11 +428,14 @@ class Command(Entity):
         node = xml.SubElement(parent, "command")
         node.attrib["name"] = self.name
         node.attrib["type"] = self.type
+        if self.successcodes:
+            node.attrib["success-codes"] = self.successcodes
         self.prototype.to_xml(node)
 
     @staticmethod
     def from_xml(node: xml.Element) -> Entity:
         proto = FunctionPrototype.from_xml(node)
-        cmd = Command(node.attrib["name"], proto)
+        successcodes = node.get("success-codes")
+        cmd = Command(node.attrib["name"], proto, successcodes)
         cmd.type = node.attrib["type"]
         return cmd

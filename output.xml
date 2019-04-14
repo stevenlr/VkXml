@@ -81,7 +81,7 @@
          <type const="False">uint32_t</type>
       </arg>
    </command>
-   <command name="vkCreateWin32SurfaceKHR" type="instance">
+   <command name="vkCreateWin32SurfaceKHR" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -104,7 +104,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfacePresentModesKHR" type="instance">
+   <command name="vkGetPhysicalDeviceSurfacePresentModesKHR" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -125,7 +125,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceFormatsKHR" type="instance">
+   <command name="vkGetPhysicalDeviceSurfaceFormatsKHR" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -146,7 +146,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceCapabilitiesKHR" type="instance">
+   <command name="vkGetPhysicalDeviceSurfaceCapabilitiesKHR" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -162,7 +162,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceSurfaceSupportKHR" type="instance">
+   <command name="vkGetPhysicalDeviceSurfaceSupportKHR" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -197,7 +197,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueuePresentKHR" type="device">
+   <command name="vkQueuePresentKHR" success-codes="VK_SUCCESS,VK_SUBOPTIMAL_KHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -210,7 +210,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAcquireNextImageKHR" type="device">
+   <command name="vkAcquireNextImageKHR" success-codes="VK_SUCCESS,VK_TIMEOUT,VK_NOT_READY,VK_SUBOPTIMAL_KHR" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -235,7 +235,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetSwapchainImagesKHR" type="device">
+   <command name="vkGetSwapchainImagesKHR" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -272,7 +272,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSwapchainKHR" type="device">
+   <command name="vkCreateSwapchainKHR" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -330,7 +330,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDebugUtilsMessengerEXT" type="instance">
+   <command name="vkCreateDebugUtilsMessengerEXT" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -421,7 +421,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkSetDebugUtilsObjectTagEXT" type="instance">
+   <command name="vkSetDebugUtilsObjectTagEXT" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -434,7 +434,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkSetDebugUtilsObjectNameEXT" type="instance">
+   <command name="vkSetDebugUtilsObjectNameEXT" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1348,7 +1348,7 @@
          <type const="False">VkPipeline</type>
       </arg>
    </command>
-   <command name="vkResetCommandBuffer" type="device">
+   <command name="vkResetCommandBuffer" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1359,7 +1359,7 @@
          <type const="False">VkCommandBufferResetFlags</type>
       </arg>
    </command>
-   <command name="vkEndCommandBuffer" type="device">
+   <command name="vkEndCommandBuffer" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1367,7 +1367,7 @@
          <type const="False">VkCommandBuffer</type>
       </arg>
    </command>
-   <command name="vkBeginCommandBuffer" type="device">
+   <command name="vkBeginCommandBuffer" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1399,7 +1399,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateCommandBuffers" type="device">
+   <command name="vkAllocateCommandBuffers" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1417,7 +1417,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetCommandPool" type="device">
+   <command name="vkResetCommandPool" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1447,7 +1447,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateCommandPool" type="device">
+   <command name="vkCreateCommandPool" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1502,7 +1502,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateRenderPass" type="device">
+   <command name="vkCreateRenderPass" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1541,7 +1541,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateFramebuffer" type="device">
+   <command name="vkCreateFramebuffer" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1588,7 +1588,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFreeDescriptorSets" type="device">
+   <command name="vkFreeDescriptorSets" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1607,7 +1607,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateDescriptorSets" type="device">
+   <command name="vkAllocateDescriptorSets" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1625,7 +1625,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetDescriptorPool" type="device">
+   <command name="vkResetDescriptorPool" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1655,7 +1655,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDescriptorPool" type="device">
+   <command name="vkCreateDescriptorPool" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1694,7 +1694,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDescriptorSetLayout" type="device">
+   <command name="vkCreateDescriptorSetLayout" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1733,7 +1733,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSampler" type="device">
+   <command name="vkCreateSampler" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1772,7 +1772,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreatePipelineLayout" type="device">
+   <command name="vkCreatePipelineLayout" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1811,7 +1811,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateComputePipelines" type="device">
+   <command name="vkCreateComputePipelines" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1840,7 +1840,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateGraphicsPipelines" type="device">
+   <command name="vkCreateGraphicsPipelines" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1869,7 +1869,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkMergePipelineCaches" type="device">
+   <command name="vkMergePipelineCaches" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1888,7 +1888,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPipelineCacheData" type="device">
+   <command name="vkGetPipelineCacheData" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1925,7 +1925,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreatePipelineCache" type="device">
+   <command name="vkCreatePipelineCache" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -1964,7 +1964,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateShaderModule" type="device">
+   <command name="vkCreateShaderModule" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2003,7 +2003,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateImageView" type="device">
+   <command name="vkCreateImageView" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2063,7 +2063,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateImage" type="device">
+   <command name="vkCreateImage" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2102,7 +2102,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateBufferView" type="device">
+   <command name="vkCreateBufferView" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2141,7 +2141,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateBuffer" type="device">
+   <command name="vkCreateBuffer" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2164,7 +2164,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetQueryPoolResults" type="device">
+   <command name="vkGetQueryPoolResults" success-codes="VK_SUCCESS,VK_NOT_READY" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2211,7 +2211,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateQueryPool" type="device">
+   <command name="vkCreateQueryPool" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2234,7 +2234,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkResetEvent" type="device">
+   <command name="vkResetEvent" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2245,7 +2245,7 @@
          <type const="False">VkEvent</type>
       </arg>
    </command>
-   <command name="vkSetEvent" type="device">
+   <command name="vkSetEvent" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2256,7 +2256,7 @@
          <type const="False">VkEvent</type>
       </arg>
    </command>
-   <command name="vkGetEventStatus" type="device">
+   <command name="vkGetEventStatus" success-codes="VK_EVENT_SET,VK_EVENT_RESET" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2283,7 +2283,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateEvent" type="device">
+   <command name="vkCreateEvent" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2322,7 +2322,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateSemaphore" type="device">
+   <command name="vkCreateSemaphore" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2345,7 +2345,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkWaitForFences" type="device">
+   <command name="vkWaitForFences" success-codes="VK_SUCCESS,VK_TIMEOUT" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2367,7 +2367,7 @@
          <type const="False">uint64_t</type>
       </arg>
    </command>
-   <command name="vkGetFenceStatus" type="device">
+   <command name="vkGetFenceStatus" success-codes="VK_SUCCESS,VK_NOT_READY" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2378,7 +2378,7 @@
          <type const="False">VkFence</type>
       </arg>
    </command>
-   <command name="vkResetFences" type="device">
+   <command name="vkResetFences" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2410,7 +2410,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateFence" type="device">
+   <command name="vkCreateFence" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2433,7 +2433,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkQueueBindSparse" type="device">
+   <command name="vkQueueBindSparse" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2538,7 +2538,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkBindImageMemory" type="device">
+   <command name="vkBindImageMemory" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2555,7 +2555,7 @@
          <type const="False">VkDeviceSize</type>
       </arg>
    </command>
-   <command name="vkBindBufferMemory" type="device">
+   <command name="vkBindBufferMemory" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2588,7 +2588,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkInvalidateMappedMemoryRanges" type="device">
+   <command name="vkInvalidateMappedMemoryRanges" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2604,7 +2604,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkFlushMappedMemoryRanges" type="device">
+   <command name="vkFlushMappedMemoryRanges" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2631,7 +2631,7 @@
          <type const="False">VkDeviceMemory</type>
       </arg>
    </command>
-   <command name="vkMapMemory" type="device">
+   <command name="vkMapMemory" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2674,7 +2674,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkAllocateMemory" type="device">
+   <command name="vkAllocateMemory" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2697,7 +2697,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkDeviceWaitIdle" type="device">
+   <command name="vkDeviceWaitIdle" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2705,7 +2705,7 @@
          <type const="False">VkDevice</type>
       </arg>
    </command>
-   <command name="vkQueueWaitIdle" type="device">
+   <command name="vkQueueWaitIdle" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2713,7 +2713,7 @@
          <type const="False">VkQueue</type>
       </arg>
    </command>
-   <command name="vkQueueSubmit" type="device">
+   <command name="vkQueueSubmit" success-codes="VK_SUCCESS" type="device">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2751,7 +2751,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateDeviceLayerProperties" type="instance">
+   <command name="vkEnumerateDeviceLayerProperties" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2769,7 +2769,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateInstanceLayerProperties" type="entry">
+   <command name="vkEnumerateInstanceLayerProperties" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2784,7 +2784,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateDeviceExtensionProperties" type="instance">
+   <command name="vkEnumerateDeviceExtensionProperties" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2807,7 +2807,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumerateInstanceExtensionProperties" type="entry">
+   <command name="vkEnumerateInstanceExtensionProperties" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2840,7 +2840,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateDevice" type="instance">
+   <command name="vkCreateDevice" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2933,7 +2933,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkGetPhysicalDeviceImageFormatProperties" type="instance">
+   <command name="vkGetPhysicalDeviceImageFormatProperties" success-codes="VK_SUCCESS" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -2990,7 +2990,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkEnumeratePhysicalDevices" type="instance">
+   <command name="vkEnumeratePhysicalDevices" success-codes="VK_SUCCESS,VK_INCOMPLETE" type="instance">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>
@@ -3021,7 +3021,7 @@
          </pointer>
       </arg>
    </command>
-   <command name="vkCreateInstance" type="entry">
+   <command name="vkCreateInstance" success-codes="VK_SUCCESS" type="entry">
       <return-type>
          <type const="False">VkResult</type>
       </return-type>

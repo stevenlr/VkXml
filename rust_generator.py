@@ -132,6 +132,35 @@ def to_rust_type_deep(t: Type) -> str:
     t_str = to_rust_type_deep_inner(t)
     return remove_prefix(remove_prefix(t_str, "mut "), "const ")
 
+def to_rust_type_deep_arg(t: FunctionArgument) -> str:
+    def to_rust_type_deep_inner_arg(t: Type, is_optional: bool) -> str:
+        if isinstance(t, TypeReference):
+            rust_type = to_rust_type(t.name)
+            if rust_type == "VkBool32":
+                rust_type = "bool"
+            if t.is_const:
+                return rust_type
+            else:
+                return "mut " + rust_type
+        elif isinstance(t, PointerType):
+            inner = to_rust_type_deep_inner_arg(t.inner, False)
+            inner_str = ""
+            if t.is_const:
+                inner_str = "&" + inner
+            else:
+                inner_str = "mut &" + inner
+            if is_optional:
+                return "Option<%s>" % remove_prefix(inner_str, "mut ")
+            else:
+                return inner_str
+        elif isinstance(t, ArrayType):
+            inner = to_rust_type_deep(t.inner)
+            return "[%s; %d]" % (inner, t.length)
+        else:
+            return ""
+    t_str = to_rust_type_deep_inner_arg(t.id.type, t.optional)
+    return remove_prefix(t_str, "mut ")
+
 fp = open("src/types.rs", "w+")
 
 fp.write("pub type HINSTANCE = usize;\n")
@@ -326,6 +355,7 @@ fp = open("src/commands.rs", "w+")
 fp.write("use crate::types::*;\n\n")
 
 def write_commands_collection(fp, type: str, struct_name: str):
+    fp.write("#[derive(Clone)]\n")
     fp.write("pub struct %s {\n" % struct_name)
     for t in model["commands"]:
         if t.type != type:
@@ -344,7 +374,8 @@ def write_commands_collection(fp, type: str, struct_name: str):
     for t in model["commands"]:
         if t.type != type:
             continue
-        fp.write("\n    pub unsafe fn %s(&self" % camel_to_snake(t.name[2:]))
+        fp.write("\n    #[inline]\n")
+        fp.write("    pub unsafe fn %s(&self" % camel_to_snake(t.name[2:]))
         for a in t.prototype.arguments:
             arg_name = camel_to_snake(a.id.name)
             if arg_name == "type":
@@ -459,4 +490,256 @@ for t in model["structure_types"]:
     fp.write("    }\n")
     fp.write("}\n\n")
 
+fp.close()
+
+class CmdGenerator:
+    def __init__(self, cmd: Command):
+        self.cmd = cmd
+
+    def write_to(self, fp, handle_type):
+        self.generate(fp, handle_type)
+
+    def generate(self, fp, handle_type):
+        return
+        fp.write("\n    pub fn %s(&self" % camel_to_snake(self.cmd.name[2:]))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+            fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep(a.id.type)))
+        fp.write(")")
+        has_return_value = False
+        if not isinstance(self.cmd.prototype.return_type, TypeReference) or self.cmd.prototype.return_type.name != "void":
+            fp.write(" -> %s" % to_rust_type_deep(self.cmd.prototype.return_type))
+            has_return_value = True
+        fp.write(" {\n")
+        inner_fn_name = camel_to_snake(self.cmd.name[2:])
+        fp.write("        let ret = unsafe { self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+            fp.write("\n            %s," % arg_name)
+        fp.write(") };\n")
+        if has_return_value:
+            fp.write("        return ret;\n")
+        fp.write("    }\n")
+
+class CmdReturnSingleGenerator(CmdGenerator):
+    def __init__(self, cmd: Command, output: FunctionArgument):
+        CmdGenerator.__init__(self, cmd)
+        self.output = output
+
+    def generate(self, fp, handle_type):
+        fp.write("\n    pub fn %s(&self" % camel_to_snake(self.cmd.name[2:]))
+        for arg in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(arg.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if arg == self.output:
+                pass
+            elif is_handle(arg.id.type, handle_type):
+                pass
+            else:
+                 fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
+        fp.write(")")
+        inner_fn_name = camel_to_snake(self.cmd.name[2:])
+        is_bool = False
+        is_return_type_result = False
+        if is_result(self.cmd.prototype.return_type):
+            ret_type = to_rust_type_deep(self.output.id.type.inner)
+            if ret_type == "VkBool32":
+                ret_type = "bool"
+                is_bool = True
+            fp.write(" -> Result<(VkResult, %s), VkResult> {\n" % ret_type)
+            is_return_type_result = True
+        else:
+            fp.write(" -> %s {\n" % to_rust_type_deep(self.output.id.type.inner))
+        fp.write("        let mut ret_value = unsafe { core::mem::uninitialized() };\n")
+        fp.write("        let ret = unsafe {\n")
+        fp.write("            self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+            if a == self.output:
+                fp.write("\n                &mut ret_value,")
+            elif is_handle(a.id.type, handle_type):
+                fp.write("\n                self.handle,")
+            elif is_optional_ptr(a):
+                fp.write("\n                %s," % optional_ptr_call(a))
+            else:
+                fp.write("\n                %s," % arg_name)
+        fp.write(")\n")
+        fp.write("        };\n")
+        if is_bool:
+            fp.write("        let ret_value = ret_value == VK_TRUE;\n")
+        if is_return_type_result:
+            fp.write("        return match ret {\n")
+            for return_code in self.cmd.successcodes.split(","):
+                fp.write("            VkResult::%s => Ok((ret, ret_value)),\n" % remove_prefix(return_code, "VK_"))
+            fp.write("            _ => Err(ret),\n")
+            fp.write("        };\n")
+        else:
+            fp.write("        return ret_value;\n")
+        fp.write("    }\n")
+
+class CmdReturnSliceAndCountGenerator(CmdGenerator):
+    def __init__(self, cmd: Command, count: FunctionArgument, output: FunctionArgument):
+        CmdGenerator.__init__(self, cmd)
+        self.count = count
+        self.output = output
+
+class CmdReturnSliceConstantCountGenerator(CmdGenerator):
+    def __init__(self, cmd: Command, output: FunctionArgument):
+        CmdGenerator.__init__(self, cmd)
+        self.output = output
+
+class CmdReturnRawDataSliceGenerator(CmdGenerator):
+    def __init__(self, cmd: Command, length: FunctionArgument, data: FunctionArgument):
+        CmdGenerator.__init__(self, cmd)
+        self.length = length
+        self.data = data
+
+def is_void(t: Type) -> bool:
+    return isinstance(t, TypeReference) and t.name == "void"
+
+def is_handle(t: Type, handle: str) -> bool:
+    return isinstance(t, TypeReference) and t.name == handle
+
+def is_result(t: Type) -> bool:
+    return isinstance(t, TypeReference) and t.name == "VkResult"
+
+def is_mut_ptr(t: Type) -> bool:
+    return isinstance(t, PointerType) and not t.inner.is_const
+
+def is_optional_ptr(a: FunctionArgument):
+    return isinstance(a.id.type, PointerType) and a.optional
+
+def optional_ptr_call(a: FunctionArgument) -> str:
+    s = "match %s { Some(r) => r, None => " % camel_to_snake(a.id.name)
+    if a.id.type.inner.is_const:
+        s += "core::ptr::null()"
+    else:
+        s += "core::ptr::null_mut()"
+    s += ",}"
+    return s
+
+def find_arguments_mut_ptr(args: List[FunctionArgument]) -> List[FunctionArgument]:
+    result = []
+    for arg in args:
+        if is_mut_ptr(arg.id.type):
+            result.append(arg)
+    return result
+
+def find_arguments_mut_ptr_length(args: List[FunctionArgument]) -> List[FunctionArgument]:
+    result = []
+    for arg in args:
+        if is_mut_ptr(arg.id.type) and arg.length:
+            result.append(arg)
+    return result
+
+def find_argument(cmd: Command, name: str) -> Optional[FunctionArgument]:
+    for a in cmd.prototype.arguments:
+        if a.id.name == name:
+            return a
+    return None
+
+def categorize_command(cmd: Command) -> CmdGenerator:
+    proto = cmd.prototype
+    args_mut_ptr = find_arguments_mut_ptr(proto.arguments)
+    args_mut_ptr_length = find_arguments_mut_ptr_length(args_mut_ptr)
+    if len(args_mut_ptr_length) > 1:
+        raise Exception("Not implemented")
+    elif len(args_mut_ptr_length) == 1:
+        arg = args_mut_ptr_length[0]
+        length_arg = find_argument(cmd, arg.length)
+
+        if length_arg:
+            if is_void(arg.id.type.inner):
+                return CmdReturnRawDataSliceGenerator(cmd, length_arg, arg)
+            else:
+                return CmdReturnSliceAndCountGenerator(cmd, length_arg, arg)
+        else:
+            return CmdReturnSliceConstantCountGenerator(cmd, arg)
+    elif len(args_mut_ptr) == 1:
+        return CmdReturnSingleGenerator(cmd, args_mut_ptr[0])
+    elif len(args_mut_ptr) > 0:
+        raise Exception("Not implemented")
+    return CmdGenerator(cmd)
+
+def write_commands(types: List[str], fp, handle_type: str):
+    for t in model["commands"]:
+        if t.type in types:
+            cmd_gen = categorize_command(t)
+            cmd_gen.write_to(fp, handle_type)
+
+fp = open("src/entry_point.rs", "w+")
+fp.write("use crate::types::*;\n")
+fp.write("use crate::commands::{StaticCommands, EntryCommands};\n\n")
+fp.write("#[derive(Clone)]\n")
+fp.write("pub struct EntryPoint {\n")
+fp.write("    pub(crate) s: StaticCommands,\n")
+fp.write("    pub(crate) e: EntryCommands,\n")
+fp.write("}\n\n")
+fp.write("impl EntryPoint {\n")
+fp.write("    pub fn new(load_fn: impl Fn(&[u8]) -> PfnVkVoidFunction) -> Self {\n")
+fp.write("        let static_commands = StaticCommands::load(load_fn);\n")
+fp.write("        let entry_commands = EntryCommands::load(|fn_name| {\n")
+fp.write("            unsafe { static_commands.get_instance_proc_addr(VkInstance::null(), fn_name.as_ptr()) }\n")
+fp.write("        });\n")
+fp.write("        Self {\n")
+fp.write("            s: static_commands,\n")
+fp.write("            e: entry_commands,\n")
+fp.write("        }\n")
+fp.write("    }\n")
+write_commands(["static", "entry"], fp, "")
+fp.write("}\n")
+fp.close()
+
+fp = open("src/instance.rs", "w+")
+fp.write("use crate::types::*;\n")
+fp.write("use crate::entry_point::EntryPoint;\n")
+fp.write("use crate::commands::InstanceCommands;\n\n")
+fp.write("#[derive(Clone)]\n")
+fp.write("pub struct Instance {\n")
+fp.write("    pub(crate) handle: VkInstance,\n")
+fp.write("    pub(crate) i: InstanceCommands,\n")
+fp.write("}\n\n")
+fp.write("impl Instance {\n")
+fp.write("    pub fn new(instance: VkInstance, entry: &EntryPoint) -> Self {\n")
+fp.write("        let commands = InstanceCommands::load(|fn_name| {\n")
+fp.write("            unsafe { entry.s.get_instance_proc_addr(instance, fn_name.as_ptr()) }\n")
+fp.write("        });\n")
+fp.write("        Self {\n")
+fp.write("            handle: instance,\n")
+fp.write("            i: commands,\n")
+fp.write("        }\n")
+fp.write("    }\n")
+write_commands(["instance"], fp, "VkInstance")
+fp.write("}\n")
+fp.close()
+
+fp = open("src/device.rs", "w+")
+fp.write("use crate::types::*;\n")
+fp.write("use crate::instance::Instance;\n")
+fp.write("use crate::commands::DeviceCommands;\n\n")
+fp.write("#[derive(Clone)]\n")
+fp.write("pub struct Device {\n")
+fp.write("    handle: VkDevice,\n")
+fp.write("    d: DeviceCommands,\n")
+fp.write("}\n\n")
+fp.write("impl Device {\n")
+fp.write("    pub fn new(device: VkDevice, instance: &Instance) -> Self {\n")
+fp.write("        let commands = DeviceCommands::load(|fn_name| {\n")
+fp.write("            unsafe { instance.i.get_device_proc_addr(device, fn_name.as_ptr()) }\n")
+fp.write("        });\n")
+fp.write("        Self {\n")
+fp.write("            handle: device,\n")
+fp.write("            d: commands,\n")
+fp.write("        }\n")
+fp.write("    }\n")
+write_commands(["device"], fp, "VkDevice")
+fp.write("}\n")
 fp.close()

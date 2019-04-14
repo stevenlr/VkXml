@@ -1,5 +1,6 @@
 use crate::types::*;
 
+#[derive(Clone)]
 pub struct StaticCommands {
     pfn_get_instance_proc_addr: PfnVkGetInstanceProcAddr,
 }
@@ -11,6 +12,7 @@ impl StaticCommands {
         }
     }
 
+    #[inline]
     pub unsafe fn get_instance_proc_addr(&self,
         instance: VkInstance,
         p_name: *const u8) -> PfnVkVoidFunction {
@@ -20,6 +22,7 @@ impl StaticCommands {
     }
 }
 
+#[derive(Clone)]
 pub struct EntryCommands {
     pfn_enumerate_instance_layer_properties: PfnVkEnumerateInstanceLayerProperties,
     pfn_enumerate_instance_extension_properties: PfnVkEnumerateInstanceExtensionProperties,
@@ -35,6 +38,7 @@ impl EntryCommands {
         }
     }
 
+    #[inline]
     pub unsafe fn enumerate_instance_layer_properties(&self,
         p_property_count: *mut u32,
         p_properties: *mut VkLayerProperties) -> VkResult {
@@ -43,6 +47,7 @@ impl EntryCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn enumerate_instance_extension_properties(&self,
         p_layer_name: *const u8,
         p_property_count: *mut u32,
@@ -53,6 +58,7 @@ impl EntryCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn create_instance(&self,
         p_create_info: *const VkInstanceCreateInfo,
         p_allocator: *const VkAllocationCallbacks,
@@ -64,6 +70,7 @@ impl EntryCommands {
     }
 }
 
+#[derive(Clone)]
 pub struct InstanceCommands {
     pfn_get_physical_device_win_32_presentation_support_khr: PfnVkGetPhysicalDeviceWin32PresentationSupportKHR,
     pfn_create_win_32_surface_khr: PfnVkCreateWin32SurfaceKHR,
@@ -135,6 +142,7 @@ impl InstanceCommands {
         }
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_win_32_presentation_support_khr(&self,
         physical_device: VkPhysicalDevice,
         queue_family_index: u32) -> VkBool32 {
@@ -143,6 +151,7 @@ impl InstanceCommands {
             queue_family_index,)
     }
 
+    #[inline]
     pub unsafe fn create_win_32_surface_khr(&self,
         instance: VkInstance,
         p_create_info: *const VkWin32SurfaceCreateInfoKHR,
@@ -155,6 +164,7 @@ impl InstanceCommands {
             p_surface,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_surface_present_modes_khr(&self,
         physical_device: VkPhysicalDevice,
         surface: VkSurfaceKHR,
@@ -167,6 +177,7 @@ impl InstanceCommands {
             p_present_modes,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_surface_formats_khr(&self,
         physical_device: VkPhysicalDevice,
         surface: VkSurfaceKHR,
@@ -179,6 +190,7 @@ impl InstanceCommands {
             p_surface_formats,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_surface_capabilities_khr(&self,
         physical_device: VkPhysicalDevice,
         surface: VkSurfaceKHR,
@@ -189,6 +201,7 @@ impl InstanceCommands {
             p_surface_capabilities,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_surface_support_khr(&self,
         physical_device: VkPhysicalDevice,
         queue_family_index: u32,
@@ -201,6 +214,7 @@ impl InstanceCommands {
             p_supported,)
     }
 
+    #[inline]
     pub unsafe fn destroy_surface_khr(&self,
         instance: VkInstance,
         surface: VkSurfaceKHR,
@@ -211,6 +225,7 @@ impl InstanceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn submit_debug_utils_message_ext(&self,
         instance: VkInstance,
         message_severity: VkDebugUtilsMessageSeverityFlagBitsEXT,
@@ -223,6 +238,7 @@ impl InstanceCommands {
             p_callback_data,)
     }
 
+    #[inline]
     pub unsafe fn destroy_debug_utils_messenger_ext(&self,
         instance: VkInstance,
         messenger: VkDebugUtilsMessengerEXT,
@@ -233,6 +249,7 @@ impl InstanceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_debug_utils_messenger_ext(&self,
         instance: VkInstance,
         p_create_info: *const VkDebugUtilsMessengerCreateInfoEXT,
@@ -245,6 +262,7 @@ impl InstanceCommands {
             p_messenger,)
     }
 
+    #[inline]
     pub unsafe fn cmd_insert_debug_utils_label_ext(&self,
         command_buffer: VkCommandBuffer,
         p_label_info: *const VkDebugUtilsLabelEXT) {
@@ -253,12 +271,14 @@ impl InstanceCommands {
             p_label_info,)
     }
 
+    #[inline]
     pub unsafe fn cmd_end_debug_utils_label_ext(&self,
         command_buffer: VkCommandBuffer) {
         (self.pfn_cmd_end_debug_utils_label_ext)(
             command_buffer,)
     }
 
+    #[inline]
     pub unsafe fn cmd_begin_debug_utils_label_ext(&self,
         command_buffer: VkCommandBuffer,
         p_label_info: *const VkDebugUtilsLabelEXT) {
@@ -267,6 +287,7 @@ impl InstanceCommands {
             p_label_info,)
     }
 
+    #[inline]
     pub unsafe fn queue_insert_debug_utils_label_ext(&self,
         queue: VkQueue,
         p_label_info: *const VkDebugUtilsLabelEXT) {
@@ -275,12 +296,14 @@ impl InstanceCommands {
             p_label_info,)
     }
 
+    #[inline]
     pub unsafe fn queue_end_debug_utils_label_ext(&self,
         queue: VkQueue) {
         (self.pfn_queue_end_debug_utils_label_ext)(
             queue,)
     }
 
+    #[inline]
     pub unsafe fn queue_begin_debug_utils_label_ext(&self,
         queue: VkQueue,
         p_label_info: *const VkDebugUtilsLabelEXT) {
@@ -289,6 +312,7 @@ impl InstanceCommands {
             p_label_info,)
     }
 
+    #[inline]
     pub unsafe fn set_debug_utils_object_tag_ext(&self,
         device: VkDevice,
         p_tag_info: *const VkDebugUtilsObjectTagInfoEXT) -> VkResult {
@@ -297,6 +321,7 @@ impl InstanceCommands {
             p_tag_info,)
     }
 
+    #[inline]
     pub unsafe fn set_debug_utils_object_name_ext(&self,
         device: VkDevice,
         p_name_info: *const VkDebugUtilsObjectNameInfoEXT) -> VkResult {
@@ -305,6 +330,7 @@ impl InstanceCommands {
             p_name_info,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_sparse_image_format_properties(&self,
         physical_device: VkPhysicalDevice,
         format: VkFormat,
@@ -325,6 +351,7 @@ impl InstanceCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn enumerate_device_layer_properties(&self,
         physical_device: VkPhysicalDevice,
         p_property_count: *mut u32,
@@ -335,6 +362,7 @@ impl InstanceCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn enumerate_device_extension_properties(&self,
         physical_device: VkPhysicalDevice,
         p_layer_name: *const u8,
@@ -347,6 +375,7 @@ impl InstanceCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn create_device(&self,
         physical_device: VkPhysicalDevice,
         p_create_info: *const VkDeviceCreateInfo,
@@ -359,6 +388,7 @@ impl InstanceCommands {
             p_device,)
     }
 
+    #[inline]
     pub unsafe fn get_device_proc_addr(&self,
         device: VkDevice,
         p_name: *const u8) -> PfnVkVoidFunction {
@@ -367,6 +397,7 @@ impl InstanceCommands {
             p_name,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_memory_properties(&self,
         physical_device: VkPhysicalDevice,
         p_memory_properties: *mut VkPhysicalDeviceMemoryProperties) {
@@ -375,6 +406,7 @@ impl InstanceCommands {
             p_memory_properties,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_queue_family_properties(&self,
         physical_device: VkPhysicalDevice,
         p_queue_family_property_count: *mut u32,
@@ -385,6 +417,7 @@ impl InstanceCommands {
             p_queue_family_properties,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_properties(&self,
         physical_device: VkPhysicalDevice,
         p_properties: *mut VkPhysicalDeviceProperties) {
@@ -393,6 +426,7 @@ impl InstanceCommands {
             p_properties,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_image_format_properties(&self,
         physical_device: VkPhysicalDevice,
         format: VkFormat,
@@ -411,6 +445,7 @@ impl InstanceCommands {
             p_image_format_properties,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_format_properties(&self,
         physical_device: VkPhysicalDevice,
         format: VkFormat,
@@ -421,6 +456,7 @@ impl InstanceCommands {
             p_format_properties,)
     }
 
+    #[inline]
     pub unsafe fn get_physical_device_features(&self,
         physical_device: VkPhysicalDevice,
         p_features: *mut VkPhysicalDeviceFeatures) {
@@ -429,6 +465,7 @@ impl InstanceCommands {
             p_features,)
     }
 
+    #[inline]
     pub unsafe fn enumerate_physical_devices(&self,
         instance: VkInstance,
         p_physical_device_count: *mut u32,
@@ -439,6 +476,7 @@ impl InstanceCommands {
             p_physical_devices,)
     }
 
+    #[inline]
     pub unsafe fn destroy_instance(&self,
         instance: VkInstance,
         p_allocator: *const VkAllocationCallbacks) {
@@ -448,6 +486,7 @@ impl InstanceCommands {
     }
 }
 
+#[derive(Clone)]
 pub struct DeviceCommands {
     pfn_queue_present_khr: PfnVkQueuePresentKHR,
     pfn_acquire_next_image_khr: PfnVkAcquireNextImageKHR,
@@ -707,6 +746,7 @@ impl DeviceCommands {
         }
     }
 
+    #[inline]
     pub unsafe fn queue_present_khr(&self,
         queue: VkQueue,
         p_present_info: *const VkPresentInfoKHR) -> VkResult {
@@ -715,6 +755,7 @@ impl DeviceCommands {
             p_present_info,)
     }
 
+    #[inline]
     pub unsafe fn acquire_next_image_khr(&self,
         device: VkDevice,
         swapchain: VkSwapchainKHR,
@@ -731,6 +772,7 @@ impl DeviceCommands {
             p_image_index,)
     }
 
+    #[inline]
     pub unsafe fn get_swapchain_images_khr(&self,
         device: VkDevice,
         swapchain: VkSwapchainKHR,
@@ -743,6 +785,7 @@ impl DeviceCommands {
             p_swapchain_images,)
     }
 
+    #[inline]
     pub unsafe fn destroy_swapchain_khr(&self,
         device: VkDevice,
         swapchain: VkSwapchainKHR,
@@ -753,6 +796,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_swapchain_khr(&self,
         device: VkDevice,
         p_create_info: *const VkSwapchainCreateInfoKHR,
@@ -765,6 +809,7 @@ impl DeviceCommands {
             p_swapchain,)
     }
 
+    #[inline]
     pub unsafe fn cmd_execute_commands(&self,
         command_buffer: VkCommandBuffer,
         command_buffer_count: u32,
@@ -775,12 +820,14 @@ impl DeviceCommands {
             p_command_buffers,)
     }
 
+    #[inline]
     pub unsafe fn cmd_end_render_pass(&self,
         command_buffer: VkCommandBuffer) {
         (self.pfn_cmd_end_render_pass)(
             command_buffer,)
     }
 
+    #[inline]
     pub unsafe fn cmd_next_subpass(&self,
         command_buffer: VkCommandBuffer,
         contents: VkSubpassContents) {
@@ -789,6 +836,7 @@ impl DeviceCommands {
             contents,)
     }
 
+    #[inline]
     pub unsafe fn cmd_begin_render_pass(&self,
         command_buffer: VkCommandBuffer,
         p_render_pass_begin: *const VkRenderPassBeginInfo,
@@ -799,6 +847,7 @@ impl DeviceCommands {
             contents,)
     }
 
+    #[inline]
     pub unsafe fn cmd_push_constants(&self,
         command_buffer: VkCommandBuffer,
         layout: VkPipelineLayout,
@@ -815,6 +864,7 @@ impl DeviceCommands {
             p_values,)
     }
 
+    #[inline]
     pub unsafe fn cmd_copy_query_pool_results(&self,
         command_buffer: VkCommandBuffer,
         query_pool: VkQueryPool,
@@ -835,6 +885,7 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn cmd_write_timestamp(&self,
         command_buffer: VkCommandBuffer,
         pipeline_stage: VkPipelineStageFlagBits,
@@ -847,6 +898,7 @@ impl DeviceCommands {
             query,)
     }
 
+    #[inline]
     pub unsafe fn cmd_reset_query_pool(&self,
         command_buffer: VkCommandBuffer,
         query_pool: VkQueryPool,
@@ -859,6 +911,7 @@ impl DeviceCommands {
             query_count,)
     }
 
+    #[inline]
     pub unsafe fn cmd_end_query(&self,
         command_buffer: VkCommandBuffer,
         query_pool: VkQueryPool,
@@ -869,6 +922,7 @@ impl DeviceCommands {
             query,)
     }
 
+    #[inline]
     pub unsafe fn cmd_begin_query(&self,
         command_buffer: VkCommandBuffer,
         query_pool: VkQueryPool,
@@ -881,6 +935,7 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn cmd_pipeline_barrier(&self,
         command_buffer: VkCommandBuffer,
         src_stage_mask: VkPipelineStageFlags,
@@ -905,6 +960,7 @@ impl DeviceCommands {
             p_image_memory_barriers,)
     }
 
+    #[inline]
     pub unsafe fn cmd_wait_events(&self,
         command_buffer: VkCommandBuffer,
         event_count: u32,
@@ -931,6 +987,7 @@ impl DeviceCommands {
             p_image_memory_barriers,)
     }
 
+    #[inline]
     pub unsafe fn cmd_reset_event(&self,
         command_buffer: VkCommandBuffer,
         event: VkEvent,
@@ -941,6 +998,7 @@ impl DeviceCommands {
             stage_mask,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_event(&self,
         command_buffer: VkCommandBuffer,
         event: VkEvent,
@@ -951,6 +1009,7 @@ impl DeviceCommands {
             stage_mask,)
     }
 
+    #[inline]
     pub unsafe fn cmd_resolve_image(&self,
         command_buffer: VkCommandBuffer,
         src_image: VkImage,
@@ -969,6 +1028,7 @@ impl DeviceCommands {
             p_regions,)
     }
 
+    #[inline]
     pub unsafe fn cmd_clear_attachments(&self,
         command_buffer: VkCommandBuffer,
         attachment_count: u32,
@@ -983,6 +1043,7 @@ impl DeviceCommands {
             p_rects,)
     }
 
+    #[inline]
     pub unsafe fn cmd_clear_depth_stencil_image(&self,
         command_buffer: VkCommandBuffer,
         image: VkImage,
@@ -999,6 +1060,7 @@ impl DeviceCommands {
             p_ranges,)
     }
 
+    #[inline]
     pub unsafe fn cmd_clear_color_image(&self,
         command_buffer: VkCommandBuffer,
         image: VkImage,
@@ -1015,6 +1077,7 @@ impl DeviceCommands {
             p_ranges,)
     }
 
+    #[inline]
     pub unsafe fn cmd_fill_buffer(&self,
         command_buffer: VkCommandBuffer,
         dst_buffer: VkBuffer,
@@ -1029,6 +1092,7 @@ impl DeviceCommands {
             data,)
     }
 
+    #[inline]
     pub unsafe fn cmd_update_buffer(&self,
         command_buffer: VkCommandBuffer,
         dst_buffer: VkBuffer,
@@ -1043,6 +1107,7 @@ impl DeviceCommands {
             p_data,)
     }
 
+    #[inline]
     pub unsafe fn cmd_copy_image_to_buffer(&self,
         command_buffer: VkCommandBuffer,
         src_image: VkImage,
@@ -1059,6 +1124,7 @@ impl DeviceCommands {
             p_regions,)
     }
 
+    #[inline]
     pub unsafe fn cmd_copy_buffer_to_image(&self,
         command_buffer: VkCommandBuffer,
         src_buffer: VkBuffer,
@@ -1075,6 +1141,7 @@ impl DeviceCommands {
             p_regions,)
     }
 
+    #[inline]
     pub unsafe fn cmd_blit_image(&self,
         command_buffer: VkCommandBuffer,
         src_image: VkImage,
@@ -1095,6 +1162,7 @@ impl DeviceCommands {
             filter,)
     }
 
+    #[inline]
     pub unsafe fn cmd_copy_image(&self,
         command_buffer: VkCommandBuffer,
         src_image: VkImage,
@@ -1113,6 +1181,7 @@ impl DeviceCommands {
             p_regions,)
     }
 
+    #[inline]
     pub unsafe fn cmd_copy_buffer(&self,
         command_buffer: VkCommandBuffer,
         src_buffer: VkBuffer,
@@ -1127,6 +1196,7 @@ impl DeviceCommands {
             p_regions,)
     }
 
+    #[inline]
     pub unsafe fn cmd_dispatch_indirect(&self,
         command_buffer: VkCommandBuffer,
         buffer: VkBuffer,
@@ -1137,6 +1207,7 @@ impl DeviceCommands {
             offset,)
     }
 
+    #[inline]
     pub unsafe fn cmd_dispatch(&self,
         command_buffer: VkCommandBuffer,
         group_count_x: u32,
@@ -1149,6 +1220,7 @@ impl DeviceCommands {
             group_count_z,)
     }
 
+    #[inline]
     pub unsafe fn cmd_draw_indexed_indirect(&self,
         command_buffer: VkCommandBuffer,
         buffer: VkBuffer,
@@ -1163,6 +1235,7 @@ impl DeviceCommands {
             stride,)
     }
 
+    #[inline]
     pub unsafe fn cmd_draw_indirect(&self,
         command_buffer: VkCommandBuffer,
         buffer: VkBuffer,
@@ -1177,6 +1250,7 @@ impl DeviceCommands {
             stride,)
     }
 
+    #[inline]
     pub unsafe fn cmd_draw_indexed(&self,
         command_buffer: VkCommandBuffer,
         index_count: u32,
@@ -1193,6 +1267,7 @@ impl DeviceCommands {
             first_instance,)
     }
 
+    #[inline]
     pub unsafe fn cmd_draw(&self,
         command_buffer: VkCommandBuffer,
         vertex_count: u32,
@@ -1207,6 +1282,7 @@ impl DeviceCommands {
             first_instance,)
     }
 
+    #[inline]
     pub unsafe fn cmd_bind_vertex_buffers(&self,
         command_buffer: VkCommandBuffer,
         first_binding: u32,
@@ -1221,6 +1297,7 @@ impl DeviceCommands {
             p_offsets,)
     }
 
+    #[inline]
     pub unsafe fn cmd_bind_index_buffer(&self,
         command_buffer: VkCommandBuffer,
         buffer: VkBuffer,
@@ -1233,6 +1310,7 @@ impl DeviceCommands {
             index_type,)
     }
 
+    #[inline]
     pub unsafe fn cmd_bind_descriptor_sets(&self,
         command_buffer: VkCommandBuffer,
         pipeline_bind_point: VkPipelineBindPoint,
@@ -1253,6 +1331,7 @@ impl DeviceCommands {
             p_dynamic_offsets,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_stencil_reference(&self,
         command_buffer: VkCommandBuffer,
         face_mask: VkStencilFaceFlags,
@@ -1263,6 +1342,7 @@ impl DeviceCommands {
             reference,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_stencil_write_mask(&self,
         command_buffer: VkCommandBuffer,
         face_mask: VkStencilFaceFlags,
@@ -1273,6 +1353,7 @@ impl DeviceCommands {
             write_mask,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_stencil_compare_mask(&self,
         command_buffer: VkCommandBuffer,
         face_mask: VkStencilFaceFlags,
@@ -1283,6 +1364,7 @@ impl DeviceCommands {
             compare_mask,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_depth_bounds(&self,
         command_buffer: VkCommandBuffer,
         min_depth_bounds: f32,
@@ -1293,6 +1375,7 @@ impl DeviceCommands {
             max_depth_bounds,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_blend_constants(&self,
         command_buffer: VkCommandBuffer,
         blend_constants: [f32; 4]) {
@@ -1301,6 +1384,7 @@ impl DeviceCommands {
             blend_constants,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_depth_bias(&self,
         command_buffer: VkCommandBuffer,
         depth_bias_constant_factor: f32,
@@ -1313,6 +1397,7 @@ impl DeviceCommands {
             depth_bias_slope_factor,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_line_width(&self,
         command_buffer: VkCommandBuffer,
         line_width: f32) {
@@ -1321,6 +1406,7 @@ impl DeviceCommands {
             line_width,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_scissor(&self,
         command_buffer: VkCommandBuffer,
         first_scissor: u32,
@@ -1333,6 +1419,7 @@ impl DeviceCommands {
             p_scissors,)
     }
 
+    #[inline]
     pub unsafe fn cmd_set_viewport(&self,
         command_buffer: VkCommandBuffer,
         first_viewport: u32,
@@ -1345,6 +1432,7 @@ impl DeviceCommands {
             p_viewports,)
     }
 
+    #[inline]
     pub unsafe fn cmd_bind_pipeline(&self,
         command_buffer: VkCommandBuffer,
         pipeline_bind_point: VkPipelineBindPoint,
@@ -1355,6 +1443,7 @@ impl DeviceCommands {
             pipeline,)
     }
 
+    #[inline]
     pub unsafe fn reset_command_buffer(&self,
         command_buffer: VkCommandBuffer,
         flags: VkCommandBufferResetFlags) -> VkResult {
@@ -1363,12 +1452,14 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn end_command_buffer(&self,
         command_buffer: VkCommandBuffer) -> VkResult {
         (self.pfn_end_command_buffer)(
             command_buffer,)
     }
 
+    #[inline]
     pub unsafe fn begin_command_buffer(&self,
         command_buffer: VkCommandBuffer,
         p_begin_info: *const VkCommandBufferBeginInfo) -> VkResult {
@@ -1377,6 +1468,7 @@ impl DeviceCommands {
             p_begin_info,)
     }
 
+    #[inline]
     pub unsafe fn free_command_buffers(&self,
         device: VkDevice,
         command_pool: VkCommandPool,
@@ -1389,6 +1481,7 @@ impl DeviceCommands {
             p_command_buffers,)
     }
 
+    #[inline]
     pub unsafe fn allocate_command_buffers(&self,
         device: VkDevice,
         p_allocate_info: *const VkCommandBufferAllocateInfo,
@@ -1399,6 +1492,7 @@ impl DeviceCommands {
             p_command_buffers,)
     }
 
+    #[inline]
     pub unsafe fn reset_command_pool(&self,
         device: VkDevice,
         command_pool: VkCommandPool,
@@ -1409,6 +1503,7 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn destroy_command_pool(&self,
         device: VkDevice,
         command_pool: VkCommandPool,
@@ -1419,6 +1514,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_command_pool(&self,
         device: VkDevice,
         p_create_info: *const VkCommandPoolCreateInfo,
@@ -1431,6 +1527,7 @@ impl DeviceCommands {
             p_command_pool,)
     }
 
+    #[inline]
     pub unsafe fn get_render_area_granularity(&self,
         device: VkDevice,
         render_pass: VkRenderPass,
@@ -1441,6 +1538,7 @@ impl DeviceCommands {
             p_granularity,)
     }
 
+    #[inline]
     pub unsafe fn destroy_render_pass(&self,
         device: VkDevice,
         render_pass: VkRenderPass,
@@ -1451,6 +1549,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_render_pass(&self,
         device: VkDevice,
         p_create_info: *const VkRenderPassCreateInfo,
@@ -1463,6 +1562,7 @@ impl DeviceCommands {
             p_render_pass,)
     }
 
+    #[inline]
     pub unsafe fn destroy_framebuffer(&self,
         device: VkDevice,
         framebuffer: VkFramebuffer,
@@ -1473,6 +1573,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_framebuffer(&self,
         device: VkDevice,
         p_create_info: *const VkFramebufferCreateInfo,
@@ -1485,6 +1586,7 @@ impl DeviceCommands {
             p_framebuffer,)
     }
 
+    #[inline]
     pub unsafe fn update_descriptor_sets(&self,
         device: VkDevice,
         descriptor_write_count: u32,
@@ -1499,6 +1601,7 @@ impl DeviceCommands {
             p_descriptor_copies,)
     }
 
+    #[inline]
     pub unsafe fn free_descriptor_sets(&self,
         device: VkDevice,
         descriptor_pool: VkDescriptorPool,
@@ -1511,6 +1614,7 @@ impl DeviceCommands {
             p_descriptor_sets,)
     }
 
+    #[inline]
     pub unsafe fn allocate_descriptor_sets(&self,
         device: VkDevice,
         p_allocate_info: *const VkDescriptorSetAllocateInfo,
@@ -1521,6 +1625,7 @@ impl DeviceCommands {
             p_descriptor_sets,)
     }
 
+    #[inline]
     pub unsafe fn reset_descriptor_pool(&self,
         device: VkDevice,
         descriptor_pool: VkDescriptorPool,
@@ -1531,6 +1636,7 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn destroy_descriptor_pool(&self,
         device: VkDevice,
         descriptor_pool: VkDescriptorPool,
@@ -1541,6 +1647,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_descriptor_pool(&self,
         device: VkDevice,
         p_create_info: *const VkDescriptorPoolCreateInfo,
@@ -1553,6 +1660,7 @@ impl DeviceCommands {
             p_descriptor_pool,)
     }
 
+    #[inline]
     pub unsafe fn destroy_descriptor_set_layout(&self,
         device: VkDevice,
         descriptor_set_layout: VkDescriptorSetLayout,
@@ -1563,6 +1671,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_descriptor_set_layout(&self,
         device: VkDevice,
         p_create_info: *const VkDescriptorSetLayoutCreateInfo,
@@ -1575,6 +1684,7 @@ impl DeviceCommands {
             p_set_layout,)
     }
 
+    #[inline]
     pub unsafe fn destroy_sampler(&self,
         device: VkDevice,
         sampler: VkSampler,
@@ -1585,6 +1695,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_sampler(&self,
         device: VkDevice,
         p_create_info: *const VkSamplerCreateInfo,
@@ -1597,6 +1708,7 @@ impl DeviceCommands {
             p_sampler,)
     }
 
+    #[inline]
     pub unsafe fn destroy_pipeline_layout(&self,
         device: VkDevice,
         pipeline_layout: VkPipelineLayout,
@@ -1607,6 +1719,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_pipeline_layout(&self,
         device: VkDevice,
         p_create_info: *const VkPipelineLayoutCreateInfo,
@@ -1619,6 +1732,7 @@ impl DeviceCommands {
             p_pipeline_layout,)
     }
 
+    #[inline]
     pub unsafe fn destroy_pipeline(&self,
         device: VkDevice,
         pipeline: VkPipeline,
@@ -1629,6 +1743,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_compute_pipelines(&self,
         device: VkDevice,
         pipeline_cache: VkPipelineCache,
@@ -1645,6 +1760,7 @@ impl DeviceCommands {
             p_pipelines,)
     }
 
+    #[inline]
     pub unsafe fn create_graphics_pipelines(&self,
         device: VkDevice,
         pipeline_cache: VkPipelineCache,
@@ -1661,6 +1777,7 @@ impl DeviceCommands {
             p_pipelines,)
     }
 
+    #[inline]
     pub unsafe fn merge_pipeline_caches(&self,
         device: VkDevice,
         dst_cache: VkPipelineCache,
@@ -1673,6 +1790,7 @@ impl DeviceCommands {
             p_src_caches,)
     }
 
+    #[inline]
     pub unsafe fn get_pipeline_cache_data(&self,
         device: VkDevice,
         pipeline_cache: VkPipelineCache,
@@ -1685,6 +1803,7 @@ impl DeviceCommands {
             p_data,)
     }
 
+    #[inline]
     pub unsafe fn destroy_pipeline_cache(&self,
         device: VkDevice,
         pipeline_cache: VkPipelineCache,
@@ -1695,6 +1814,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_pipeline_cache(&self,
         device: VkDevice,
         p_create_info: *const VkPipelineCacheCreateInfo,
@@ -1707,6 +1827,7 @@ impl DeviceCommands {
             p_pipeline_cache,)
     }
 
+    #[inline]
     pub unsafe fn destroy_shader_module(&self,
         device: VkDevice,
         shader_module: VkShaderModule,
@@ -1717,6 +1838,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_shader_module(&self,
         device: VkDevice,
         p_create_info: *const VkShaderModuleCreateInfo,
@@ -1729,6 +1851,7 @@ impl DeviceCommands {
             p_shader_module,)
     }
 
+    #[inline]
     pub unsafe fn destroy_image_view(&self,
         device: VkDevice,
         image_view: VkImageView,
@@ -1739,6 +1862,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_image_view(&self,
         device: VkDevice,
         p_create_info: *const VkImageViewCreateInfo,
@@ -1751,6 +1875,7 @@ impl DeviceCommands {
             p_view,)
     }
 
+    #[inline]
     pub unsafe fn get_image_subresource_layout(&self,
         device: VkDevice,
         image: VkImage,
@@ -1763,6 +1888,7 @@ impl DeviceCommands {
             p_layout,)
     }
 
+    #[inline]
     pub unsafe fn destroy_image(&self,
         device: VkDevice,
         image: VkImage,
@@ -1773,6 +1899,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_image(&self,
         device: VkDevice,
         p_create_info: *const VkImageCreateInfo,
@@ -1785,6 +1912,7 @@ impl DeviceCommands {
             p_image,)
     }
 
+    #[inline]
     pub unsafe fn destroy_buffer_view(&self,
         device: VkDevice,
         buffer_view: VkBufferView,
@@ -1795,6 +1923,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_buffer_view(&self,
         device: VkDevice,
         p_create_info: *const VkBufferViewCreateInfo,
@@ -1807,6 +1936,7 @@ impl DeviceCommands {
             p_view,)
     }
 
+    #[inline]
     pub unsafe fn destroy_buffer(&self,
         device: VkDevice,
         buffer: VkBuffer,
@@ -1817,6 +1947,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_buffer(&self,
         device: VkDevice,
         p_create_info: *const VkBufferCreateInfo,
@@ -1829,6 +1960,7 @@ impl DeviceCommands {
             p_buffer,)
     }
 
+    #[inline]
     pub unsafe fn get_query_pool_results(&self,
         device: VkDevice,
         query_pool: VkQueryPool,
@@ -1849,6 +1981,7 @@ impl DeviceCommands {
             flags,)
     }
 
+    #[inline]
     pub unsafe fn destroy_query_pool(&self,
         device: VkDevice,
         query_pool: VkQueryPool,
@@ -1859,6 +1992,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_query_pool(&self,
         device: VkDevice,
         p_create_info: *const VkQueryPoolCreateInfo,
@@ -1871,6 +2005,7 @@ impl DeviceCommands {
             p_query_pool,)
     }
 
+    #[inline]
     pub unsafe fn reset_event(&self,
         device: VkDevice,
         event: VkEvent) -> VkResult {
@@ -1879,6 +2014,7 @@ impl DeviceCommands {
             event,)
     }
 
+    #[inline]
     pub unsafe fn set_event(&self,
         device: VkDevice,
         event: VkEvent) -> VkResult {
@@ -1887,6 +2023,7 @@ impl DeviceCommands {
             event,)
     }
 
+    #[inline]
     pub unsafe fn get_event_status(&self,
         device: VkDevice,
         event: VkEvent) -> VkResult {
@@ -1895,6 +2032,7 @@ impl DeviceCommands {
             event,)
     }
 
+    #[inline]
     pub unsafe fn destroy_event(&self,
         device: VkDevice,
         event: VkEvent,
@@ -1905,6 +2043,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_event(&self,
         device: VkDevice,
         p_create_info: *const VkEventCreateInfo,
@@ -1917,6 +2056,7 @@ impl DeviceCommands {
             p_event,)
     }
 
+    #[inline]
     pub unsafe fn destroy_semaphore(&self,
         device: VkDevice,
         semaphore: VkSemaphore,
@@ -1927,6 +2067,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_semaphore(&self,
         device: VkDevice,
         p_create_info: *const VkSemaphoreCreateInfo,
@@ -1939,6 +2080,7 @@ impl DeviceCommands {
             p_semaphore,)
     }
 
+    #[inline]
     pub unsafe fn wait_for_fences(&self,
         device: VkDevice,
         fence_count: u32,
@@ -1953,6 +2095,7 @@ impl DeviceCommands {
             timeout,)
     }
 
+    #[inline]
     pub unsafe fn get_fence_status(&self,
         device: VkDevice,
         fence: VkFence) -> VkResult {
@@ -1961,6 +2104,7 @@ impl DeviceCommands {
             fence,)
     }
 
+    #[inline]
     pub unsafe fn reset_fences(&self,
         device: VkDevice,
         fence_count: u32,
@@ -1971,6 +2115,7 @@ impl DeviceCommands {
             p_fences,)
     }
 
+    #[inline]
     pub unsafe fn destroy_fence(&self,
         device: VkDevice,
         fence: VkFence,
@@ -1981,6 +2126,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn create_fence(&self,
         device: VkDevice,
         p_create_info: *const VkFenceCreateInfo,
@@ -1993,6 +2139,7 @@ impl DeviceCommands {
             p_fence,)
     }
 
+    #[inline]
     pub unsafe fn queue_bind_sparse(&self,
         queue: VkQueue,
         bind_info_count: u32,
@@ -2005,6 +2152,7 @@ impl DeviceCommands {
             fence,)
     }
 
+    #[inline]
     pub unsafe fn get_image_sparse_memory_requirements(&self,
         device: VkDevice,
         image: VkImage,
@@ -2017,6 +2165,7 @@ impl DeviceCommands {
             p_sparse_memory_requirements,)
     }
 
+    #[inline]
     pub unsafe fn get_image_memory_requirements(&self,
         device: VkDevice,
         image: VkImage,
@@ -2027,6 +2176,7 @@ impl DeviceCommands {
             p_memory_requirements,)
     }
 
+    #[inline]
     pub unsafe fn get_buffer_memory_requirements(&self,
         device: VkDevice,
         buffer: VkBuffer,
@@ -2037,6 +2187,7 @@ impl DeviceCommands {
             p_memory_requirements,)
     }
 
+    #[inline]
     pub unsafe fn bind_image_memory(&self,
         device: VkDevice,
         image: VkImage,
@@ -2049,6 +2200,7 @@ impl DeviceCommands {
             memory_offset,)
     }
 
+    #[inline]
     pub unsafe fn bind_buffer_memory(&self,
         device: VkDevice,
         buffer: VkBuffer,
@@ -2061,6 +2213,7 @@ impl DeviceCommands {
             memory_offset,)
     }
 
+    #[inline]
     pub unsafe fn get_device_memory_commitment(&self,
         device: VkDevice,
         memory: VkDeviceMemory,
@@ -2071,6 +2224,7 @@ impl DeviceCommands {
             p_committed_memory_in_bytes,)
     }
 
+    #[inline]
     pub unsafe fn invalidate_mapped_memory_ranges(&self,
         device: VkDevice,
         memory_range_count: u32,
@@ -2081,6 +2235,7 @@ impl DeviceCommands {
             p_memory_ranges,)
     }
 
+    #[inline]
     pub unsafe fn flush_mapped_memory_ranges(&self,
         device: VkDevice,
         memory_range_count: u32,
@@ -2091,6 +2246,7 @@ impl DeviceCommands {
             p_memory_ranges,)
     }
 
+    #[inline]
     pub unsafe fn unmap_memory(&self,
         device: VkDevice,
         memory: VkDeviceMemory) {
@@ -2099,6 +2255,7 @@ impl DeviceCommands {
             memory,)
     }
 
+    #[inline]
     pub unsafe fn map_memory(&self,
         device: VkDevice,
         memory: VkDeviceMemory,
@@ -2115,6 +2272,7 @@ impl DeviceCommands {
             pp_data,)
     }
 
+    #[inline]
     pub unsafe fn free_memory(&self,
         device: VkDevice,
         memory: VkDeviceMemory,
@@ -2125,6 +2283,7 @@ impl DeviceCommands {
             p_allocator,)
     }
 
+    #[inline]
     pub unsafe fn allocate_memory(&self,
         device: VkDevice,
         p_allocate_info: *const VkMemoryAllocateInfo,
@@ -2137,18 +2296,21 @@ impl DeviceCommands {
             p_memory,)
     }
 
+    #[inline]
     pub unsafe fn device_wait_idle(&self,
         device: VkDevice) -> VkResult {
         (self.pfn_device_wait_idle)(
             device,)
     }
 
+    #[inline]
     pub unsafe fn queue_wait_idle(&self,
         queue: VkQueue) -> VkResult {
         (self.pfn_queue_wait_idle)(
             queue,)
     }
 
+    #[inline]
     pub unsafe fn queue_submit(&self,
         queue: VkQueue,
         submit_count: u32,
@@ -2161,6 +2323,7 @@ impl DeviceCommands {
             fence,)
     }
 
+    #[inline]
     pub unsafe fn get_device_queue(&self,
         device: VkDevice,
         queue_family_index: u32,
@@ -2173,6 +2336,7 @@ impl DeviceCommands {
             p_queue,)
     }
 
+    #[inline]
     pub unsafe fn destroy_device(&self,
         device: VkDevice,
         p_allocator: *const VkAllocationCallbacks) {
