@@ -669,11 +669,33 @@ impl VkSystemAllocationScope {
     pub const INSTANCE: VkSystemAllocationScope = VkSystemAllocationScope(4);
 }
 
+impl core::fmt::Debug for VkSystemAllocationScope {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkSystemAllocationScope::COMMAND => write!(f, "VkSystemAllocationScope(COMMAND)"),
+            VkSystemAllocationScope::OBJECT => write!(f, "VkSystemAllocationScope(OBJECT)"),
+            VkSystemAllocationScope::CACHE => write!(f, "VkSystemAllocationScope(CACHE)"),
+            VkSystemAllocationScope::DEVICE => write!(f, "VkSystemAllocationScope(DEVICE)"),
+            VkSystemAllocationScope::INSTANCE => write!(f, "VkSystemAllocationScope(INSTANCE)"),
+            _ => write!(f, "VkSystemAllocationScope({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkInternalAllocationType(u32);
 impl VkInternalAllocationType {
     pub const EXECUTABLE: VkInternalAllocationType = VkInternalAllocationType(0);
+}
+
+impl core::fmt::Debug for VkInternalAllocationType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkInternalAllocationType::EXECUTABLE => write!(f, "VkInternalAllocationType(EXECUTABLE)"),
+            _ => write!(f, "VkInternalAllocationType({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -739,6 +761,71 @@ impl VkStructureType {
     pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: VkStructureType = VkStructureType(1000128004);
 }
 
+impl core::fmt::Debug for VkStructureType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkStructureType::APPLICATION_INFO => write!(f, "VkStructureType(APPLICATION_INFO)"),
+            VkStructureType::INSTANCE_CREATE_INFO => write!(f, "VkStructureType(INSTANCE_CREATE_INFO)"),
+            VkStructureType::DEVICE_QUEUE_CREATE_INFO => write!(f, "VkStructureType(DEVICE_QUEUE_CREATE_INFO)"),
+            VkStructureType::DEVICE_CREATE_INFO => write!(f, "VkStructureType(DEVICE_CREATE_INFO)"),
+            VkStructureType::SUBMIT_INFO => write!(f, "VkStructureType(SUBMIT_INFO)"),
+            VkStructureType::MEMORY_ALLOCATE_INFO => write!(f, "VkStructureType(MEMORY_ALLOCATE_INFO)"),
+            VkStructureType::MAPPED_MEMORY_RANGE => write!(f, "VkStructureType(MAPPED_MEMORY_RANGE)"),
+            VkStructureType::BIND_SPARSE_INFO => write!(f, "VkStructureType(BIND_SPARSE_INFO)"),
+            VkStructureType::FENCE_CREATE_INFO => write!(f, "VkStructureType(FENCE_CREATE_INFO)"),
+            VkStructureType::SEMAPHORE_CREATE_INFO => write!(f, "VkStructureType(SEMAPHORE_CREATE_INFO)"),
+            VkStructureType::EVENT_CREATE_INFO => write!(f, "VkStructureType(EVENT_CREATE_INFO)"),
+            VkStructureType::QUERY_POOL_CREATE_INFO => write!(f, "VkStructureType(QUERY_POOL_CREATE_INFO)"),
+            VkStructureType::BUFFER_CREATE_INFO => write!(f, "VkStructureType(BUFFER_CREATE_INFO)"),
+            VkStructureType::BUFFER_VIEW_CREATE_INFO => write!(f, "VkStructureType(BUFFER_VIEW_CREATE_INFO)"),
+            VkStructureType::IMAGE_CREATE_INFO => write!(f, "VkStructureType(IMAGE_CREATE_INFO)"),
+            VkStructureType::IMAGE_VIEW_CREATE_INFO => write!(f, "VkStructureType(IMAGE_VIEW_CREATE_INFO)"),
+            VkStructureType::SHADER_MODULE_CREATE_INFO => write!(f, "VkStructureType(SHADER_MODULE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_CACHE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_CACHE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_SHADER_STAGE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_SHADER_STAGE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_TESSELLATION_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_VIEWPORT_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_RASTERIZATION_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_MULTISAMPLE_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_COLOR_BLEND_STATE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_DYNAMIC_STATE_CREATE_INFO)"),
+            VkStructureType::GRAPHICS_PIPELINE_CREATE_INFO => write!(f, "VkStructureType(GRAPHICS_PIPELINE_CREATE_INFO)"),
+            VkStructureType::COMPUTE_PIPELINE_CREATE_INFO => write!(f, "VkStructureType(COMPUTE_PIPELINE_CREATE_INFO)"),
+            VkStructureType::PIPELINE_LAYOUT_CREATE_INFO => write!(f, "VkStructureType(PIPELINE_LAYOUT_CREATE_INFO)"),
+            VkStructureType::SAMPLER_CREATE_INFO => write!(f, "VkStructureType(SAMPLER_CREATE_INFO)"),
+            VkStructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO => write!(f, "VkStructureType(DESCRIPTOR_SET_LAYOUT_CREATE_INFO)"),
+            VkStructureType::DESCRIPTOR_POOL_CREATE_INFO => write!(f, "VkStructureType(DESCRIPTOR_POOL_CREATE_INFO)"),
+            VkStructureType::DESCRIPTOR_SET_ALLOCATE_INFO => write!(f, "VkStructureType(DESCRIPTOR_SET_ALLOCATE_INFO)"),
+            VkStructureType::WRITE_DESCRIPTOR_SET => write!(f, "VkStructureType(WRITE_DESCRIPTOR_SET)"),
+            VkStructureType::COPY_DESCRIPTOR_SET => write!(f, "VkStructureType(COPY_DESCRIPTOR_SET)"),
+            VkStructureType::FRAMEBUFFER_CREATE_INFO => write!(f, "VkStructureType(FRAMEBUFFER_CREATE_INFO)"),
+            VkStructureType::RENDER_PASS_CREATE_INFO => write!(f, "VkStructureType(RENDER_PASS_CREATE_INFO)"),
+            VkStructureType::COMMAND_POOL_CREATE_INFO => write!(f, "VkStructureType(COMMAND_POOL_CREATE_INFO)"),
+            VkStructureType::COMMAND_BUFFER_ALLOCATE_INFO => write!(f, "VkStructureType(COMMAND_BUFFER_ALLOCATE_INFO)"),
+            VkStructureType::COMMAND_BUFFER_INHERITANCE_INFO => write!(f, "VkStructureType(COMMAND_BUFFER_INHERITANCE_INFO)"),
+            VkStructureType::COMMAND_BUFFER_BEGIN_INFO => write!(f, "VkStructureType(COMMAND_BUFFER_BEGIN_INFO)"),
+            VkStructureType::RENDER_PASS_BEGIN_INFO => write!(f, "VkStructureType(RENDER_PASS_BEGIN_INFO)"),
+            VkStructureType::BUFFER_MEMORY_BARRIER => write!(f, "VkStructureType(BUFFER_MEMORY_BARRIER)"),
+            VkStructureType::IMAGE_MEMORY_BARRIER => write!(f, "VkStructureType(IMAGE_MEMORY_BARRIER)"),
+            VkStructureType::MEMORY_BARRIER => write!(f, "VkStructureType(MEMORY_BARRIER)"),
+            VkStructureType::LOADER_INSTANCE_CREATE_INFO => write!(f, "VkStructureType(LOADER_INSTANCE_CREATE_INFO)"),
+            VkStructureType::LOADER_DEVICE_CREATE_INFO => write!(f, "VkStructureType(LOADER_DEVICE_CREATE_INFO)"),
+            VkStructureType::SWAPCHAIN_CREATE_INFO_KHR => write!(f, "VkStructureType(SWAPCHAIN_CREATE_INFO_KHR)"),
+            VkStructureType::PRESENT_INFO_KHR => write!(f, "VkStructureType(PRESENT_INFO_KHR)"),
+            VkStructureType::WIN32_SURFACE_CREATE_INFO_KHR => write!(f, "VkStructureType(WIN32_SURFACE_CREATE_INFO_KHR)"),
+            VkStructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT => write!(f, "VkStructureType(DEBUG_UTILS_OBJECT_NAME_INFO_EXT)"),
+            VkStructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT => write!(f, "VkStructureType(DEBUG_UTILS_OBJECT_TAG_INFO_EXT)"),
+            VkStructureType::DEBUG_UTILS_LABEL_EXT => write!(f, "VkStructureType(DEBUG_UTILS_LABEL_EXT)"),
+            VkStructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT => write!(f, "VkStructureType(DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT)"),
+            VkStructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT => write!(f, "VkStructureType(DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT)"),
+            _ => write!(f, "VkStructureType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkResult(u32);
@@ -767,6 +854,36 @@ impl VkResult {
     pub const SUBOPTIMAL_KHR: VkResult = VkResult(1000001003);
 }
 
+impl core::fmt::Debug for VkResult {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkResult::ERROR_OUT_OF_DATE_KHR => write!(f, "VkResult(ERROR_OUT_OF_DATE_KHR)"),
+            VkResult::ERROR_NATIVE_WINDOW_IN_USE_KHR => write!(f, "VkResult(ERROR_NATIVE_WINDOW_IN_USE_KHR)"),
+            VkResult::ERROR_SURFACE_LOST_KHR => write!(f, "VkResult(ERROR_SURFACE_LOST_KHR)"),
+            VkResult::ERROR_FRAGMENTED_POOL => write!(f, "VkResult(ERROR_FRAGMENTED_POOL)"),
+            VkResult::ERROR_FORMAT_NOT_SUPPORTED => write!(f, "VkResult(ERROR_FORMAT_NOT_SUPPORTED)"),
+            VkResult::ERROR_TOO_MANY_OBJECTS => write!(f, "VkResult(ERROR_TOO_MANY_OBJECTS)"),
+            VkResult::ERROR_INCOMPATIBLE_DRIVER => write!(f, "VkResult(ERROR_INCOMPATIBLE_DRIVER)"),
+            VkResult::ERROR_FEATURE_NOT_PRESENT => write!(f, "VkResult(ERROR_FEATURE_NOT_PRESENT)"),
+            VkResult::ERROR_EXTENSION_NOT_PRESENT => write!(f, "VkResult(ERROR_EXTENSION_NOT_PRESENT)"),
+            VkResult::ERROR_LAYER_NOT_PRESENT => write!(f, "VkResult(ERROR_LAYER_NOT_PRESENT)"),
+            VkResult::ERROR_MEMORY_MAP_FAILED => write!(f, "VkResult(ERROR_MEMORY_MAP_FAILED)"),
+            VkResult::ERROR_DEVICE_LOST => write!(f, "VkResult(ERROR_DEVICE_LOST)"),
+            VkResult::ERROR_INITIALIZATION_FAILED => write!(f, "VkResult(ERROR_INITIALIZATION_FAILED)"),
+            VkResult::ERROR_OUT_OF_DEVICE_MEMORY => write!(f, "VkResult(ERROR_OUT_OF_DEVICE_MEMORY)"),
+            VkResult::ERROR_OUT_OF_HOST_MEMORY => write!(f, "VkResult(ERROR_OUT_OF_HOST_MEMORY)"),
+            VkResult::SUCCESS => write!(f, "VkResult(SUCCESS)"),
+            VkResult::NOT_READY => write!(f, "VkResult(NOT_READY)"),
+            VkResult::TIMEOUT => write!(f, "VkResult(TIMEOUT)"),
+            VkResult::EVENT_SET => write!(f, "VkResult(EVENT_SET)"),
+            VkResult::EVENT_RESET => write!(f, "VkResult(EVENT_RESET)"),
+            VkResult::INCOMPLETE => write!(f, "VkResult(INCOMPLETE)"),
+            VkResult::SUBOPTIMAL_KHR => write!(f, "VkResult(SUBOPTIMAL_KHR)"),
+            _ => write!(f, "VkResult({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPresentModeKHR(u32);
@@ -777,12 +894,34 @@ impl VkPresentModeKHR {
     pub const FIFO_RELAXED_KHR: VkPresentModeKHR = VkPresentModeKHR(3);
 }
 
+impl core::fmt::Debug for VkPresentModeKHR {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPresentModeKHR::IMMEDIATE_KHR => write!(f, "VkPresentModeKHR(IMMEDIATE_KHR)"),
+            VkPresentModeKHR::MAILBOX_KHR => write!(f, "VkPresentModeKHR(MAILBOX_KHR)"),
+            VkPresentModeKHR::FIFO_KHR => write!(f, "VkPresentModeKHR(FIFO_KHR)"),
+            VkPresentModeKHR::FIFO_RELAXED_KHR => write!(f, "VkPresentModeKHR(FIFO_RELAXED_KHR)"),
+            _ => write!(f, "VkPresentModeKHR({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkColorSpaceKHR(u32);
 impl VkColorSpaceKHR {
     pub const SRGB_NONLINEAR_KHR: VkColorSpaceKHR = VkColorSpaceKHR(0);
     pub const VK_COLORSPACE_SRGB_NONLINEAR_KHR: VkColorSpaceKHR = VkColorSpaceKHR(0);
+}
+
+impl core::fmt::Debug for VkColorSpaceKHR {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkColorSpaceKHR::SRGB_NONLINEAR_KHR => write!(f, "VkColorSpaceKHR(SRGB_NONLINEAR_KHR)"),
+            VkColorSpaceKHR::VK_COLORSPACE_SRGB_NONLINEAR_KHR => write!(f, "VkColorSpaceKHR(VK_COLORSPACE_SRGB_NONLINEAR_KHR)"),
+            _ => write!(f, "VkColorSpaceKHR({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -976,6 +1115,199 @@ impl VkFormat {
     pub const ASTC_12X12_SRGB_BLOCK: VkFormat = VkFormat(184);
 }
 
+impl core::fmt::Debug for VkFormat {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkFormat::UNDEFINED => write!(f, "VkFormat(UNDEFINED)"),
+            VkFormat::R4G4_UNORM_PACK8 => write!(f, "VkFormat(R4G4_UNORM_PACK8)"),
+            VkFormat::R4G4B4A4_UNORM_PACK16 => write!(f, "VkFormat(R4G4B4A4_UNORM_PACK16)"),
+            VkFormat::B4G4R4A4_UNORM_PACK16 => write!(f, "VkFormat(B4G4R4A4_UNORM_PACK16)"),
+            VkFormat::R5G6B5_UNORM_PACK16 => write!(f, "VkFormat(R5G6B5_UNORM_PACK16)"),
+            VkFormat::B5G6R5_UNORM_PACK16 => write!(f, "VkFormat(B5G6R5_UNORM_PACK16)"),
+            VkFormat::R5G5B5A1_UNORM_PACK16 => write!(f, "VkFormat(R5G5B5A1_UNORM_PACK16)"),
+            VkFormat::B5G5R5A1_UNORM_PACK16 => write!(f, "VkFormat(B5G5R5A1_UNORM_PACK16)"),
+            VkFormat::A1R5G5B5_UNORM_PACK16 => write!(f, "VkFormat(A1R5G5B5_UNORM_PACK16)"),
+            VkFormat::R8_UNORM => write!(f, "VkFormat(R8_UNORM)"),
+            VkFormat::R8_SNORM => write!(f, "VkFormat(R8_SNORM)"),
+            VkFormat::R8_USCALED => write!(f, "VkFormat(R8_USCALED)"),
+            VkFormat::R8_SSCALED => write!(f, "VkFormat(R8_SSCALED)"),
+            VkFormat::R8_UINT => write!(f, "VkFormat(R8_UINT)"),
+            VkFormat::R8_SINT => write!(f, "VkFormat(R8_SINT)"),
+            VkFormat::R8_SRGB => write!(f, "VkFormat(R8_SRGB)"),
+            VkFormat::R8G8_UNORM => write!(f, "VkFormat(R8G8_UNORM)"),
+            VkFormat::R8G8_SNORM => write!(f, "VkFormat(R8G8_SNORM)"),
+            VkFormat::R8G8_USCALED => write!(f, "VkFormat(R8G8_USCALED)"),
+            VkFormat::R8G8_SSCALED => write!(f, "VkFormat(R8G8_SSCALED)"),
+            VkFormat::R8G8_UINT => write!(f, "VkFormat(R8G8_UINT)"),
+            VkFormat::R8G8_SINT => write!(f, "VkFormat(R8G8_SINT)"),
+            VkFormat::R8G8_SRGB => write!(f, "VkFormat(R8G8_SRGB)"),
+            VkFormat::R8G8B8_UNORM => write!(f, "VkFormat(R8G8B8_UNORM)"),
+            VkFormat::R8G8B8_SNORM => write!(f, "VkFormat(R8G8B8_SNORM)"),
+            VkFormat::R8G8B8_USCALED => write!(f, "VkFormat(R8G8B8_USCALED)"),
+            VkFormat::R8G8B8_SSCALED => write!(f, "VkFormat(R8G8B8_SSCALED)"),
+            VkFormat::R8G8B8_UINT => write!(f, "VkFormat(R8G8B8_UINT)"),
+            VkFormat::R8G8B8_SINT => write!(f, "VkFormat(R8G8B8_SINT)"),
+            VkFormat::R8G8B8_SRGB => write!(f, "VkFormat(R8G8B8_SRGB)"),
+            VkFormat::B8G8R8_UNORM => write!(f, "VkFormat(B8G8R8_UNORM)"),
+            VkFormat::B8G8R8_SNORM => write!(f, "VkFormat(B8G8R8_SNORM)"),
+            VkFormat::B8G8R8_USCALED => write!(f, "VkFormat(B8G8R8_USCALED)"),
+            VkFormat::B8G8R8_SSCALED => write!(f, "VkFormat(B8G8R8_SSCALED)"),
+            VkFormat::B8G8R8_UINT => write!(f, "VkFormat(B8G8R8_UINT)"),
+            VkFormat::B8G8R8_SINT => write!(f, "VkFormat(B8G8R8_SINT)"),
+            VkFormat::B8G8R8_SRGB => write!(f, "VkFormat(B8G8R8_SRGB)"),
+            VkFormat::R8G8B8A8_UNORM => write!(f, "VkFormat(R8G8B8A8_UNORM)"),
+            VkFormat::R8G8B8A8_SNORM => write!(f, "VkFormat(R8G8B8A8_SNORM)"),
+            VkFormat::R8G8B8A8_USCALED => write!(f, "VkFormat(R8G8B8A8_USCALED)"),
+            VkFormat::R8G8B8A8_SSCALED => write!(f, "VkFormat(R8G8B8A8_SSCALED)"),
+            VkFormat::R8G8B8A8_UINT => write!(f, "VkFormat(R8G8B8A8_UINT)"),
+            VkFormat::R8G8B8A8_SINT => write!(f, "VkFormat(R8G8B8A8_SINT)"),
+            VkFormat::R8G8B8A8_SRGB => write!(f, "VkFormat(R8G8B8A8_SRGB)"),
+            VkFormat::B8G8R8A8_UNORM => write!(f, "VkFormat(B8G8R8A8_UNORM)"),
+            VkFormat::B8G8R8A8_SNORM => write!(f, "VkFormat(B8G8R8A8_SNORM)"),
+            VkFormat::B8G8R8A8_USCALED => write!(f, "VkFormat(B8G8R8A8_USCALED)"),
+            VkFormat::B8G8R8A8_SSCALED => write!(f, "VkFormat(B8G8R8A8_SSCALED)"),
+            VkFormat::B8G8R8A8_UINT => write!(f, "VkFormat(B8G8R8A8_UINT)"),
+            VkFormat::B8G8R8A8_SINT => write!(f, "VkFormat(B8G8R8A8_SINT)"),
+            VkFormat::B8G8R8A8_SRGB => write!(f, "VkFormat(B8G8R8A8_SRGB)"),
+            VkFormat::A8B8G8R8_UNORM_PACK32 => write!(f, "VkFormat(A8B8G8R8_UNORM_PACK32)"),
+            VkFormat::A8B8G8R8_SNORM_PACK32 => write!(f, "VkFormat(A8B8G8R8_SNORM_PACK32)"),
+            VkFormat::A8B8G8R8_USCALED_PACK32 => write!(f, "VkFormat(A8B8G8R8_USCALED_PACK32)"),
+            VkFormat::A8B8G8R8_SSCALED_PACK32 => write!(f, "VkFormat(A8B8G8R8_SSCALED_PACK32)"),
+            VkFormat::A8B8G8R8_UINT_PACK32 => write!(f, "VkFormat(A8B8G8R8_UINT_PACK32)"),
+            VkFormat::A8B8G8R8_SINT_PACK32 => write!(f, "VkFormat(A8B8G8R8_SINT_PACK32)"),
+            VkFormat::A8B8G8R8_SRGB_PACK32 => write!(f, "VkFormat(A8B8G8R8_SRGB_PACK32)"),
+            VkFormat::A2R10G10B10_UNORM_PACK32 => write!(f, "VkFormat(A2R10G10B10_UNORM_PACK32)"),
+            VkFormat::A2R10G10B10_SNORM_PACK32 => write!(f, "VkFormat(A2R10G10B10_SNORM_PACK32)"),
+            VkFormat::A2R10G10B10_USCALED_PACK32 => write!(f, "VkFormat(A2R10G10B10_USCALED_PACK32)"),
+            VkFormat::A2R10G10B10_SSCALED_PACK32 => write!(f, "VkFormat(A2R10G10B10_SSCALED_PACK32)"),
+            VkFormat::A2R10G10B10_UINT_PACK32 => write!(f, "VkFormat(A2R10G10B10_UINT_PACK32)"),
+            VkFormat::A2R10G10B10_SINT_PACK32 => write!(f, "VkFormat(A2R10G10B10_SINT_PACK32)"),
+            VkFormat::A2B10G10R10_UNORM_PACK32 => write!(f, "VkFormat(A2B10G10R10_UNORM_PACK32)"),
+            VkFormat::A2B10G10R10_SNORM_PACK32 => write!(f, "VkFormat(A2B10G10R10_SNORM_PACK32)"),
+            VkFormat::A2B10G10R10_USCALED_PACK32 => write!(f, "VkFormat(A2B10G10R10_USCALED_PACK32)"),
+            VkFormat::A2B10G10R10_SSCALED_PACK32 => write!(f, "VkFormat(A2B10G10R10_SSCALED_PACK32)"),
+            VkFormat::A2B10G10R10_UINT_PACK32 => write!(f, "VkFormat(A2B10G10R10_UINT_PACK32)"),
+            VkFormat::A2B10G10R10_SINT_PACK32 => write!(f, "VkFormat(A2B10G10R10_SINT_PACK32)"),
+            VkFormat::R16_UNORM => write!(f, "VkFormat(R16_UNORM)"),
+            VkFormat::R16_SNORM => write!(f, "VkFormat(R16_SNORM)"),
+            VkFormat::R16_USCALED => write!(f, "VkFormat(R16_USCALED)"),
+            VkFormat::R16_SSCALED => write!(f, "VkFormat(R16_SSCALED)"),
+            VkFormat::R16_UINT => write!(f, "VkFormat(R16_UINT)"),
+            VkFormat::R16_SINT => write!(f, "VkFormat(R16_SINT)"),
+            VkFormat::R16_SFLOAT => write!(f, "VkFormat(R16_SFLOAT)"),
+            VkFormat::R16G16_UNORM => write!(f, "VkFormat(R16G16_UNORM)"),
+            VkFormat::R16G16_SNORM => write!(f, "VkFormat(R16G16_SNORM)"),
+            VkFormat::R16G16_USCALED => write!(f, "VkFormat(R16G16_USCALED)"),
+            VkFormat::R16G16_SSCALED => write!(f, "VkFormat(R16G16_SSCALED)"),
+            VkFormat::R16G16_UINT => write!(f, "VkFormat(R16G16_UINT)"),
+            VkFormat::R16G16_SINT => write!(f, "VkFormat(R16G16_SINT)"),
+            VkFormat::R16G16_SFLOAT => write!(f, "VkFormat(R16G16_SFLOAT)"),
+            VkFormat::R16G16B16_UNORM => write!(f, "VkFormat(R16G16B16_UNORM)"),
+            VkFormat::R16G16B16_SNORM => write!(f, "VkFormat(R16G16B16_SNORM)"),
+            VkFormat::R16G16B16_USCALED => write!(f, "VkFormat(R16G16B16_USCALED)"),
+            VkFormat::R16G16B16_SSCALED => write!(f, "VkFormat(R16G16B16_SSCALED)"),
+            VkFormat::R16G16B16_UINT => write!(f, "VkFormat(R16G16B16_UINT)"),
+            VkFormat::R16G16B16_SINT => write!(f, "VkFormat(R16G16B16_SINT)"),
+            VkFormat::R16G16B16_SFLOAT => write!(f, "VkFormat(R16G16B16_SFLOAT)"),
+            VkFormat::R16G16B16A16_UNORM => write!(f, "VkFormat(R16G16B16A16_UNORM)"),
+            VkFormat::R16G16B16A16_SNORM => write!(f, "VkFormat(R16G16B16A16_SNORM)"),
+            VkFormat::R16G16B16A16_USCALED => write!(f, "VkFormat(R16G16B16A16_USCALED)"),
+            VkFormat::R16G16B16A16_SSCALED => write!(f, "VkFormat(R16G16B16A16_SSCALED)"),
+            VkFormat::R16G16B16A16_UINT => write!(f, "VkFormat(R16G16B16A16_UINT)"),
+            VkFormat::R16G16B16A16_SINT => write!(f, "VkFormat(R16G16B16A16_SINT)"),
+            VkFormat::R16G16B16A16_SFLOAT => write!(f, "VkFormat(R16G16B16A16_SFLOAT)"),
+            VkFormat::R32_UINT => write!(f, "VkFormat(R32_UINT)"),
+            VkFormat::R32_SINT => write!(f, "VkFormat(R32_SINT)"),
+            VkFormat::R32_SFLOAT => write!(f, "VkFormat(R32_SFLOAT)"),
+            VkFormat::R32G32_UINT => write!(f, "VkFormat(R32G32_UINT)"),
+            VkFormat::R32G32_SINT => write!(f, "VkFormat(R32G32_SINT)"),
+            VkFormat::R32G32_SFLOAT => write!(f, "VkFormat(R32G32_SFLOAT)"),
+            VkFormat::R32G32B32_UINT => write!(f, "VkFormat(R32G32B32_UINT)"),
+            VkFormat::R32G32B32_SINT => write!(f, "VkFormat(R32G32B32_SINT)"),
+            VkFormat::R32G32B32_SFLOAT => write!(f, "VkFormat(R32G32B32_SFLOAT)"),
+            VkFormat::R32G32B32A32_UINT => write!(f, "VkFormat(R32G32B32A32_UINT)"),
+            VkFormat::R32G32B32A32_SINT => write!(f, "VkFormat(R32G32B32A32_SINT)"),
+            VkFormat::R32G32B32A32_SFLOAT => write!(f, "VkFormat(R32G32B32A32_SFLOAT)"),
+            VkFormat::R64_UINT => write!(f, "VkFormat(R64_UINT)"),
+            VkFormat::R64_SINT => write!(f, "VkFormat(R64_SINT)"),
+            VkFormat::R64_SFLOAT => write!(f, "VkFormat(R64_SFLOAT)"),
+            VkFormat::R64G64_UINT => write!(f, "VkFormat(R64G64_UINT)"),
+            VkFormat::R64G64_SINT => write!(f, "VkFormat(R64G64_SINT)"),
+            VkFormat::R64G64_SFLOAT => write!(f, "VkFormat(R64G64_SFLOAT)"),
+            VkFormat::R64G64B64_UINT => write!(f, "VkFormat(R64G64B64_UINT)"),
+            VkFormat::R64G64B64_SINT => write!(f, "VkFormat(R64G64B64_SINT)"),
+            VkFormat::R64G64B64_SFLOAT => write!(f, "VkFormat(R64G64B64_SFLOAT)"),
+            VkFormat::R64G64B64A64_UINT => write!(f, "VkFormat(R64G64B64A64_UINT)"),
+            VkFormat::R64G64B64A64_SINT => write!(f, "VkFormat(R64G64B64A64_SINT)"),
+            VkFormat::R64G64B64A64_SFLOAT => write!(f, "VkFormat(R64G64B64A64_SFLOAT)"),
+            VkFormat::B10G11R11_UFLOAT_PACK32 => write!(f, "VkFormat(B10G11R11_UFLOAT_PACK32)"),
+            VkFormat::E5B9G9R9_UFLOAT_PACK32 => write!(f, "VkFormat(E5B9G9R9_UFLOAT_PACK32)"),
+            VkFormat::D16_UNORM => write!(f, "VkFormat(D16_UNORM)"),
+            VkFormat::X8_D24_UNORM_PACK32 => write!(f, "VkFormat(X8_D24_UNORM_PACK32)"),
+            VkFormat::D32_SFLOAT => write!(f, "VkFormat(D32_SFLOAT)"),
+            VkFormat::S8_UINT => write!(f, "VkFormat(S8_UINT)"),
+            VkFormat::D16_UNORM_S8_UINT => write!(f, "VkFormat(D16_UNORM_S8_UINT)"),
+            VkFormat::D24_UNORM_S8_UINT => write!(f, "VkFormat(D24_UNORM_S8_UINT)"),
+            VkFormat::D32_SFLOAT_S8_UINT => write!(f, "VkFormat(D32_SFLOAT_S8_UINT)"),
+            VkFormat::BC1_RGB_UNORM_BLOCK => write!(f, "VkFormat(BC1_RGB_UNORM_BLOCK)"),
+            VkFormat::BC1_RGB_SRGB_BLOCK => write!(f, "VkFormat(BC1_RGB_SRGB_BLOCK)"),
+            VkFormat::BC1_RGBA_UNORM_BLOCK => write!(f, "VkFormat(BC1_RGBA_UNORM_BLOCK)"),
+            VkFormat::BC1_RGBA_SRGB_BLOCK => write!(f, "VkFormat(BC1_RGBA_SRGB_BLOCK)"),
+            VkFormat::BC2_UNORM_BLOCK => write!(f, "VkFormat(BC2_UNORM_BLOCK)"),
+            VkFormat::BC2_SRGB_BLOCK => write!(f, "VkFormat(BC2_SRGB_BLOCK)"),
+            VkFormat::BC3_UNORM_BLOCK => write!(f, "VkFormat(BC3_UNORM_BLOCK)"),
+            VkFormat::BC3_SRGB_BLOCK => write!(f, "VkFormat(BC3_SRGB_BLOCK)"),
+            VkFormat::BC4_UNORM_BLOCK => write!(f, "VkFormat(BC4_UNORM_BLOCK)"),
+            VkFormat::BC4_SNORM_BLOCK => write!(f, "VkFormat(BC4_SNORM_BLOCK)"),
+            VkFormat::BC5_UNORM_BLOCK => write!(f, "VkFormat(BC5_UNORM_BLOCK)"),
+            VkFormat::BC5_SNORM_BLOCK => write!(f, "VkFormat(BC5_SNORM_BLOCK)"),
+            VkFormat::BC6H_UFLOAT_BLOCK => write!(f, "VkFormat(BC6H_UFLOAT_BLOCK)"),
+            VkFormat::BC6H_SFLOAT_BLOCK => write!(f, "VkFormat(BC6H_SFLOAT_BLOCK)"),
+            VkFormat::BC7_UNORM_BLOCK => write!(f, "VkFormat(BC7_UNORM_BLOCK)"),
+            VkFormat::BC7_SRGB_BLOCK => write!(f, "VkFormat(BC7_SRGB_BLOCK)"),
+            VkFormat::ETC2_R8G8B8_UNORM_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8_UNORM_BLOCK)"),
+            VkFormat::ETC2_R8G8B8_SRGB_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8_SRGB_BLOCK)"),
+            VkFormat::ETC2_R8G8B8A1_UNORM_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8A1_UNORM_BLOCK)"),
+            VkFormat::ETC2_R8G8B8A1_SRGB_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8A1_SRGB_BLOCK)"),
+            VkFormat::ETC2_R8G8B8A8_UNORM_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8A8_UNORM_BLOCK)"),
+            VkFormat::ETC2_R8G8B8A8_SRGB_BLOCK => write!(f, "VkFormat(ETC2_R8G8B8A8_SRGB_BLOCK)"),
+            VkFormat::EAC_R11_UNORM_BLOCK => write!(f, "VkFormat(EAC_R11_UNORM_BLOCK)"),
+            VkFormat::EAC_R11_SNORM_BLOCK => write!(f, "VkFormat(EAC_R11_SNORM_BLOCK)"),
+            VkFormat::EAC_R11G11_UNORM_BLOCK => write!(f, "VkFormat(EAC_R11G11_UNORM_BLOCK)"),
+            VkFormat::EAC_R11G11_SNORM_BLOCK => write!(f, "VkFormat(EAC_R11G11_SNORM_BLOCK)"),
+            VkFormat::ASTC_4X4_UNORM_BLOCK => write!(f, "VkFormat(ASTC_4X4_UNORM_BLOCK)"),
+            VkFormat::ASTC_4X4_SRGB_BLOCK => write!(f, "VkFormat(ASTC_4X4_SRGB_BLOCK)"),
+            VkFormat::ASTC_5X4_UNORM_BLOCK => write!(f, "VkFormat(ASTC_5X4_UNORM_BLOCK)"),
+            VkFormat::ASTC_5X4_SRGB_BLOCK => write!(f, "VkFormat(ASTC_5X4_SRGB_BLOCK)"),
+            VkFormat::ASTC_5X5_UNORM_BLOCK => write!(f, "VkFormat(ASTC_5X5_UNORM_BLOCK)"),
+            VkFormat::ASTC_5X5_SRGB_BLOCK => write!(f, "VkFormat(ASTC_5X5_SRGB_BLOCK)"),
+            VkFormat::ASTC_6X5_UNORM_BLOCK => write!(f, "VkFormat(ASTC_6X5_UNORM_BLOCK)"),
+            VkFormat::ASTC_6X5_SRGB_BLOCK => write!(f, "VkFormat(ASTC_6X5_SRGB_BLOCK)"),
+            VkFormat::ASTC_6X6_UNORM_BLOCK => write!(f, "VkFormat(ASTC_6X6_UNORM_BLOCK)"),
+            VkFormat::ASTC_6X6_SRGB_BLOCK => write!(f, "VkFormat(ASTC_6X6_SRGB_BLOCK)"),
+            VkFormat::ASTC_8X5_UNORM_BLOCK => write!(f, "VkFormat(ASTC_8X5_UNORM_BLOCK)"),
+            VkFormat::ASTC_8X5_SRGB_BLOCK => write!(f, "VkFormat(ASTC_8X5_SRGB_BLOCK)"),
+            VkFormat::ASTC_8X6_UNORM_BLOCK => write!(f, "VkFormat(ASTC_8X6_UNORM_BLOCK)"),
+            VkFormat::ASTC_8X6_SRGB_BLOCK => write!(f, "VkFormat(ASTC_8X6_SRGB_BLOCK)"),
+            VkFormat::ASTC_8X8_UNORM_BLOCK => write!(f, "VkFormat(ASTC_8X8_UNORM_BLOCK)"),
+            VkFormat::ASTC_8X8_SRGB_BLOCK => write!(f, "VkFormat(ASTC_8X8_SRGB_BLOCK)"),
+            VkFormat::ASTC_10X5_UNORM_BLOCK => write!(f, "VkFormat(ASTC_10X5_UNORM_BLOCK)"),
+            VkFormat::ASTC_10X5_SRGB_BLOCK => write!(f, "VkFormat(ASTC_10X5_SRGB_BLOCK)"),
+            VkFormat::ASTC_10X6_UNORM_BLOCK => write!(f, "VkFormat(ASTC_10X6_UNORM_BLOCK)"),
+            VkFormat::ASTC_10X6_SRGB_BLOCK => write!(f, "VkFormat(ASTC_10X6_SRGB_BLOCK)"),
+            VkFormat::ASTC_10X8_UNORM_BLOCK => write!(f, "VkFormat(ASTC_10X8_UNORM_BLOCK)"),
+            VkFormat::ASTC_10X8_SRGB_BLOCK => write!(f, "VkFormat(ASTC_10X8_SRGB_BLOCK)"),
+            VkFormat::ASTC_10X10_UNORM_BLOCK => write!(f, "VkFormat(ASTC_10X10_UNORM_BLOCK)"),
+            VkFormat::ASTC_10X10_SRGB_BLOCK => write!(f, "VkFormat(ASTC_10X10_SRGB_BLOCK)"),
+            VkFormat::ASTC_12X10_UNORM_BLOCK => write!(f, "VkFormat(ASTC_12X10_UNORM_BLOCK)"),
+            VkFormat::ASTC_12X10_SRGB_BLOCK => write!(f, "VkFormat(ASTC_12X10_SRGB_BLOCK)"),
+            VkFormat::ASTC_12X12_UNORM_BLOCK => write!(f, "VkFormat(ASTC_12X12_UNORM_BLOCK)"),
+            VkFormat::ASTC_12X12_SRGB_BLOCK => write!(f, "VkFormat(ASTC_12X12_SRGB_BLOCK)"),
+            _ => write!(f, "VkFormat({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkObjectType(u32);
@@ -1011,12 +1343,59 @@ impl VkObjectType {
     pub const DEBUG_UTILS_MESSENGER_EXT: VkObjectType = VkObjectType(1000128000);
 }
 
+impl core::fmt::Debug for VkObjectType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkObjectType::UNKNOWN => write!(f, "VkObjectType(UNKNOWN)"),
+            VkObjectType::INSTANCE => write!(f, "VkObjectType(INSTANCE)"),
+            VkObjectType::PHYSICAL_DEVICE => write!(f, "VkObjectType(PHYSICAL_DEVICE)"),
+            VkObjectType::DEVICE => write!(f, "VkObjectType(DEVICE)"),
+            VkObjectType::QUEUE => write!(f, "VkObjectType(QUEUE)"),
+            VkObjectType::SEMAPHORE => write!(f, "VkObjectType(SEMAPHORE)"),
+            VkObjectType::COMMAND_BUFFER => write!(f, "VkObjectType(COMMAND_BUFFER)"),
+            VkObjectType::FENCE => write!(f, "VkObjectType(FENCE)"),
+            VkObjectType::DEVICE_MEMORY => write!(f, "VkObjectType(DEVICE_MEMORY)"),
+            VkObjectType::BUFFER => write!(f, "VkObjectType(BUFFER)"),
+            VkObjectType::IMAGE => write!(f, "VkObjectType(IMAGE)"),
+            VkObjectType::EVENT => write!(f, "VkObjectType(EVENT)"),
+            VkObjectType::QUERY_POOL => write!(f, "VkObjectType(QUERY_POOL)"),
+            VkObjectType::BUFFER_VIEW => write!(f, "VkObjectType(BUFFER_VIEW)"),
+            VkObjectType::IMAGE_VIEW => write!(f, "VkObjectType(IMAGE_VIEW)"),
+            VkObjectType::SHADER_MODULE => write!(f, "VkObjectType(SHADER_MODULE)"),
+            VkObjectType::PIPELINE_CACHE => write!(f, "VkObjectType(PIPELINE_CACHE)"),
+            VkObjectType::PIPELINE_LAYOUT => write!(f, "VkObjectType(PIPELINE_LAYOUT)"),
+            VkObjectType::RENDER_PASS => write!(f, "VkObjectType(RENDER_PASS)"),
+            VkObjectType::PIPELINE => write!(f, "VkObjectType(PIPELINE)"),
+            VkObjectType::DESCRIPTOR_SET_LAYOUT => write!(f, "VkObjectType(DESCRIPTOR_SET_LAYOUT)"),
+            VkObjectType::SAMPLER => write!(f, "VkObjectType(SAMPLER)"),
+            VkObjectType::DESCRIPTOR_POOL => write!(f, "VkObjectType(DESCRIPTOR_POOL)"),
+            VkObjectType::DESCRIPTOR_SET => write!(f, "VkObjectType(DESCRIPTOR_SET)"),
+            VkObjectType::FRAMEBUFFER => write!(f, "VkObjectType(FRAMEBUFFER)"),
+            VkObjectType::COMMAND_POOL => write!(f, "VkObjectType(COMMAND_POOL)"),
+            VkObjectType::SURFACE_KHR => write!(f, "VkObjectType(SURFACE_KHR)"),
+            VkObjectType::SWAPCHAIN_KHR => write!(f, "VkObjectType(SWAPCHAIN_KHR)"),
+            VkObjectType::DEBUG_UTILS_MESSENGER_EXT => write!(f, "VkObjectType(DEBUG_UTILS_MESSENGER_EXT)"),
+            _ => write!(f, "VkObjectType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSharingMode(u32);
 impl VkSharingMode {
     pub const EXCLUSIVE: VkSharingMode = VkSharingMode(0);
     pub const CONCURRENT: VkSharingMode = VkSharingMode(1);
+}
+
+impl core::fmt::Debug for VkSharingMode {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkSharingMode::EXCLUSIVE => write!(f, "VkSharingMode(EXCLUSIVE)"),
+            VkSharingMode::CONCURRENT => write!(f, "VkSharingMode(CONCURRENT)"),
+            _ => write!(f, "VkSharingMode({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1035,6 +1414,24 @@ impl VkImageLayout {
     pub const PRESENT_SRC_KHR: VkImageLayout = VkImageLayout(1000001002);
 }
 
+impl core::fmt::Debug for VkImageLayout {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkImageLayout::UNDEFINED => write!(f, "VkImageLayout(UNDEFINED)"),
+            VkImageLayout::GENERAL => write!(f, "VkImageLayout(GENERAL)"),
+            VkImageLayout::COLOR_ATTACHMENT_OPTIMAL => write!(f, "VkImageLayout(COLOR_ATTACHMENT_OPTIMAL)"),
+            VkImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => write!(f, "VkImageLayout(DEPTH_STENCIL_ATTACHMENT_OPTIMAL)"),
+            VkImageLayout::DEPTH_STENCIL_READ_ONLY_OPTIMAL => write!(f, "VkImageLayout(DEPTH_STENCIL_READ_ONLY_OPTIMAL)"),
+            VkImageLayout::SHADER_READ_ONLY_OPTIMAL => write!(f, "VkImageLayout(SHADER_READ_ONLY_OPTIMAL)"),
+            VkImageLayout::TRANSFER_SRC_OPTIMAL => write!(f, "VkImageLayout(TRANSFER_SRC_OPTIMAL)"),
+            VkImageLayout::TRANSFER_DST_OPTIMAL => write!(f, "VkImageLayout(TRANSFER_DST_OPTIMAL)"),
+            VkImageLayout::PREINITIALIZED => write!(f, "VkImageLayout(PREINITIALIZED)"),
+            VkImageLayout::PRESENT_SRC_KHR => write!(f, "VkImageLayout(PRESENT_SRC_KHR)"),
+            _ => write!(f, "VkImageLayout({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkVendorId(u32);
@@ -1042,6 +1439,17 @@ impl VkVendorId {
     pub const VIV: VkVendorId = VkVendorId(65537);
     pub const VSI: VkVendorId = VkVendorId(65538);
     pub const KAZAN: VkVendorId = VkVendorId(65539);
+}
+
+impl core::fmt::Debug for VkVendorId {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkVendorId::VIV => write!(f, "VkVendorId(VIV)"),
+            VkVendorId::VSI => write!(f, "VkVendorId(VSI)"),
+            VkVendorId::KAZAN => write!(f, "VkVendorId(KAZAN)"),
+            _ => write!(f, "VkVendorId({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1052,12 +1460,32 @@ impl VkSubpassContents {
     pub const SECONDARY_COMMAND_BUFFERS: VkSubpassContents = VkSubpassContents(1);
 }
 
+impl core::fmt::Debug for VkSubpassContents {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkSubpassContents::INLINE => write!(f, "VkSubpassContents(INLINE)"),
+            VkSubpassContents::SECONDARY_COMMAND_BUFFERS => write!(f, "VkSubpassContents(SECONDARY_COMMAND_BUFFERS)"),
+            _ => write!(f, "VkSubpassContents({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkFilter(u32);
 impl VkFilter {
     pub const NEAREST: VkFilter = VkFilter(0);
     pub const LINEAR: VkFilter = VkFilter(1);
+}
+
+impl core::fmt::Debug for VkFilter {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkFilter::NEAREST => write!(f, "VkFilter(NEAREST)"),
+            VkFilter::LINEAR => write!(f, "VkFilter(LINEAR)"),
+            _ => write!(f, "VkFilter({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1068,12 +1496,32 @@ impl VkIndexType {
     pub const UINT32: VkIndexType = VkIndexType(1);
 }
 
+impl core::fmt::Debug for VkIndexType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkIndexType::UINT16 => write!(f, "VkIndexType(UINT16)"),
+            VkIndexType::UINT32 => write!(f, "VkIndexType(UINT32)"),
+            _ => write!(f, "VkIndexType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPipelineBindPoint(u32);
 impl VkPipelineBindPoint {
     pub const GRAPHICS: VkPipelineBindPoint = VkPipelineBindPoint(0);
     pub const COMPUTE: VkPipelineBindPoint = VkPipelineBindPoint(1);
+}
+
+impl core::fmt::Debug for VkPipelineBindPoint {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPipelineBindPoint::GRAPHICS => write!(f, "VkPipelineBindPoint(GRAPHICS)"),
+            VkPipelineBindPoint::COMPUTE => write!(f, "VkPipelineBindPoint(COMPUTE)"),
+            _ => write!(f, "VkPipelineBindPoint({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1084,12 +1532,32 @@ impl VkCommandBufferLevel {
     pub const SECONDARY: VkCommandBufferLevel = VkCommandBufferLevel(1);
 }
 
+impl core::fmt::Debug for VkCommandBufferLevel {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkCommandBufferLevel::PRIMARY => write!(f, "VkCommandBufferLevel(PRIMARY)"),
+            VkCommandBufferLevel::SECONDARY => write!(f, "VkCommandBufferLevel(SECONDARY)"),
+            _ => write!(f, "VkCommandBufferLevel({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkAttachmentStoreOp(u32);
 impl VkAttachmentStoreOp {
     pub const STORE: VkAttachmentStoreOp = VkAttachmentStoreOp(0);
     pub const DONT_CARE: VkAttachmentStoreOp = VkAttachmentStoreOp(1);
+}
+
+impl core::fmt::Debug for VkAttachmentStoreOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkAttachmentStoreOp::STORE => write!(f, "VkAttachmentStoreOp(STORE)"),
+            VkAttachmentStoreOp::DONT_CARE => write!(f, "VkAttachmentStoreOp(DONT_CARE)"),
+            _ => write!(f, "VkAttachmentStoreOp({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1099,6 +1567,17 @@ impl VkAttachmentLoadOp {
     pub const LOAD: VkAttachmentLoadOp = VkAttachmentLoadOp(0);
     pub const CLEAR: VkAttachmentLoadOp = VkAttachmentLoadOp(1);
     pub const DONT_CARE: VkAttachmentLoadOp = VkAttachmentLoadOp(2);
+}
+
+impl core::fmt::Debug for VkAttachmentLoadOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkAttachmentLoadOp::LOAD => write!(f, "VkAttachmentLoadOp(LOAD)"),
+            VkAttachmentLoadOp::CLEAR => write!(f, "VkAttachmentLoadOp(CLEAR)"),
+            VkAttachmentLoadOp::DONT_CARE => write!(f, "VkAttachmentLoadOp(DONT_CARE)"),
+            _ => write!(f, "VkAttachmentLoadOp({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1118,6 +1597,25 @@ impl VkDescriptorType {
     pub const INPUT_ATTACHMENT: VkDescriptorType = VkDescriptorType(10);
 }
 
+impl core::fmt::Debug for VkDescriptorType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkDescriptorType::SAMPLER => write!(f, "VkDescriptorType(SAMPLER)"),
+            VkDescriptorType::COMBINED_IMAGE_SAMPLER => write!(f, "VkDescriptorType(COMBINED_IMAGE_SAMPLER)"),
+            VkDescriptorType::SAMPLED_IMAGE => write!(f, "VkDescriptorType(SAMPLED_IMAGE)"),
+            VkDescriptorType::STORAGE_IMAGE => write!(f, "VkDescriptorType(STORAGE_IMAGE)"),
+            VkDescriptorType::UNIFORM_TEXEL_BUFFER => write!(f, "VkDescriptorType(UNIFORM_TEXEL_BUFFER)"),
+            VkDescriptorType::STORAGE_TEXEL_BUFFER => write!(f, "VkDescriptorType(STORAGE_TEXEL_BUFFER)"),
+            VkDescriptorType::UNIFORM_BUFFER => write!(f, "VkDescriptorType(UNIFORM_BUFFER)"),
+            VkDescriptorType::STORAGE_BUFFER => write!(f, "VkDescriptorType(STORAGE_BUFFER)"),
+            VkDescriptorType::UNIFORM_BUFFER_DYNAMIC => write!(f, "VkDescriptorType(UNIFORM_BUFFER_DYNAMIC)"),
+            VkDescriptorType::STORAGE_BUFFER_DYNAMIC => write!(f, "VkDescriptorType(STORAGE_BUFFER_DYNAMIC)"),
+            VkDescriptorType::INPUT_ATTACHMENT => write!(f, "VkDescriptorType(INPUT_ATTACHMENT)"),
+            _ => write!(f, "VkDescriptorType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkBorderColor(u32);
@@ -1128,6 +1626,20 @@ impl VkBorderColor {
     pub const INT_OPAQUE_BLACK: VkBorderColor = VkBorderColor(3);
     pub const FLOAT_OPAQUE_WHITE: VkBorderColor = VkBorderColor(4);
     pub const INT_OPAQUE_WHITE: VkBorderColor = VkBorderColor(5);
+}
+
+impl core::fmt::Debug for VkBorderColor {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkBorderColor::FLOAT_TRANSPARENT_BLACK => write!(f, "VkBorderColor(FLOAT_TRANSPARENT_BLACK)"),
+            VkBorderColor::INT_TRANSPARENT_BLACK => write!(f, "VkBorderColor(INT_TRANSPARENT_BLACK)"),
+            VkBorderColor::FLOAT_OPAQUE_BLACK => write!(f, "VkBorderColor(FLOAT_OPAQUE_BLACK)"),
+            VkBorderColor::INT_OPAQUE_BLACK => write!(f, "VkBorderColor(INT_OPAQUE_BLACK)"),
+            VkBorderColor::FLOAT_OPAQUE_WHITE => write!(f, "VkBorderColor(FLOAT_OPAQUE_WHITE)"),
+            VkBorderColor::INT_OPAQUE_WHITE => write!(f, "VkBorderColor(INT_OPAQUE_WHITE)"),
+            _ => write!(f, "VkBorderColor({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1144,6 +1656,22 @@ impl VkCompareOp {
     pub const ALWAYS: VkCompareOp = VkCompareOp(7);
 }
 
+impl core::fmt::Debug for VkCompareOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkCompareOp::NEVER => write!(f, "VkCompareOp(NEVER)"),
+            VkCompareOp::LESS => write!(f, "VkCompareOp(LESS)"),
+            VkCompareOp::EQUAL => write!(f, "VkCompareOp(EQUAL)"),
+            VkCompareOp::LESS_OR_EQUAL => write!(f, "VkCompareOp(LESS_OR_EQUAL)"),
+            VkCompareOp::GREATER => write!(f, "VkCompareOp(GREATER)"),
+            VkCompareOp::NOT_EQUAL => write!(f, "VkCompareOp(NOT_EQUAL)"),
+            VkCompareOp::GREATER_OR_EQUAL => write!(f, "VkCompareOp(GREATER_OR_EQUAL)"),
+            VkCompareOp::ALWAYS => write!(f, "VkCompareOp(ALWAYS)"),
+            _ => write!(f, "VkCompareOp({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSamplerAddressMode(u32);
@@ -1154,12 +1682,34 @@ impl VkSamplerAddressMode {
     pub const CLAMP_TO_BORDER: VkSamplerAddressMode = VkSamplerAddressMode(3);
 }
 
+impl core::fmt::Debug for VkSamplerAddressMode {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkSamplerAddressMode::REPEAT => write!(f, "VkSamplerAddressMode(REPEAT)"),
+            VkSamplerAddressMode::MIRRORED_REPEAT => write!(f, "VkSamplerAddressMode(MIRRORED_REPEAT)"),
+            VkSamplerAddressMode::CLAMP_TO_EDGE => write!(f, "VkSamplerAddressMode(CLAMP_TO_EDGE)"),
+            VkSamplerAddressMode::CLAMP_TO_BORDER => write!(f, "VkSamplerAddressMode(CLAMP_TO_BORDER)"),
+            _ => write!(f, "VkSamplerAddressMode({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkSamplerMipmapMode(u32);
 impl VkSamplerMipmapMode {
     pub const NEAREST: VkSamplerMipmapMode = VkSamplerMipmapMode(0);
     pub const LINEAR: VkSamplerMipmapMode = VkSamplerMipmapMode(1);
+}
+
+impl core::fmt::Debug for VkSamplerMipmapMode {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkSamplerMipmapMode::NEAREST => write!(f, "VkSamplerMipmapMode(NEAREST)"),
+            VkSamplerMipmapMode::LINEAR => write!(f, "VkSamplerMipmapMode(LINEAR)"),
+            _ => write!(f, "VkSamplerMipmapMode({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1177,6 +1727,23 @@ impl VkDynamicState {
     pub const STENCIL_REFERENCE: VkDynamicState = VkDynamicState(8);
 }
 
+impl core::fmt::Debug for VkDynamicState {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkDynamicState::VIEWPORT => write!(f, "VkDynamicState(VIEWPORT)"),
+            VkDynamicState::SCISSOR => write!(f, "VkDynamicState(SCISSOR)"),
+            VkDynamicState::LINE_WIDTH => write!(f, "VkDynamicState(LINE_WIDTH)"),
+            VkDynamicState::DEPTH_BIAS => write!(f, "VkDynamicState(DEPTH_BIAS)"),
+            VkDynamicState::BLEND_CONSTANTS => write!(f, "VkDynamicState(BLEND_CONSTANTS)"),
+            VkDynamicState::DEPTH_BOUNDS => write!(f, "VkDynamicState(DEPTH_BOUNDS)"),
+            VkDynamicState::STENCIL_COMPARE_MASK => write!(f, "VkDynamicState(STENCIL_COMPARE_MASK)"),
+            VkDynamicState::STENCIL_WRITE_MASK => write!(f, "VkDynamicState(STENCIL_WRITE_MASK)"),
+            VkDynamicState::STENCIL_REFERENCE => write!(f, "VkDynamicState(STENCIL_REFERENCE)"),
+            _ => write!(f, "VkDynamicState({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkBlendOp(u32);
@@ -1186,6 +1753,19 @@ impl VkBlendOp {
     pub const REVERSE_SUBTRACT: VkBlendOp = VkBlendOp(2);
     pub const MIN: VkBlendOp = VkBlendOp(3);
     pub const MAX: VkBlendOp = VkBlendOp(4);
+}
+
+impl core::fmt::Debug for VkBlendOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkBlendOp::ADD => write!(f, "VkBlendOp(ADD)"),
+            VkBlendOp::SUBTRACT => write!(f, "VkBlendOp(SUBTRACT)"),
+            VkBlendOp::REVERSE_SUBTRACT => write!(f, "VkBlendOp(REVERSE_SUBTRACT)"),
+            VkBlendOp::MIN => write!(f, "VkBlendOp(MIN)"),
+            VkBlendOp::MAX => write!(f, "VkBlendOp(MAX)"),
+            _ => write!(f, "VkBlendOp({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1213,6 +1793,33 @@ impl VkBlendFactor {
     pub const ONE_MINUS_SRC1_ALPHA: VkBlendFactor = VkBlendFactor(18);
 }
 
+impl core::fmt::Debug for VkBlendFactor {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkBlendFactor::ZERO => write!(f, "VkBlendFactor(ZERO)"),
+            VkBlendFactor::ONE => write!(f, "VkBlendFactor(ONE)"),
+            VkBlendFactor::SRC_COLOR => write!(f, "VkBlendFactor(SRC_COLOR)"),
+            VkBlendFactor::ONE_MINUS_SRC_COLOR => write!(f, "VkBlendFactor(ONE_MINUS_SRC_COLOR)"),
+            VkBlendFactor::DST_COLOR => write!(f, "VkBlendFactor(DST_COLOR)"),
+            VkBlendFactor::ONE_MINUS_DST_COLOR => write!(f, "VkBlendFactor(ONE_MINUS_DST_COLOR)"),
+            VkBlendFactor::SRC_ALPHA => write!(f, "VkBlendFactor(SRC_ALPHA)"),
+            VkBlendFactor::ONE_MINUS_SRC_ALPHA => write!(f, "VkBlendFactor(ONE_MINUS_SRC_ALPHA)"),
+            VkBlendFactor::DST_ALPHA => write!(f, "VkBlendFactor(DST_ALPHA)"),
+            VkBlendFactor::ONE_MINUS_DST_ALPHA => write!(f, "VkBlendFactor(ONE_MINUS_DST_ALPHA)"),
+            VkBlendFactor::CONSTANT_COLOR => write!(f, "VkBlendFactor(CONSTANT_COLOR)"),
+            VkBlendFactor::ONE_MINUS_CONSTANT_COLOR => write!(f, "VkBlendFactor(ONE_MINUS_CONSTANT_COLOR)"),
+            VkBlendFactor::CONSTANT_ALPHA => write!(f, "VkBlendFactor(CONSTANT_ALPHA)"),
+            VkBlendFactor::ONE_MINUS_CONSTANT_ALPHA => write!(f, "VkBlendFactor(ONE_MINUS_CONSTANT_ALPHA)"),
+            VkBlendFactor::SRC_ALPHA_SATURATE => write!(f, "VkBlendFactor(SRC_ALPHA_SATURATE)"),
+            VkBlendFactor::SRC1_COLOR => write!(f, "VkBlendFactor(SRC1_COLOR)"),
+            VkBlendFactor::ONE_MINUS_SRC1_COLOR => write!(f, "VkBlendFactor(ONE_MINUS_SRC1_COLOR)"),
+            VkBlendFactor::SRC1_ALPHA => write!(f, "VkBlendFactor(SRC1_ALPHA)"),
+            VkBlendFactor::ONE_MINUS_SRC1_ALPHA => write!(f, "VkBlendFactor(ONE_MINUS_SRC1_ALPHA)"),
+            _ => write!(f, "VkBlendFactor({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkLogicOp(u32);
@@ -1235,6 +1842,30 @@ impl VkLogicOp {
     pub const SET: VkLogicOp = VkLogicOp(15);
 }
 
+impl core::fmt::Debug for VkLogicOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkLogicOp::CLEAR => write!(f, "VkLogicOp(CLEAR)"),
+            VkLogicOp::AND => write!(f, "VkLogicOp(AND)"),
+            VkLogicOp::AND_REVERSE => write!(f, "VkLogicOp(AND_REVERSE)"),
+            VkLogicOp::COPY => write!(f, "VkLogicOp(COPY)"),
+            VkLogicOp::AND_INVERTED => write!(f, "VkLogicOp(AND_INVERTED)"),
+            VkLogicOp::NO_OP => write!(f, "VkLogicOp(NO_OP)"),
+            VkLogicOp::XOR => write!(f, "VkLogicOp(XOR)"),
+            VkLogicOp::OR => write!(f, "VkLogicOp(OR)"),
+            VkLogicOp::NOR => write!(f, "VkLogicOp(NOR)"),
+            VkLogicOp::EQUIVALENT => write!(f, "VkLogicOp(EQUIVALENT)"),
+            VkLogicOp::INVERT => write!(f, "VkLogicOp(INVERT)"),
+            VkLogicOp::OR_REVERSE => write!(f, "VkLogicOp(OR_REVERSE)"),
+            VkLogicOp::COPY_INVERTED => write!(f, "VkLogicOp(COPY_INVERTED)"),
+            VkLogicOp::OR_INVERTED => write!(f, "VkLogicOp(OR_INVERTED)"),
+            VkLogicOp::NAND => write!(f, "VkLogicOp(NAND)"),
+            VkLogicOp::SET => write!(f, "VkLogicOp(SET)"),
+            _ => write!(f, "VkLogicOp({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkStencilOp(u32);
@@ -1249,12 +1880,38 @@ impl VkStencilOp {
     pub const DECREMENT_AND_WRAP: VkStencilOp = VkStencilOp(7);
 }
 
+impl core::fmt::Debug for VkStencilOp {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkStencilOp::KEEP => write!(f, "VkStencilOp(KEEP)"),
+            VkStencilOp::ZERO => write!(f, "VkStencilOp(ZERO)"),
+            VkStencilOp::REPLACE => write!(f, "VkStencilOp(REPLACE)"),
+            VkStencilOp::INCREMENT_AND_CLAMP => write!(f, "VkStencilOp(INCREMENT_AND_CLAMP)"),
+            VkStencilOp::DECREMENT_AND_CLAMP => write!(f, "VkStencilOp(DECREMENT_AND_CLAMP)"),
+            VkStencilOp::INVERT => write!(f, "VkStencilOp(INVERT)"),
+            VkStencilOp::INCREMENT_AND_WRAP => write!(f, "VkStencilOp(INCREMENT_AND_WRAP)"),
+            VkStencilOp::DECREMENT_AND_WRAP => write!(f, "VkStencilOp(DECREMENT_AND_WRAP)"),
+            _ => write!(f, "VkStencilOp({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkFrontFace(u32);
 impl VkFrontFace {
     pub const COUNTER_CLOCKWISE: VkFrontFace = VkFrontFace(0);
     pub const CLOCKWISE: VkFrontFace = VkFrontFace(1);
+}
+
+impl core::fmt::Debug for VkFrontFace {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkFrontFace::COUNTER_CLOCKWISE => write!(f, "VkFrontFace(COUNTER_CLOCKWISE)"),
+            VkFrontFace::CLOCKWISE => write!(f, "VkFrontFace(CLOCKWISE)"),
+            _ => write!(f, "VkFrontFace({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1264,6 +1921,17 @@ impl VkPolygonMode {
     pub const FILL: VkPolygonMode = VkPolygonMode(0);
     pub const LINE: VkPolygonMode = VkPolygonMode(1);
     pub const POINT: VkPolygonMode = VkPolygonMode(2);
+}
+
+impl core::fmt::Debug for VkPolygonMode {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPolygonMode::FILL => write!(f, "VkPolygonMode(FILL)"),
+            VkPolygonMode::LINE => write!(f, "VkPolygonMode(LINE)"),
+            VkPolygonMode::POINT => write!(f, "VkPolygonMode(POINT)"),
+            _ => write!(f, "VkPolygonMode({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1283,12 +1951,41 @@ impl VkPrimitiveTopology {
     pub const PATCH_LIST: VkPrimitiveTopology = VkPrimitiveTopology(10);
 }
 
+impl core::fmt::Debug for VkPrimitiveTopology {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPrimitiveTopology::POINT_LIST => write!(f, "VkPrimitiveTopology(POINT_LIST)"),
+            VkPrimitiveTopology::LINE_LIST => write!(f, "VkPrimitiveTopology(LINE_LIST)"),
+            VkPrimitiveTopology::LINE_STRIP => write!(f, "VkPrimitiveTopology(LINE_STRIP)"),
+            VkPrimitiveTopology::TRIANGLE_LIST => write!(f, "VkPrimitiveTopology(TRIANGLE_LIST)"),
+            VkPrimitiveTopology::TRIANGLE_STRIP => write!(f, "VkPrimitiveTopology(TRIANGLE_STRIP)"),
+            VkPrimitiveTopology::TRIANGLE_FAN => write!(f, "VkPrimitiveTopology(TRIANGLE_FAN)"),
+            VkPrimitiveTopology::LINE_LIST_WITH_ADJACENCY => write!(f, "VkPrimitiveTopology(LINE_LIST_WITH_ADJACENCY)"),
+            VkPrimitiveTopology::LINE_STRIP_WITH_ADJACENCY => write!(f, "VkPrimitiveTopology(LINE_STRIP_WITH_ADJACENCY)"),
+            VkPrimitiveTopology::TRIANGLE_LIST_WITH_ADJACENCY => write!(f, "VkPrimitiveTopology(TRIANGLE_LIST_WITH_ADJACENCY)"),
+            VkPrimitiveTopology::TRIANGLE_STRIP_WITH_ADJACENCY => write!(f, "VkPrimitiveTopology(TRIANGLE_STRIP_WITH_ADJACENCY)"),
+            VkPrimitiveTopology::PATCH_LIST => write!(f, "VkPrimitiveTopology(PATCH_LIST)"),
+            _ => write!(f, "VkPrimitiveTopology({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkVertexInputRate(u32);
 impl VkVertexInputRate {
     pub const VERTEX: VkVertexInputRate = VkVertexInputRate(0);
     pub const INSTANCE: VkVertexInputRate = VkVertexInputRate(1);
+}
+
+impl core::fmt::Debug for VkVertexInputRate {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkVertexInputRate::VERTEX => write!(f, "VkVertexInputRate(VERTEX)"),
+            VkVertexInputRate::INSTANCE => write!(f, "VkVertexInputRate(INSTANCE)"),
+            _ => write!(f, "VkVertexInputRate({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1304,6 +2001,21 @@ impl VkComponentSwizzle {
     pub const A: VkComponentSwizzle = VkComponentSwizzle(6);
 }
 
+impl core::fmt::Debug for VkComponentSwizzle {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkComponentSwizzle::IDENTITY => write!(f, "VkComponentSwizzle(IDENTITY)"),
+            VkComponentSwizzle::ZERO => write!(f, "VkComponentSwizzle(ZERO)"),
+            VkComponentSwizzle::ONE => write!(f, "VkComponentSwizzle(ONE)"),
+            VkComponentSwizzle::R => write!(f, "VkComponentSwizzle(R)"),
+            VkComponentSwizzle::G => write!(f, "VkComponentSwizzle(G)"),
+            VkComponentSwizzle::B => write!(f, "VkComponentSwizzle(B)"),
+            VkComponentSwizzle::A => write!(f, "VkComponentSwizzle(A)"),
+            _ => write!(f, "VkComponentSwizzle({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageViewType(u32);
@@ -1317,12 +2029,37 @@ impl VkImageViewType {
     pub const CUBE_ARRAY: VkImageViewType = VkImageViewType(6);
 }
 
+impl core::fmt::Debug for VkImageViewType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkImageViewType::K_1D => write!(f, "VkImageViewType(K_1D)"),
+            VkImageViewType::K_2D => write!(f, "VkImageViewType(K_2D)"),
+            VkImageViewType::K_3D => write!(f, "VkImageViewType(K_3D)"),
+            VkImageViewType::CUBE => write!(f, "VkImageViewType(CUBE)"),
+            VkImageViewType::K_1D_ARRAY => write!(f, "VkImageViewType(K_1D_ARRAY)"),
+            VkImageViewType::K_2D_ARRAY => write!(f, "VkImageViewType(K_2D_ARRAY)"),
+            VkImageViewType::CUBE_ARRAY => write!(f, "VkImageViewType(CUBE_ARRAY)"),
+            _ => write!(f, "VkImageViewType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkImageTiling(u32);
 impl VkImageTiling {
     pub const OPTIMAL: VkImageTiling = VkImageTiling(0);
     pub const LINEAR: VkImageTiling = VkImageTiling(1);
+}
+
+impl core::fmt::Debug for VkImageTiling {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkImageTiling::OPTIMAL => write!(f, "VkImageTiling(OPTIMAL)"),
+            VkImageTiling::LINEAR => write!(f, "VkImageTiling(LINEAR)"),
+            _ => write!(f, "VkImageTiling({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1334,6 +2071,17 @@ impl VkImageType {
     pub const K_3D: VkImageType = VkImageType(2);
 }
 
+impl core::fmt::Debug for VkImageType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkImageType::K_1D => write!(f, "VkImageType(K_1D)"),
+            VkImageType::K_2D => write!(f, "VkImageType(K_2D)"),
+            VkImageType::K_3D => write!(f, "VkImageType(K_3D)"),
+            _ => write!(f, "VkImageType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkQueryType(u32);
@@ -1341,6 +2089,17 @@ impl VkQueryType {
     pub const OCCLUSION: VkQueryType = VkQueryType(0);
     pub const PIPELINE_STATISTICS: VkQueryType = VkQueryType(1);
     pub const TIMESTAMP: VkQueryType = VkQueryType(2);
+}
+
+impl core::fmt::Debug for VkQueryType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkQueryType::OCCLUSION => write!(f, "VkQueryType(OCCLUSION)"),
+            VkQueryType::PIPELINE_STATISTICS => write!(f, "VkQueryType(PIPELINE_STATISTICS)"),
+            VkQueryType::TIMESTAMP => write!(f, "VkQueryType(TIMESTAMP)"),
+            _ => write!(f, "VkQueryType({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]
@@ -1354,11 +2113,33 @@ impl VkPhysicalDeviceType {
     pub const CPU: VkPhysicalDeviceType = VkPhysicalDeviceType(4);
 }
 
+impl core::fmt::Debug for VkPhysicalDeviceType {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPhysicalDeviceType::OTHER => write!(f, "VkPhysicalDeviceType(OTHER)"),
+            VkPhysicalDeviceType::INTEGRATED_GPU => write!(f, "VkPhysicalDeviceType(INTEGRATED_GPU)"),
+            VkPhysicalDeviceType::DISCRETE_GPU => write!(f, "VkPhysicalDeviceType(DISCRETE_GPU)"),
+            VkPhysicalDeviceType::VIRTUAL_GPU => write!(f, "VkPhysicalDeviceType(VIRTUAL_GPU)"),
+            VkPhysicalDeviceType::CPU => write!(f, "VkPhysicalDeviceType(CPU)"),
+            _ => write!(f, "VkPhysicalDeviceType({})", self.0),
+        }
+    }
+}
+
 #[repr(transparent)]
 #[derive(Default, PartialOrd, Copy, Clone, Ord, PartialEq, Eq, Hash)]
 pub struct VkPipelineCacheHeaderVersion(u32);
 impl VkPipelineCacheHeaderVersion {
     pub const ONE: VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion(1);
+}
+
+impl core::fmt::Debug for VkPipelineCacheHeaderVersion {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+    match *self {
+            VkPipelineCacheHeaderVersion::ONE => write!(f, "VkPipelineCacheHeaderVersion(ONE)"),
+            _ => write!(f, "VkPipelineCacheHeaderVersion({})", self.0),
+        }
+    }
 }
 
 #[repr(transparent)]

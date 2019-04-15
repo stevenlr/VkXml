@@ -241,6 +241,16 @@ for t in model["enum_types"]:
         else:
             fp.write("    pub const %s: %s = %s(%d);\n" % (v, enum_name, enum_name, value))
     fp.write("}\n\n")
+    fp.write("impl core::fmt::Debug for %s {\n" % enum_name)
+    fp.write("    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {\n")
+    fp.write("    match *self {\n")
+    for v in t.values:
+        v = format_enum_value(v, enum_name)
+        fp.write("            %s::%s => write!(f, \"%s(%s)\"),\n" % (enum_name, v, enum_name, v))
+    fp.write("            _ => write!(f, \"%s({})\", self.0),\n" % enum_name)
+    fp.write("        }\n")
+    fp.write("    }\n")
+    fp.write("}\n\n")
 
 for t in model["enum_types"]:
     if t.type != "bitmask":
