@@ -511,28 +511,65 @@ class CmdGenerator:
         self.generate(fp, handle_type)
 
     def generate(self, fp, handle_type):
-        return
+        computed_length_code = ""
+        computed_length_args = []
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and arg.id.type.inner.is_const and arg.length and arg.length != "null-terminated":
+                if arg.length in computed_length_args:
+                    computed_length_code += "        assert!(%s as usize == %s.len());\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name))
+                else:
+                    computed_length_code += "        let %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name))
+                    computed_length_args.append(arg.length)
+
         fp.write("\n    pub fn %s(&self" % camel_to_snake(self.cmd.name[2:]))
-        for a in self.cmd.prototype.arguments:
-            arg_name = camel_to_snake(a.id.name)
+        for arg in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(arg.id.name)
             if arg_name == "type":
                 arg_name = "kind"
-            fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep(a.id.type)))
+
+            if is_handle(arg.id.type, handle_type):
+                pass
+            elif not arg.id.name in computed_length_args:
+                 fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
         fp.write(")")
-        has_return_value = False
-        if not isinstance(self.cmd.prototype.return_type, TypeReference) or self.cmd.prototype.return_type.name != "void":
-            fp.write(" -> %s" % to_rust_type_deep(self.cmd.prototype.return_type))
-            has_return_value = True
-        fp.write(" {\n")
         inner_fn_name = camel_to_snake(self.cmd.name[2:])
-        fp.write("        let ret = unsafe { self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        is_return_type_result = False
+        if is_result(self.cmd.prototype.return_type):
+            fp.write(" -> Result<VkResult, VkResult> {\n")
+            is_return_type_result = True
+        elif is_void(self.cmd.prototype.return_type):
+            fp.write(" {\n")
+        else:
+            fp.write(" -> %s {\n" % to_rust_type_deep(self.cmd.prototype.return_type))
+        fp.write(computed_length_code)
+        fp.write("        let ret = unsafe {\n")
+        fp.write("            self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
         for a in self.cmd.prototype.arguments:
             arg_name = camel_to_snake(a.id.name)
             if arg_name == "type":
                 arg_name = "kind"
-            fp.write("\n            %s," % arg_name)
-        fp.write(") };\n")
-        if has_return_value:
+            elif is_handle(a.id.type, handle_type):
+                fp.write("\n                self.handle,")
+            elif is_bool(a.id.type):
+                fp.write("\n                if %s { VK_TRUE } else { VK_FALSE }," % arg_name)
+            elif is_optional_ptr(a):
+                fp.write("\n                %s," % optional_ptr_call(a))
+            elif isinstance(a.id.type, PointerType) and a.length:
+                if a.id.type.inner.is_const:
+                    fp.write("\n                core::mem::transmute(%s.as_ptr())," % arg_name)
+                else:
+                    fp.write("\n                core::mem::transmute(%s.as_mut_ptr())," % arg_name)
+            else:
+                fp.write("\n                %s," % arg_name)
+        fp.write(")\n")
+        fp.write("        };\n")
+        if is_return_type_result:
+            fp.write("        return match ret {\n")
+            for return_code in self.cmd.successcodes.split(","):
+                fp.write("            VkResult::%s => Ok(ret),\n" % remove_prefix(return_code, "VK_"))
+            fp.write("            _ => Err(ret),\n")
+            fp.write("        };\n")
+        elif not is_void(self.cmd.prototype.return_type):
             fp.write("        return ret;\n")
         fp.write("    }\n")
 
@@ -827,6 +864,9 @@ class CmdReturnSliceConstantCountGenerator(CmdGenerator):
 
 def is_void(t: Type) -> bool:
     return isinstance(t, TypeReference) and t.name == "void"
+
+def is_bool(t: Type) -> bool:
+    return isinstance(t, TypeReference) and t.name == "VkBool32"
 
 def is_handle(t: Type, handle: str) -> bool:
     return isinstance(t, TypeReference) and t.name == handle

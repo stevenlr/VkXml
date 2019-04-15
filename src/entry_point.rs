@@ -81,6 +81,17 @@ impl EntryPoint {
         };
     }
 
+    pub fn get_instance_proc_addr(&self,
+        instance: VkInstance,
+        p_name: &[u8]) -> PfnVkVoidFunction {
+        let ret = unsafe {
+            self.s.get_instance_proc_addr(
+                instance,
+                core::mem::transmute(p_name.as_ptr()),)
+        };
+        return ret;
+    }
+
     pub fn create_instance(&self,
         p_create_info: &VkInstanceCreateInfo,
         p_allocator: Option<&VkAllocationCallbacks>) -> Result<(VkResult, VkInstance), VkResult> {

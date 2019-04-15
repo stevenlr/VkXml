@@ -19,6 +19,17 @@ impl Instance {
         }
     }
 
+    pub fn get_physical_device_win_32_presentation_support_khr(&self,
+        physical_device: VkPhysicalDevice,
+        queue_family_index: u32) -> VkBool32 {
+        let ret = unsafe {
+            self.i.get_physical_device_win_32_presentation_support_khr(
+                physical_device,
+                queue_family_index,)
+        };
+        return ret;
+    }
+
     pub fn create_win_32_surface_khr(&self,
         p_create_info: &VkWin32SurfaceCreateInfoKHR,
         p_allocator: Option<&VkAllocationCallbacks>) -> Result<(VkResult, VkSurfaceKHR), VkResult> {
@@ -145,6 +156,41 @@ impl Instance {
         };
     }
 
+    pub fn destroy_surface_khr(&self,
+        surface: VkSurfaceKHR,
+        p_allocator: Option<&VkAllocationCallbacks>) {
+        let ret = unsafe {
+            self.i.destroy_surface_khr(
+                self.handle,
+                surface,
+                match p_allocator { Some(r) => r, None => core::ptr::null() },)
+        };
+    }
+
+    pub fn submit_debug_utils_message_ext(&self,
+        message_severity: VkDebugUtilsMessageSeverityFlagBitsEXT,
+        message_types: VkDebugUtilsMessageTypeFlagsEXT,
+        p_callback_data: &VkDebugUtilsMessengerCallbackDataEXT) {
+        let ret = unsafe {
+            self.i.submit_debug_utils_message_ext(
+                self.handle,
+                message_severity,
+                message_types,
+                p_callback_data,)
+        };
+    }
+
+    pub fn destroy_debug_utils_messenger_ext(&self,
+        messenger: VkDebugUtilsMessengerEXT,
+        p_allocator: Option<&VkAllocationCallbacks>) {
+        let ret = unsafe {
+            self.i.destroy_debug_utils_messenger_ext(
+                self.handle,
+                messenger,
+                match p_allocator { Some(r) => r, None => core::ptr::null() },)
+        };
+    }
+
     pub fn create_debug_utils_messenger_ext(&self,
         p_create_info: &VkDebugUtilsMessengerCreateInfoEXT,
         p_allocator: Option<&VkAllocationCallbacks>) -> Result<(VkResult, VkDebugUtilsMessengerEXT), VkResult> {
@@ -158,6 +204,90 @@ impl Instance {
         };
         return match ret {
             VkResult::SUCCESS => Ok((ret, ret_value)),
+            _ => Err(ret),
+        };
+    }
+
+    pub fn cmd_insert_debug_utils_label_ext(&self,
+        command_buffer: VkCommandBuffer,
+        p_label_info: &VkDebugUtilsLabelEXT) {
+        let ret = unsafe {
+            self.i.cmd_insert_debug_utils_label_ext(
+                command_buffer,
+                p_label_info,)
+        };
+    }
+
+    pub fn cmd_end_debug_utils_label_ext(&self,
+        command_buffer: VkCommandBuffer) {
+        let ret = unsafe {
+            self.i.cmd_end_debug_utils_label_ext(
+                command_buffer,)
+        };
+    }
+
+    pub fn cmd_begin_debug_utils_label_ext(&self,
+        command_buffer: VkCommandBuffer,
+        p_label_info: &VkDebugUtilsLabelEXT) {
+        let ret = unsafe {
+            self.i.cmd_begin_debug_utils_label_ext(
+                command_buffer,
+                p_label_info,)
+        };
+    }
+
+    pub fn queue_insert_debug_utils_label_ext(&self,
+        queue: VkQueue,
+        p_label_info: &VkDebugUtilsLabelEXT) {
+        let ret = unsafe {
+            self.i.queue_insert_debug_utils_label_ext(
+                queue,
+                p_label_info,)
+        };
+    }
+
+    pub fn queue_end_debug_utils_label_ext(&self,
+        queue: VkQueue) {
+        let ret = unsafe {
+            self.i.queue_end_debug_utils_label_ext(
+                queue,)
+        };
+    }
+
+    pub fn queue_begin_debug_utils_label_ext(&self,
+        queue: VkQueue,
+        p_label_info: &VkDebugUtilsLabelEXT) {
+        let ret = unsafe {
+            self.i.queue_begin_debug_utils_label_ext(
+                queue,
+                p_label_info,)
+        };
+    }
+
+    pub fn set_debug_utils_object_tag_ext(&self,
+        device: VkDevice,
+        p_tag_info: &VkDebugUtilsObjectTagInfoEXT) -> Result<VkResult, VkResult> {
+        let ret = unsafe {
+            self.i.set_debug_utils_object_tag_ext(
+                device,
+                p_tag_info,)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok(ret),
+            _ => Err(ret),
+        };
+    }
+
+    pub fn set_debug_utils_object_name_ext(&self,
+        device: VkDevice,
+        p_name_info: &VkDebugUtilsObjectNameInfoEXT) -> Result<VkResult, VkResult> {
+        let ret = unsafe {
+            self.i.set_debug_utils_object_name_ext(
+                device,
+                p_name_info,)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok(ret),
             _ => Err(ret),
         };
     }
@@ -294,6 +424,17 @@ impl Instance {
         };
     }
 
+    pub fn get_device_proc_addr(&self,
+        device: VkDevice,
+        p_name: &[u8]) -> PfnVkVoidFunction {
+        let ret = unsafe {
+            self.i.get_device_proc_addr(
+                device,
+                core::mem::transmute(p_name.as_ptr()),)
+        };
+        return ret;
+    }
+
     pub fn get_physical_device_memory_properties(&self,
         physical_device: VkPhysicalDevice) -> VkPhysicalDeviceMemoryProperties {
         let mut ret_value = unsafe { core::mem::uninitialized() };
@@ -416,6 +557,15 @@ impl Instance {
             VkResult::SUCCESS => Ok(ret),
             VkResult::INCOMPLETE => Ok(ret),
             _ => Err(ret),
+        };
+    }
+
+    pub fn destroy_instance(&self,
+        p_allocator: Option<&VkAllocationCallbacks>) {
+        let ret = unsafe {
+            self.i.destroy_instance(
+                self.handle,
+                match p_allocator { Some(r) => r, None => core::ptr::null() },)
         };
     }
 }
