@@ -19,6 +19,68 @@ impl EntryPoint {
         }
     }
 
+    pub fn enumerate_instance_layer_properties_count(&self) -> Result<(VkResult, usize), VkResult> {
+        let mut p_property_count = 0;
+        let ret = unsafe {
+            self.e.enumerate_instance_layer_properties(
+                &mut p_property_count,
+                core::ptr::null_mut(),)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok((ret, p_property_count as usize)),
+            VkResult::INCOMPLETE => Ok((ret, p_property_count as usize)),
+            _ => Err(ret),
+        };
+    }
+
+    pub fn enumerate_instance_layer_properties(&self,
+        p_properties: &mut [VkLayerProperties]) -> Result<VkResult, VkResult> {
+        let mut p_property_count = p_properties.len() as _;
+        let ret = unsafe {
+            self.e.enumerate_instance_layer_properties(
+                &mut p_property_count,
+                core::mem::transmute(p_properties.as_mut_ptr()),)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok(ret),
+            VkResult::INCOMPLETE => Ok(ret),
+            _ => Err(ret),
+        };
+    }
+
+    pub fn enumerate_instance_extension_properties_count(&self,
+        p_layer_name: Option<&[u8]>) -> Result<(VkResult, usize), VkResult> {
+        let mut p_property_count = 0;
+        let ret = unsafe {
+            self.e.enumerate_instance_extension_properties(
+                match p_layer_name { Some(r) => r.as_ptr(), None => core::ptr::null() },
+                &mut p_property_count,
+                core::ptr::null_mut(),)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok((ret, p_property_count as usize)),
+            VkResult::INCOMPLETE => Ok((ret, p_property_count as usize)),
+            _ => Err(ret),
+        };
+    }
+
+    pub fn enumerate_instance_extension_properties(&self,
+        p_layer_name: Option<&[u8]>,
+        p_properties: &mut [VkExtensionProperties]) -> Result<VkResult, VkResult> {
+        let mut p_property_count = p_properties.len() as _;
+        let ret = unsafe {
+            self.e.enumerate_instance_extension_properties(
+                match p_layer_name { Some(r) => r.as_ptr(), None => core::ptr::null() },
+                &mut p_property_count,
+                core::mem::transmute(p_properties.as_mut_ptr()),)
+        };
+        return match ret {
+            VkResult::SUCCESS => Ok(ret),
+            VkResult::INCOMPLETE => Ok(ret),
+            _ => Err(ret),
+        };
+    }
+
     pub fn create_instance(&self,
         p_create_info: &VkInstanceCreateInfo,
         p_allocator: Option<&VkAllocationCallbacks>) -> Result<(VkResult, VkInstance), VkResult> {
@@ -26,7 +88,7 @@ impl EntryPoint {
         let ret = unsafe {
             self.e.create_instance(
                 p_create_info,
-                match p_allocator { Some(r) => r, None => core::ptr::null(),},
+                match p_allocator { Some(r) => r, None => core::ptr::null() },
                 &mut ret_value,)
         };
         return match ret {

@@ -133,7 +133,7 @@ def to_rust_type_deep(t: Type) -> str:
     return remove_prefix(remove_prefix(t_str, "mut "), "const ")
 
 def to_rust_type_deep_arg(t: FunctionArgument) -> str:
-    def to_rust_type_deep_inner_arg(t: Type, is_optional: bool) -> str:
+    def to_rust_type_deep_inner_arg(t: Type, is_optional: bool, has_length: bool) -> str:
         if isinstance(t, TypeReference):
             rust_type = to_rust_type(t.name)
             if rust_type == "VkBool32":
@@ -143,12 +143,23 @@ def to_rust_type_deep_arg(t: FunctionArgument) -> str:
             else:
                 return "mut " + rust_type
         elif isinstance(t, PointerType):
-            inner = to_rust_type_deep_inner_arg(t.inner, False)
+            inner = to_rust_type_deep_inner_arg(t.inner, False, False)
             inner_str = ""
-            if t.is_const:
-                inner_str = "&" + inner
+            if not has_length:
+                if t.is_const:
+                    inner_str = "&%s" % inner
+                else:
+                    inner_str = "mut &%s" % inner
             else:
-                inner_str = "mut &" + inner
+                if inner.endswith("core::ffi::c_void"):
+                    inner = inner[:-17] + "u8"
+                if t.is_const:
+                    inner_str = "&[%s]" % inner
+                else:
+                    if t.inner.is_const:
+                        inner_str = "mut &[%s]" % inner
+                    else:
+                        inner_str = "mut &mut [%s]" % remove_prefix(inner, "mut ")
             if is_optional:
                 return "Option<%s>" % remove_prefix(inner_str, "mut ")
             else:
@@ -158,7 +169,7 @@ def to_rust_type_deep_arg(t: FunctionArgument) -> str:
             return "[%s; %d]" % (inner, t.length)
         else:
             return ""
-    t_str = to_rust_type_deep_inner_arg(t.id.type, t.optional)
+    t_str = to_rust_type_deep_inner_arg(t.id.type, t.optional, t.length != None)
     return remove_prefix(t_str, "mut ")
 
 fp = open("src/types.rs", "w+")
@@ -591,16 +602,228 @@ class CmdReturnSliceAndCountGenerator(CmdGenerator):
         self.count = count
         self.output = output
 
+    def generate(self, fp, handle_type):
+        self.generate_count(fp, handle_type)
+        self.generate_data(fp, handle_type)
+
+    def generate_count(self, fp, handle_type):
+        fp.write("\n    pub fn %s_count(&self" % camel_to_snake(self.cmd.name[2:]))
+        for arg in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(arg.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if arg == self.count or arg == self.output:
+                pass
+            elif is_handle(arg.id.type, handle_type):
+                pass
+            else:
+                 fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
+        fp.write(")")
+        inner_fn_name = camel_to_snake(self.cmd.name[2:])
+        is_return_type_result = False
+        if is_result(self.cmd.prototype.return_type):
+            fp.write(" -> Result<(VkResult, usize), VkResult> {\n")
+            is_return_type_result = True
+        elif is_void(self.cmd.prototype.return_type):
+            fp.write(" -> usize {\n")
+        else:
+            raise Exception("Not implemented")
+        computed_length_args = []
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and arg.id.type.inner.is_const and arg.length and arg.length != "null-terminated" and arg.length != self.count.id.name:
+                fp.write("        let %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                computed_length_args.append(arg.length)
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and not arg.id.type.inner.is_const and arg.length and arg.length != "null-terminated" and arg.length != self.count.id.name:
+                if arg.length in computed_length_args or "::" in arg.length:
+                    length = ".".join([camel_to_snake(x) for x in arg.length.split("::")])
+                    fp.write("        assert!(%s as usize == %s.len());\n" % (length, camel_to_snake(arg.id.name)))
+                else:
+                    fp.write("        let mut %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                    computed_length_args.append(arg.length)
+        fp.write("        let mut %s = 0;\n" % camel_to_snake(self.count.id.name))
+        fp.write("        let ret = unsafe {\n")
+        fp.write("            self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if is_handle(a.id.type, handle_type):
+                fp.write("\n                self.handle,")
+            elif a == self.count:
+                fp.write("\n                &mut %s," % arg_name)
+            elif a == self.output:
+                fp.write("\n                core::ptr::null_mut(),")
+            elif is_optional_ptr(a):
+                fp.write("\n                %s," % optional_ptr_call(a))
+            elif isinstance(a.id.type, PointerType) and a.length:
+                if a.id.type.inner.is_const:
+                    fp.write("\n                core::mem::transmute(%s.as_ptr())," % arg_name)
+                else:
+                    fp.write("\n                core::mem::transmute(%s.as_mut_ptr())," % arg_name)
+            else:
+                fp.write("\n                %s," % arg_name)
+        fp.write(")\n")
+        fp.write("        };\n")
+        if is_return_type_result:
+            fp.write("        return match ret {\n")
+            for return_code in self.cmd.successcodes.split(","):
+                fp.write("            VkResult::%s => Ok((ret, %s as usize)),\n" % (remove_prefix(return_code, "VK_"), camel_to_snake(self.count.id.name)))
+            fp.write("            _ => Err(ret),\n")
+            fp.write("        };\n")
+        else:
+            fp.write("        return %s as usize;\n" % camel_to_snake(self.count.id.name))
+        fp.write("    }\n")
+
+    def generate_data(self, fp, handle_type):
+        fp.write("\n    pub fn %s(&self" % camel_to_snake(self.cmd.name[2:]))
+        for arg in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(arg.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if arg == self.count:
+                pass
+            elif is_handle(arg.id.type, handle_type):
+                pass
+            elif arg == self.output:
+                old_optional = arg.optional
+                arg.optional = False
+                fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
+                arg.optional = old_optional
+            else:
+                 fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
+        fp.write(")")
+        inner_fn_name = camel_to_snake(self.cmd.name[2:])
+        is_return_type_result = False
+        if is_result(self.cmd.prototype.return_type):
+            fp.write(" -> Result<VkResult, VkResult> {\n")
+            is_return_type_result = True
+        elif is_void(self.cmd.prototype.return_type):
+            fp.write(" {\n")
+        else:
+            fp.write(" -> %s {\n" % to_rust_type_deep(self.output.id.type.inner))
+        computed_length_args = []
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and arg.id.type.inner.is_const and arg.length and arg.length != "null-terminated":
+                fp.write("        let %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                computed_length_args.append(arg.length)
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and not arg.id.type.inner.is_const and arg.length and arg.length != "null-terminated":
+                if arg.length in computed_length_args or "::" in arg.length:
+                    length = ".".join([camel_to_snake(x) for x in arg.length.split("::")])
+                    fp.write("        assert!(%s as usize == %s.len());\n" % (length, camel_to_snake(arg.id.name)))
+                else:
+                    fp.write("        let mut %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                    computed_length_args.append(arg.length)
+        fp.write("        let ret = unsafe {\n")
+        fp.write("            self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if is_handle(a.id.type, handle_type):
+                fp.write("\n                self.handle,")
+            elif a == self.count:
+                fp.write("\n                &mut %s," % arg_name)
+            elif a == self.output:
+                fp.write("\n                core::mem::transmute(%s.as_mut_ptr())," % arg_name)
+            elif is_optional_ptr(a):
+                fp.write("\n                %s," % optional_ptr_call(a))
+            elif isinstance(a.id.type, PointerType) and a.length:
+                if a.id.type.inner.is_const:
+                    fp.write("\n                core::mem::transmute(%s.as_ptr())," % arg_name)
+                else:
+                    fp.write("\n                core::mem::transmute(%s.as_mut_ptr())," % arg_name)
+            else:
+                fp.write("\n                %s," % arg_name)
+        fp.write(")\n")
+        fp.write("        };\n")
+        if is_return_type_result:
+            fp.write("        return match ret {\n")
+            for return_code in self.cmd.successcodes.split(","):
+                fp.write("            VkResult::%s => Ok(ret),\n" % remove_prefix(return_code, "VK_"))
+            fp.write("            _ => Err(ret),\n")
+            fp.write("        };\n")
+        elif not is_void(self.cmd.prototype.return_type):
+            fp.write("        return ret_value;\n")
+        fp.write("    }\n")
+
 class CmdReturnSliceConstantCountGenerator(CmdGenerator):
     def __init__(self, cmd: Command, output: FunctionArgument):
         CmdGenerator.__init__(self, cmd)
         self.output = output
 
-class CmdReturnRawDataSliceGenerator(CmdGenerator):
-    def __init__(self, cmd: Command, length: FunctionArgument, data: FunctionArgument):
-        CmdGenerator.__init__(self, cmd)
-        self.length = length
-        self.data = data
+    def generate(self, fp, handle_type):
+        length_arg = find_argument(self.cmd, self.output.length)
+
+        fp.write("\n    pub fn %s(&self" % camel_to_snake(self.cmd.name[2:]))
+        for arg in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(arg.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if length_arg and arg == length_arg:
+                pass
+            elif is_handle(arg.id.type, handle_type):
+                pass
+            else:
+                 fp.write(",\n        %s: %s" % (arg_name, to_rust_type_deep_arg(arg)))
+        fp.write(")")
+        inner_fn_name = camel_to_snake(self.cmd.name[2:])
+        is_return_type_result = False
+        if is_result(self.cmd.prototype.return_type):
+            fp.write(" -> Result<VkResult, VkResult> {\n")
+            is_return_type_result = True
+        elif is_void(self.cmd.prototype.return_type):
+            fp.write(" {\n")
+        else:
+            fp.write(" -> %s {\n" % to_rust_type_deep(self.output.id.type.inner))
+        computed_length_args = []
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and arg.id.type.inner.is_const and arg.length:
+                fp.write("        let %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                computed_length_args.append(arg.length)
+        for arg in self.cmd.prototype.arguments:
+            if isinstance(arg.id.type, PointerType) and not arg.id.type.inner.is_const and arg.length:
+                if arg.length in computed_length_args or "::" in arg.length:
+                    length = ".".join([camel_to_snake(x) for x in arg.length.split("::")])
+                    fp.write("        assert!(%s as usize == %s.len());\n" % (length, camel_to_snake(arg.id.name)))
+                else:
+                    fp.write("        let %s = %s.len() as _;\n" % (camel_to_snake(arg.length), camel_to_snake(arg.id.name)))
+                    computed_length_args.append(arg.length)
+        fp.write("        let ret = unsafe {\n")
+        fp.write("            self.%s.%s(" % (self.cmd.type[0], inner_fn_name))
+        for a in self.cmd.prototype.arguments:
+            arg_name = camel_to_snake(a.id.name)
+            if arg_name == "type":
+                arg_name = "kind"
+
+            if is_handle(a.id.type, handle_type):
+                fp.write("\n                self.handle,")
+            elif is_optional_ptr(a):
+                fp.write("\n                %s," % optional_ptr_call(a))
+            elif isinstance(a.id.type, PointerType) and a.length:
+                if a.id.type.inner.is_const:
+                    fp.write("\n                core::mem::transmute(%s.as_ptr())," % arg_name)
+                else:
+                    fp.write("\n                core::mem::transmute(%s.as_mut_ptr())," % arg_name)
+            else:
+                fp.write("\n                %s," % arg_name)
+        fp.write(")\n")
+        fp.write("        };\n")
+        if is_return_type_result:
+            fp.write("        return match ret {\n")
+            for return_code in self.cmd.successcodes.split(","):
+                fp.write("            VkResult::%s => Ok(ret),\n" % remove_prefix(return_code, "VK_"))
+            fp.write("            _ => Err(ret),\n")
+            fp.write("        };\n")
+        else:
+            fp.write("        return ret_value;\n")
+        fp.write("    }\n")
 
 def is_void(t: Type) -> bool:
     return isinstance(t, TypeReference) and t.name == "void"
@@ -618,13 +841,17 @@ def is_optional_ptr(a: FunctionArgument):
     return isinstance(a.id.type, PointerType) and a.optional
 
 def optional_ptr_call(a: FunctionArgument) -> str:
-    s = "match %s { Some(r) => r, None => " % camel_to_snake(a.id.name)
-    if a.id.type.inner.is_const:
-        s += "core::ptr::null()"
+    arg_name = camel_to_snake(a.id.name)
+    if a.length:
+        if a.id.type.inner.is_const:
+            return "match %s { Some(r) => r.as_ptr(), None => core::ptr::null() }" % arg_name
+        else:
+            return "match %s { Some(r) => r.as_mut_ptr(), None => core::ptr::null_mut() }" % arg_name
     else:
-        s += "core::ptr::null_mut()"
-    s += ",}"
-    return s
+        if a.id.type.inner.is_const:
+            return "match %s { Some(r) => r, None => core::ptr::null() }" % arg_name
+        else:
+            return "match %s { Some(r) => r, None => core::ptr::null_mut() }" % arg_name
 
 def find_arguments_mut_ptr(args: List[FunctionArgument]) -> List[FunctionArgument]:
     result = []
@@ -655,12 +882,8 @@ def categorize_command(cmd: Command) -> CmdGenerator:
     elif len(args_mut_ptr_length) == 1:
         arg = args_mut_ptr_length[0]
         length_arg = find_argument(cmd, arg.length)
-
-        if length_arg:
-            if is_void(arg.id.type.inner):
-                return CmdReturnRawDataSliceGenerator(cmd, length_arg, arg)
-            else:
-                return CmdReturnSliceAndCountGenerator(cmd, length_arg, arg)
+        if length_arg and isinstance(length_arg.id.type, PointerType) and not length_arg.id.type.inner.is_const:
+            return CmdReturnSliceAndCountGenerator(cmd, length_arg, arg)
         else:
             return CmdReturnSliceConstantCountGenerator(cmd, arg)
     elif len(args_mut_ptr) == 1:
