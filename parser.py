@@ -205,22 +205,26 @@ def parse_enum(type):
 def parse_enum_extends(tag, extnumber: int) -> Entity:
     base_enum_name = tag.attrib["extends"]
 
+
     if not base_enum_name in ENUM_TYPES:
         raise Exception("Unknown enum to extend %s" % base_enum_name)
 
     name = tag.attrib["name"]
     value = 0
 
-    if "extnumber" in tag.attrib:
-        extnumber = int(tag.attrib["extnumber"], 0)
-
-    if "bitpos" in tag.attrib:
-        value = 1 << int(tag.attrib["bitpos"])
+    if "alias" in tag.attrib:
+        ENUM_TYPES[base_enum_name].get_value(tag.attrib["alias"])
     else:
-        value = 1000000000 + 1000 * (extnumber - 1) + int(tag.attrib["offset"], 0)
+        if "extnumber" in tag.attrib:
+            extnumber = int(tag.attrib["extnumber"], 0)
 
-    if "dir" in tag.attrib and tag.attrib["dir"] == "-":
-        value = -value
+        if "bitpos" in tag.attrib:
+            value = 1 << int(tag.attrib["bitpos"])
+        else:
+            value = 1000000000 + 1000 * (extnumber - 1) + int(tag.attrib["offset"], 0)
+
+        if "dir" in tag.attrib and tag.attrib["dir"] == "-":
+            value = -value
 
     ENUM_TYPES[base_enum_name].add_value(name, value)
     return ENUM_TYPES[base_enum_name]
@@ -394,7 +398,6 @@ def parse_funcpointer(type):
 
     FUNCTION_POINTER_TYPES[name] = FunctionPointerType(name, prototype)
 
-# @Todo Parse success codes
 # @Todo Parse error codes
 
 def parse_command(tag):
