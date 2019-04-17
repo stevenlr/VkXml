@@ -440,6 +440,9 @@ for t in model["structure_types"]:
     fp.write("            s: %s::default(),\n" % struct_name)
     fp.write("            _p: core::marker::PhantomData,\n")
     fp.write("        }\n")
+    fp.write("    }\n\n")
+    fp.write("    pub fn build(&self) -> %s {\n" % struct_name)
+    fp.write("        self.s.clone()\n")
     fp.write("    }")
     for m in t.members:
         member_name = camel_to_snake(m.id.name)
