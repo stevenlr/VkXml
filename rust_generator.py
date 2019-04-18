@@ -270,7 +270,7 @@ for t in model["enum_types"]:
             fp.write("    pub const %s: %s = %s(%d);\n" % (v, enum_name, enum_name, value))
     fp.write("\n")
     fp.write("    #[inline]\n")
-    fp.write("    pub fn contains(&self, other: &Self) -> bool { return (self.0 & other.0) == other.0; }\n")
+    fp.write("    pub fn contains(&self, other: Self) -> bool { return (self.0 & other.0) == other.0; }\n")
     fp.write("}\n\n")
     fp.write("impl core::ops::BitOr for %s {\n" % enum_name)
     fp.write("    type Output = %s;\n" % enum_name)
